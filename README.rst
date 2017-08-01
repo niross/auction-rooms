@@ -7,13 +7,16 @@ Hotel Room Auctions!
 Getting up and running locally
 ------------------------------
 
+::
+
     $ git clone git@gitlab.com:luckybreak/luckybreak-web.git
     $ cd luckybreak
     $ docker-compose -f local.yml build
     $ docker-compose -f local.yml up
     
-    URL for testing is http://localhost:8000
-    Emails sent by the system will be viewable at http://localhost:8025/
+URL for testing is http://localhost:8000
+
+Emails sent by the system will be viewable at http://localhost:8025/
 
 
 Test coverage
