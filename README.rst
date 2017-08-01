@@ -5,7 +5,7 @@ Hotel Room Auctions!
 
 
 Getting up and running locally
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
