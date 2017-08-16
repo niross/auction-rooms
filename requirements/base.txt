@@ -52,5 +52,11 @@ celery==3.1.25
 rcssmin==1.0.6 
 django-compressor==2.1.1
 
+# Raven is the Sentry client
+# --------------------------
+raven==6.1.0
+
 
 # Your custom requirements go here
+django-settings-export==1.2.1
+django-static-precompiler==1.6
