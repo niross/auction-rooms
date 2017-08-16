@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
+from __future__ import print_function
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3  # (luckybreak/config/settings/base.py - 3 = luckybreak/)
@@ -49,13 +50,17 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'raven.contrib.django.raven_compat',
+    'static_precompiler',
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
     # custom users app
-    'luckybreak.users.apps.UsersConfig',
+    'luckybreak.common',
     # Your stuff: custom apps go here
+    'luckybreak.users.apps.UsersConfig',
+    'luckybreak.browse',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -167,7 +172,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                # Your stuff: custom template context processors go here
+                'django_settings_export.settings_export',
+                'luckybreak.common.context_processors.site',
             ],
         },
     },
@@ -193,6 +199,7 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'static_precompiler.finders.StaticPrecompilerFinder',
 ]
 
 # MEDIA CONFIGURATION
@@ -281,5 +288,24 @@ STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
-# Your common stuff: Below this line define 3rd party library settings
+########## django-static-precompiler settings
 # ------------------------------------------------------------------------------
+STATIC_PRECOMPILER_COMPILERS = (
+    ('static_precompiler.compilers.LESS', {"executable": "/usr/bin/lessc"}),
+)
+
+PROTOCOL = 'https://'
+
+SETTINGS_EXPORT = [
+    'DEBUG',
+    'GOOGLE_ANALYTICS_KEY',
+    'HOMEPAGE_BACKGROUND_IMAGE',
+]
+
+SENTRY_DSN = ''
+RAVEN_CONFIG = {
+    'DSN': ''
+}
+GOOGLE_ANALYTICS_KEY = ''
+
+HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-118523.jpg'
