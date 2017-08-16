@@ -13,6 +13,10 @@ COPY ./compose/django/start-dev.sh /start-dev.sh
 RUN sed -i 's/\r//' /start-dev.sh
 RUN chmod +x /start-dev.sh
 
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g less
+
 WORKDIR /app
 
 ENTRYPOINT ["/entrypoint.sh"]
