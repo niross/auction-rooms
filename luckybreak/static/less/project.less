@@ -7,6 +7,10 @@ html {
   color: #424242;
 }
 
+nav.top {
+  a { font-weight: bold; }
+}
+
 nav {
   -webkit-transition: background-color 500ms linear;
   -moz-transition: background-color 500ms linear;
@@ -22,6 +26,10 @@ nav {
     font-weight: bold;
   }
 
+  #signout-dd {
+    min-width: 180px;
+  }
+
   a {
     -webkit-transition: color 300ms linear;
     -moz-transition: color 300ms linear;
@@ -29,11 +37,7 @@ nav {
     -ms-transition: color 300ms linear;
     transition: color 300ms linear;
 
-    &.top {
-      font-weight: bold;
-    }
   }
-
   .dropdown-content a {
     color: #424242 !important;
     font-weight: normal;
@@ -44,6 +48,7 @@ nav {
 
   &.crumbs {
     box-shadow: none;
+    background-color: transparent;
     
     a {
       color: #039be5;
@@ -66,4 +71,19 @@ nav {
 
 .top-align {
   margin-top: 0;
+}
+.alert-row {
+  margin-bottom: 0;
+}
+
+.btn {
+  &.facebook {
+    background-color: #3B5998;
+    margin-bottom: 10px;
+  }
+
+  &.twitter {
+    background-color: #2FC2EF;
+    margin-bottom: 10px;
+  }
 }

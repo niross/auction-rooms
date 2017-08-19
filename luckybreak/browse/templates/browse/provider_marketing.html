@@ -6,9 +6,6 @@
 {% block extra_css %}
   <link href="{% static 'less/provider-marketing.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
-{% block nav %}
-  {% include 'browse/inc/nav.html' with active="provider-marketing" %}
-{% endblock nav %}
 {% block content %}
   <div class="hero-wrap">
     <div class="hero" style="background-image:url('{{ settings.PROVIDER_BACKGROUND_IMAGE }}')">
@@ -27,11 +24,11 @@
     </div>
   </div>
   <div class="container">
-    <nav class="crumbs white">
+    <nav class="crumbs">
       <div class="nav-wrapper">
         <div class="col s12">
-          <a href="{% url 'homepage' %}" class="breadcrumb">Home</a>
-          <a href="{% url 'provider-marketing' %}" class="breadcrumb">Start Listing</a>
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'browse:provider-marketing' %}" class="breadcrumb">Start Listing</a>
         </div>
       </div>
     </nav>

@@ -29,23 +29,19 @@ class AuctionAdmin(admin.ModelAdmin):
 
     inlines = (BidAdmin,)
 
-    @staticmethod
     def formatted_name(auction):
         return '{} Auction: {}'.format(
             auction.status(), auction.experience.title
         )
     formatted_name.short_description = 'Auction'
 
-    @staticmethod
     def formatted_current_price(auction):
         return auction.formatted_current_price
     formatted_current_price.short_description = 'Current Price'
 
-    @staticmethod
     def bids(auction):
         return auction.bids.count()
 
-    @staticmethod
     def experience_link(auction):
         return format_html(
             '<a href="{}">{}</a>',

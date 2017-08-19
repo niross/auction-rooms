@@ -4,23 +4,18 @@ from . import views
 
 urlpatterns = [
     url(
-        regex=r'^$',
-        view=views.UserListView.as_view(),
-        name='list'
+        regex=r'^dashboard/$',
+        view=views.DashboardView.as_view(),
+        name='dashboard'
     ),
     url(
-        regex=r'^~redirect/$',
-        view=views.UserRedirectView.as_view(),
-        name='redirect'
+        regex=r'^accounts/signup/guest/$',
+        view=views.GuestSignupView.as_view(),
+        name='guest-signup'
     ),
     url(
-        regex=r'^(?P<username>[\w.@+-]+)/$',
-        view=views.UserDetailView.as_view(),
-        name='detail'
-    ),
-    url(
-        regex=r'^~update/$',
-        view=views.UserUpdateView.as_view(),
-        name='update'
+        regex=r'^accounts/signup/provider/$',
+        view=views.ProviderSignupView.as_view(),
+        name='provider-signup'
     ),
 ]
