@@ -1,13 +1,57 @@
-<nav class="grey darken-3 top">
-  <div class="nav-wrapper">
-    <div class="container">
-      <a href="/" class="brand-logo">{{ site.name }}</a>
-      <a href="#" data-activates="mobile-side-nav" class="button-collapse">
-        <i class="material-icons">menu</i>
+{% load common_tags %}
+{% if user.is_authenticated %}
+  <ul id="signout-dd" class="dropdown-content" data-constrainWidth="false">
+    <li>
+      <a href="#!" class="logout-link">
+        <form action="{% url 'account_logout' %}" method="post">
+          {% csrf_token %}
+          Sign Out
+        </form>
       </a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-      </ul>
-    </div>
-  </div>
-</nav>
-
+    </li>
+  </ul>
+  <li class="{% navactive request 'users:dashboard' %}">
+    <a href="{% url 'users:dashboard' %}">
+      <i class="material-icons left">dashboard</i>Your Dashboard</a>
+  </li>
+  <li>
+    <a
+      class="dropdown-button"
+      href="#!"
+      data-activates="signout-dd"
+      data-constrainWidth="false"
+      data-belowOrigin="true"
+    >
+      <i class="material-icons left">face</i>
+      {{ user.get_full_name }}
+      <i class="material-icons right">arrow_drop_down</i>
+    </a>
+  </li>
+{% else %}
+  <ul id="signup-dd" class="dropdown-content" data-constrainWidth="false">
+    <li>
+      <a href="{% url 'users:guest-signup' %}">Find Experiences</a>
+    </li>
+    <li>
+      <a href="{% url 'users:provider-signup' %}">Sell Experiences</a>
+    </li>
+  </ul>
+  <li class="{% navactive request 'browse:provider-marketing' %}">
+    <a href="{% url 'browse:provider-marketing' %}">
+      Add an Experience
+    </a>
+  </li>
+  <li class="{% navactive request 'account_login' %}">
+    <a href="{% url 'account_login' %}">Sign In</a>
+  </li>
+  <li>
+    <a
+      class="dropdown-button"
+      href="#!"
+      data-activates="signup-dd"
+      data-constrainWidth="false"
+      data-belowOrigin="true"
+    >
+      Sign Up<i class="material-icons right">arrow_drop_down</i></a>
+  </li>
+{% endif %}

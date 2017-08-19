@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load static compile_static %}
 {% block title %}{% block head_title %}{% endblock head_title %}{% endblock title %}
+{% block extra_css %}
+  <link href="{% static 'less/auth.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-6 offset-md-3">
+  <div class="container">
     {% block inner %}{% endblock %}
   </div>
-</div>
 {% endblock %}

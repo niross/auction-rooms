@@ -37,7 +37,9 @@
             <i class="material-icons">menu</i>
           </a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {% block nav %}{% endblock nav %}
+            {% block nav %}
+              {% include 'inc/nav.html' %}
+            {% endblock nav %}
           </ul>
         </div>
       </div>

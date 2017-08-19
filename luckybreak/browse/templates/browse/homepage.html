@@ -6,9 +6,6 @@
 {% block extra_css %}
   <link href="{% static 'less/homepage.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
-{% block nav %}
-  {% include 'browse/inc/nav.html' %}
-{% endblock nav %}
 {% block content %}
   <div class="hero-wrap">
     <div class="hero" style="background-image:url('{{ settings.HOMEPAGE_BACKGROUND_IMAGE }}')">
