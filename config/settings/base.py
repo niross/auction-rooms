@@ -299,6 +299,7 @@ SETTINGS_EXPORT = [
     'DEBUG',
     'GOOGLE_ANALYTICS_KEY',
     'HOMEPAGE_BACKGROUND_IMAGE',
+    'PROVIDER_BACKGROUND_IMAGE',
 ]
 
 SENTRY_DSN = ''
@@ -309,5 +310,6 @@ GOOGLE_ANALYTICS_KEY = ''
 GOOGLE_MAPS_KEY = 'AIzaSyDIfR8fIxgQV_w-lsbzyvV9UvUhMwUnmiM'
 
 HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-118523.jpg'
+PROVIDER_BACKGROUND_IMAGE = '/static/images/backgrounds/markus-spiske-37931.jpg'
 
 DEFAULT_CURRENCY_ID = 1  # GBP
