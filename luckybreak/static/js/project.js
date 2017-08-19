@@ -12,4 +12,7 @@ $(document).ready(function() {
     close: 'Ok',
     closeOnSelect: false
   });
+
+  // Initialise side nav for mobile
+  $('.button-collapse').sideNav();
 });
