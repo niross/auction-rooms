@@ -6,6 +6,9 @@
 {% block extra_css %}
   <link href="{% static 'less/homepage.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
+{% block nav %}
+  {% include 'browse/inc/nav.html' %}
+{% endblock nav %}
 {% block content %}
   <div class="hero-wrap">
     <div class="hero" style="background-image:url('{{ settings.HOMEPAGE_BACKGROUND_IMAGE }}')">
@@ -28,13 +31,13 @@
   <div class="container">
 
     <div class="row homepage-section">
-      <div class="col sm12">
+      <div class="col s12">
         <h5 class="section-header">Featured Experiences</h5>
       </div>
     </div>
 
     <div class="row homepage-section">
-      <div class="col sm12">
+      <div class="col s12">
         <h5 class="section-header">Ending Soon</h5>
       </div>
     </div>

@@ -1,0 +1,22 @@
+<ul id="signup-dd" class="dropdown-content" data-constrainWidth="false">
+  <li><a href="#!">Find Experiences</a></li>
+  <li><a href="#!">Sell Experiences</a></li>
+</ul>
+<li {% if active == 'provider-marketing' %}class="active"{% endif %}>
+  <a href="{% url 'provider-marketing' %}">
+    Add an Experience
+  </a>
+</li>
+<li>
+  <a href="{% url 'account_login' %}">Sign In</a>
+</li>
+<li>
+  <a
+    class="dropdown-button"
+    href="#!"
+    data-activates="signup-dd"
+    data-constrainWidth="false"
+    data-belowOrigin="true"
+  >
+    Sign Up<i class="material-icons right">arrow_drop_down</i></a>
+</li>
