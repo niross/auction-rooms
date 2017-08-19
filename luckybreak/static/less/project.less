@@ -28,10 +28,42 @@ nav {
     -o-transition: color 300ms linear;
     -ms-transition: color 300ms linear;
     transition: color 300ms linear;
+
+    &.top {
+      font-weight: bold;
+    }
   }
 
+  .dropdown-content a {
+    color: #424242 !important;
+    font-weight: normal;
+    &:hover {
+      background-color: rgba(0,0,0,0.1) !important;
+    }
+  }
+
+  &.crumbs {
+    box-shadow: none;
+    
+    a {
+      color: #039be5;
+
+      &:last-child {
+        color: #757575;
+      }
+
+      &:before {
+        color: #bdbdbd;
+      }
+    }
+
+  }
 }
 
 .section-header {
   font-weight: bold;
+}
+
+.top-align {
+  margin-top: 0;
 }

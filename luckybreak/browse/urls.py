@@ -8,4 +8,9 @@ urlpatterns = (
         views.HomepageView.as_view(),
         name='homepage'
     ),
+    url(
+        r'^start-listing/$',
+        views.ProviderMarketingView.as_view(),
+        name='provider-marketing'
+    ),
 )
