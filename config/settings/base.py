@@ -44,9 +44,12 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
+    'crispy_forms_materialize',
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'raven.contrib.django.raven_compat', # sentry
     'static_precompiler', # less compiler
 ]
@@ -130,7 +133,7 @@ TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en-us'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 1
+SITE_ID = 2
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
@@ -179,7 +182,7 @@ TEMPLATES = [
 ]
 
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -254,19 +257,51 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Some really nice defaults
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'luckybreak.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'luckybreak.users.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'VERSION': 'v2.4',
+    },
+}
 
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'users:redirect'
+LOGIN_REDIRECT_URL = 'users:dashboard'
 LOGIN_URL = 'account_login'
+
+ACCOUNT_FORMS = {
+    'login': 'luckybreak.users.forms.LBLoginForm',
+    'signup': 'luckybreak.users.forms.LBSignupForm',
+}
+SOCIALACCOUNT_FORMS = {
+    'signup': 'luckybreak.users.forms.LBSocialSignupForm',
+}
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

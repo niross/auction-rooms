@@ -19,17 +19,11 @@
     <div class="col s6 offset-s3">
       <h2>{% trans "Sign Up" %}</h2>
       <p>
-        {% blocktrans %}
-          Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
-        {% endblocktrans %}
+        {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{ provider_name }} account to login to {{ site_name }}. As a final step, please complete the following form:{% endblocktrans %}
       </p>
       <br />
 
-      <form
-        class="signup"
-        id="signup_form"
-        method="post"
-      >
+      <form class="signup" id="signup_form" method="post">
         <div class="row">
 
           {% include 'common/inc/form_field.html' with required=True placeholder="Phileas" field=form.first_name sm=12 md=6 lg=6 %}
@@ -40,11 +34,7 @@
 
           {% include 'common/inc/form_field.html' with required=True placeholder="0118 999 881 999 119 7253" field=form.phone label="Contact Number" sm=12 md=6 lg=6 %}
 
-          {% include 'common/inc/form_field.html' with required=True field=form.user_type label="Which best describes you?" sm=12 md=6 lg=6 %}
-        </div>
-        <div class="row">
-          {% include 'common/inc/form_field.html' with required=True field=form.password1 label="Enter your password" sm=12 md=6 lg=6 %}
-          {% include 'common/inc/form_field.html' with required=True field=form.password2 label="Enter your password again" sm=12 md=6 lg=6 %}
+          {% include 'common/inc/form_field.html' with required=True field=form.user_type label="Which best describes you?" sm=12 %}
         </div>
 
 

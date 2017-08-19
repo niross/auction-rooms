@@ -9,10 +9,11 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # User management
+    url(r'^', include('luckybreak.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    url(r'', include('luckybreak.browse.urls')),
+    url(r'', include('luckybreak.browse.urls', namespace='browse')),
 
 
 
