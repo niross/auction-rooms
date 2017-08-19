@@ -38,11 +38,8 @@ DJANGO_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Useful template tags:
-    # 'django.contrib.humanize',
-
-    # Admin
+    'django.contrib.gis',
+    'django.contrib.humanize',
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
@@ -50,17 +47,18 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'raven.contrib.django.raven_compat',
-    'static_precompiler',
+    'raven.contrib.django.raven_compat', # sentry
+    'static_precompiler', # less compiler
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    # custom users app
     'luckybreak.common',
-    # Your stuff: custom apps go here
     'luckybreak.users.apps.UsersConfig',
     'luckybreak.browse',
+    'luckybreak.experiences',
+    'luckybreak.auctions',
+    'luckybreak.currencies',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -114,8 +112,9 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///luckybreak'),
+    'default': env.db('DATABASE_URL', default='postgresql:///luckybreak'),
 }
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
@@ -307,5 +306,8 @@ RAVEN_CONFIG = {
     'DSN': ''
 }
 GOOGLE_ANALYTICS_KEY = ''
+GOOGLE_MAPS_KEY = 'AIzaSyDIfR8fIxgQV_w-lsbzyvV9UvUhMwUnmiM'
 
 HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-118523.jpg'
+
+DEFAULT_CURRENCY_ID = 1  # GBP
