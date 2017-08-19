@@ -7,3 +7,7 @@ class HomepageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomepageView, self).get_context_data(**kwargs)
         return context
+
+
+class ProviderMarketingView(TemplateView):
+    template_name = 'browse/provider_marketing.html'
