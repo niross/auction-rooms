@@ -5,6 +5,9 @@ ENV PYTHONUNBUFFERED 1
 RUN groupadd -r django \
     && useradd -r -g django django
 
+RUN apt-get update -y
+RUN apt-get install -y binutils libproj-dev gdal-bin
+
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
