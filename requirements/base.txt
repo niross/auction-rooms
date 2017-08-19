@@ -60,3 +60,4 @@ raven==6.1.0
 # Your custom requirements go here
 django-settings-export==1.2.1
 django-static-precompiler==1.6
+crispy-forms-materialize==0.2

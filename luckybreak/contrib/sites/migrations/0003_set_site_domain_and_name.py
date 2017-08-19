@@ -11,10 +11,17 @@ def update_site_forward(apps, schema_editor):
     """Set site domain and name."""
     Site = apps.get_model('sites', 'Site')
     Site.objects.update_or_create(
-        id=settings.SITE_ID,
+        id=1,
         defaults={
             'domain': 'luckybreak.io',
-            'name': 'luckybreak'
+            'name': 'Luckybreak'
+        }
+    )
+    Site.objects.create(
+        id=2,
+        defaults={
+            'domain': 'localhost:8000',
+            'name': 'Luckybreak Dev'
         }
     )
 
@@ -23,12 +30,13 @@ def update_site_backward(apps, schema_editor):
     """Revert site domain and name to default."""
     Site = apps.get_model('sites', 'Site')
     Site.objects.update_or_create(
-        id=settings.SITE_ID,
+        id=1,
         defaults={
             'domain': 'example.com',
             'name': 'example.com'
         }
     )
+    Site.objects.get(pk=1).delete()
 
 
 class Migration(migrations.Migration):
