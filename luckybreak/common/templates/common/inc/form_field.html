@@ -2,15 +2,15 @@
 <div class="input-field col s{% if sm %}{{ sm }}{% else %}12{% endif %} m{% if md %}{{ md }}{% else %}12{% endif %} l{% if lg %}{{ lg }}{% else %}12{% endif %}">
   {% if required %}
     {% if placeholder %}
-      {{ field|add_placeholder:placeholder|add_required|add_class:"validate" }}
+      {{ field|add_placeholder:placeholder|add_required|add_class:"validate"|add_validation:field.errors }}
     {% else %}
-      {{ field|add_required|add_class:"validate" }}
+      {{ field|add_required|add_class:"validate"|add_validation:field.errors }}
     {% endif %}
   {% else %}
     {% if placeholder %}
-      {{ field|add_placeholder:placeholder|add_class:"validate" }}
+      {{ field|add_placeholder:placeholder|add_class:"validate"|add_validation:field.errors }}
     {% else %}
-      {{ field|add_class:"validate" }}
+      {{ field|add_class:"validate"|add_validation:field.errors }}
     {% endif %}
   {% endif %}
   {% if not field.field.widget.attrs.hidden %}

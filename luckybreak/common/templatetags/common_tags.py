@@ -22,7 +22,7 @@ def navactive(request, urls, arg=None):
 @register.filter
 def mask_email(email):
     address, domain = email.split('@')
-    return '@'.join([''.join(['*' for x in address]), domain])
+    return '@'.join([''.join(['*' for _ in address]), domain])
 
 
 @register.simple_tag
@@ -52,3 +52,9 @@ def add_placeholder(field, placeholder):
 def add_required(field):
     field.field.widget.attrs['required'] = 'required'
     return field
+
+@register.filter
+def add_validation(field, errors):
+    if errors:
+        return add_class(field, 'invalid')
+    return add_class(field, 'valid')
