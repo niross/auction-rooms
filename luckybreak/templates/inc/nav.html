@@ -1,6 +1,6 @@
 {% load common_tags %}
 {% if user.is_authenticated %}
-  <ul id="signout-dd" class="dropdown-content" data-constrainWidth="false">
+<ul id="{{ screen }}-signout-dd" class="dropdown-content" data-constrainWidth="false">
     <li>
       <a href="#!" class="logout-link">
         <form action="{% url 'account_logout' %}" method="post">
@@ -18,7 +18,7 @@
     <a
       class="dropdown-button"
       href="#!"
-      data-activates="signout-dd"
+      data-activates="{{ screen }}-signout-dd"
       data-constrainWidth="false"
       data-belowOrigin="true"
     >
@@ -28,7 +28,7 @@
     </a>
   </li>
 {% else %}
-  <ul id="signup-dd" class="dropdown-content" data-constrainWidth="false">
+  <ul id="{{ screen }}-signup-dd" class="dropdown-content" data-constrainWidth="false">
     <li>
       <a href="{% url 'users:guest-signup' %}">Find Experiences</a>
     </li>
@@ -48,7 +48,7 @@
     <a
       class="dropdown-button"
       href="#!"
-      data-activates="signup-dd"
+      data-activates="{{ screen }}-signup-dd"
       data-constrainWidth="false"
       data-belowOrigin="true"
     >
