@@ -16,7 +16,7 @@
   </nav>
 
   <div class="row">
-    <div class="col s6 offset-s3">
+    <div class="col s12 m6 offset-m3">
       <h2>{% trans "Sign Up" %}</h2>
       <p>
         {% blocktrans %}
@@ -37,9 +37,9 @@
           {% include 'common/inc/form_field.html' with required=True placeholder="Fogg" field=form.last_name sm=12 md=12 lg=6 %}
 
           {% if form.user_type.value == 1 %}
-            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=12 lg=12 %}
+            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co.uk" field=form.email label="Email Address" sm=12 md=12 lg=12 %}
           {% else %}
-            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=12 lg=6 %}
+            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co.uk" field=form.email label="Email Address" sm=12 md=12 lg=6 %}
           {% endif %}
 
           {% include 'common/inc/form_field.html' with required=True placeholder="0118 999 881 999 119 7253" field=form.phone label="Contact Number" sm=12 md=12 lg=6 %}
@@ -66,7 +66,7 @@
     {% get_providers as socialaccount_providers %}
     {% if socialaccount_providers %}
       <div class="row">
-        <div class="col s6 offset-s3">
+        <div class="col s12 m6 offset-m3">
           <p class="divider"></p>
           <br />
           <div>
