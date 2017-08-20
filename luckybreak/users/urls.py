@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views import defaults as default_views
 
 from . import views
 
@@ -17,5 +18,10 @@ urlpatterns = [
         regex=r'^accounts/signup/provider/$',
         view=views.ProviderSignupView.as_view(),
         name='provider-signup'
+    ),
+    url(
+        regex=r'^accounts/signup/$',
+        view=default_views.page_not_found,
+        kwargs={'exception': Exception('Page not Found')}
     ),
 ]

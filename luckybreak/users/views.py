@@ -9,6 +9,9 @@ from luckybreak.users import models
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'users/dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        return super(DashboardView, self).get_context_data(**kwargs)
+
 
 class GuestSignupView(SignupView):
     def get_initial(self):
