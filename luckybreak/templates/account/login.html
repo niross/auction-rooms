@@ -17,10 +17,8 @@
   </nav>
 
   {% if form.non_field_errors %}
-    {% include 'common/inc/alert.html' with colour="red lighten-1" icon="warning" message=form.non_field_errors.0 class="s6 offset-s3" %}
+    {% include 'common/inc/alerts/warning.html' with message=form.non_field_errors.0 grid="s6 offset-s3" %}
   {% endif %}
-
-  {% get_providers as socialaccount_providers %}
 
   <div class="row">
     <div class="col s6 offset-s3">
@@ -61,13 +59,14 @@
         {% endif %}
       </div>
     </form>
+    {% get_providers as socialaccount_providers %}
     {% if socialaccount_providers %}
       <div class="row">
         <div class="col s6 offset-s3">
           <p class="divider"></p>
           <br />
           <div>
-            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            {% include "socialaccount/snippets/provider_list.html" with process="login" action="Sign In" %}
           </div>
 
           {% include "socialaccount/snippets/login_extra.html" %}
