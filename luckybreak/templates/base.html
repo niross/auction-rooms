@@ -38,12 +38,12 @@
           </a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             {% block nav %}
-              {% include 'inc/nav.html' %}
+              {% include 'inc/nav.html' with screen="desktop" %}
             {% endblock nav %}
           </ul>
           <ul id="mobile-side-nav" class="side-nav">
             {% block side_nav %}
-              {% include 'inc/nav.html' %}
+              {% include 'inc/nav.html' with screen="mobile" %}
             {% endblock side_nav %}
           </ul>
         </div>
