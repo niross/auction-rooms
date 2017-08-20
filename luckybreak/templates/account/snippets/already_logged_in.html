@@ -1,0 +1,3 @@
+{% load account %}
+{% user_display user as user_display %}
+{% include 'common/inc/alerts/warning.html' with grid='col s12 m6 offset-m3' message='You are already logged in as '|add:user_display %}

@@ -30,7 +30,11 @@
 
           {% include 'common/inc/form_field.html' with required=True placeholder="Fogg" field=form.last_name sm=12 md=6 lg=6 %}
 
-          {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=6 lg=6 %}
+          {% if form.user_type.value == 1 %}
+            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=12 lg=12 %}
+          {% else %}
+            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=6 lg=6 %}
+          {% endif %}
 
           {% include 'common/inc/form_field.html' with required=True placeholder="0118 999 881 999 119 7253" field=form.phone label="Contact Number" sm=12 md=6 lg=6 %}
 

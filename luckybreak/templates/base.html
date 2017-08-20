@@ -87,6 +87,19 @@
     {% compress js %}
       {% block extra_js %}{% endblock extra_js %}
     {% endcompress %}
+    {% block toast %}
+      <script>
+        $(function() {
+          {% for message in messages %}
+            var icon = '{{ message.tags }}';
+            // No success icon in materialize
+            if (icon === 'success') icon = 'check_circle';
+            var msg = $('<span><i class="material-icons left">' + icon + '</i> {{ message }}</span>');
+            Materialize.toast(msg, 10000, '{{ message.tags }}');
+          {% endfor %}
+        });
+      </script>
+    {% endblock toast %}
   </body>
 </html>
  
