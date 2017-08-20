@@ -1,8 +1,8 @@
 <div class="row alert-row">
-  <div class="col {{ class }}">
+  <div class="col {{ grid }}">
     <div class="card-panel {{ colour }}">
       <div class="white-text valign-wrapper">
-        <i class="material-icons left">{{ icon }}</i> {{ message }}
+        <i class="material-icons left">{{ icon }}</i> {{ message|safe }}
       </div>
     </div>
   </div>
