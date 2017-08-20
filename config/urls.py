@@ -14,6 +14,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'', include('luckybreak.browse.urls', namespace='browse')),
+    url(r'^contact/', include('luckybreak.contact.urls', namespace='contact')),
 
 
 

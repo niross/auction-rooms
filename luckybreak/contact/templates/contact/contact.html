@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static compile_static %}
+{% block title %}{% trans "Contact Us" %}{% endblock %}
+{% block description %}{% endblock description %}
+{% block body_class %}provider-marketing{% endblock body_class %} 
+{% block extra_css %}
+{% endblock extra_css %} 
+
+{% block content %}
+  <div class="container">
+    <nav class="crumbs">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'contact:contact' %}" class="breadcrumb">Contact Us</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <h2>{% trans "Contact Us" %}</h2>
+        <p>
+          {% with site_name=site.name %}
+            {% blocktrans %}
+            Get in touch with the {{ site_name }} Team.
+            {% endblocktrans %}
+          {% endwith %}
+        </p>
+        <form method="post">
+          <div class="row">
+
+            {% include 'common/inc/form_field.html' with required=True placeholder="Phileas" field=form.name sm=12 md=12 lg=12 %}
+
+            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co.uk" field=form.email label="Email Address" sm=12 md=12 lg=12 %}
+
+            {% include 'common/inc/form_field.html' with required=True placeholder="Your message goes here..." field=form.message label="Message" sm=12 md=12 lg=12 %}
+
+            {{ form.user }}
+
+          </div>
+
+          {% csrf_token %}
+          <div class="row right-align">
+            <button class="btn btn-large waves-effect waves-light green" type="submit">
+              <i class="material-icons left">check_circle</i>{% trans "Send Message" %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
