@@ -1,12 +1,15 @@
 @font_colour: #424242;
 
 body.homepage {
+  #sidenav-overlay {
+    display: none;
+  }
   nav {
     &.top {
       background-color: transparent !important;
       box-shadow: none;
 
-      a {
+      .brand-logo, .hide-on-med-and-down a {
         color: #eeeeee;
 
         &:hover {
