@@ -12,17 +12,13 @@ def update_site_forward(apps, schema_editor):
     Site = apps.get_model('sites', 'Site')
     Site.objects.update_or_create(
         id=1,
-        defaults={
-            'domain': 'luckybreak.io',
-            'name': 'Luckybreak'
-        }
+        domain='luckybreak.io',
+        name='Luckybreak'
     )
     Site.objects.create(
         id=2,
-        defaults={
-            'domain': 'localhost:8000',
-            'name': 'Luckybreak Dev'
-        }
+        domain='localhost:8000',
+        name='Luckybreak Dev'
     )
 
 

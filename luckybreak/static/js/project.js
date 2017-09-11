@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   // Initialise all select inputs on the page
   $('select').material_select();
 
@@ -22,4 +21,9 @@ $(document).ready(function() {
     $(this).find('form').submit();
   });
 
+	// Initialise collapsibles
+  $('.collapsible').collapsible();
+
+  // Initialise tooltips
+  $('.tooltipped').tooltip({delay: 50});
 });
