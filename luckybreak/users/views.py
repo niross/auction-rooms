@@ -7,10 +7,16 @@ from luckybreak.users import models
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = 'users/dashboard.html'
+    provider_template_name = 'users/provider_dashboard.html'
+    guest_template_name = 'users/guest_dashboard.html'
 
     def get_context_data(self, **kwargs):
         return super(DashboardView, self).get_context_data(**kwargs)
+
+    def get_template_names(self):
+        if self.request.user.is_provider():
+            return [self.provider_template_name]
+        return [self.guest_template_name]
 
 
 class GuestSignupView(SignupView):

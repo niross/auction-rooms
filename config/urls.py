@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'', include('luckybreak.browse.urls', namespace='browse')),
     url(r'^contact/', include('luckybreak.contact.urls', namespace='contact')),
 
+    # API
+    url(r'^api/', include('luckybreak.experiences.api_urls', namespace='experience-api')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
