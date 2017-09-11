@@ -15,6 +15,6 @@ def contact_save(sender, **kwargs):
     if contact.user is not None:
         msg += 'User ID: %s\n' % contact.user.id
     msg += 'Name: %s\n' % contact.name
-    msg += 'Email: %s\n' % contact.user.email
+    msg += 'Email: %s\n' % contact.email
     msg += 'Message: \n\n%s\n\n' % contact.message
     mail_admins(subject, msg)

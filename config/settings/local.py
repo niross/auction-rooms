@@ -74,6 +74,22 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 CELERY_ALWAYS_EAGER = True
 ########## END CELERY
 
+########## WEBPACK
+# See: https://github.com/owais/django-webpack-loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'js/apps/dist/js/',
+        'STATS_FILE': str(
+            str(APPS_DIR('static', 'js', 'apps', 'webpack-stats-dev.json'))
+        ),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
+########## END WEBPACK
+
 # ------------------------------------------------------------------------------
 
-PROTOCOL = 'https://'
+PROTOCOL = 'http://'

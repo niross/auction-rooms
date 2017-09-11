@@ -1,0 +1,61 @@
+#add-experience-modal {
+  max-width: 600px;
+
+  .dropzone {
+    width: 100%;
+    height: 200px;
+    border-width: 2px;
+    border-color: #9e9e9e;
+    border-style: dashed;
+    border-radius: 5px;
+    cursor: pointer;
+
+    p {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .image-card {
+    .card-content {
+      padding: 10px 0;
+      text-align: center;
+
+      .row {
+        margin-bottom: 0;
+
+        label {
+          padding-left: 25px;
+        }
+      }
+    }
+
+    .image-preview {
+      height: 80px;
+      background-position: center center;
+      background-size: cover;
+      overflow: hidden;
+      background-image: attr(data-image-src url);
+    }
+
+    .image-delete {
+      position: absolute;
+      top: 1px;
+      right: 2px;
+    }
+  }
+}
+
+.modal-footer {
+  padding: 4px 0;
+  height: 74px !important;
+  
+
+  .row {
+    margin: 0;
+  }
+
+  button {
+    width: 100%;
+  }
+}
