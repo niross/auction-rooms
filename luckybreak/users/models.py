@@ -20,3 +20,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.get_full_name()
+
+    def is_provider(self):
+        return self.user_type == self.USER_TYPE_PROVIDER

@@ -103,17 +103,12 @@ body.homepage {
     }
   }
   .search-nav {
-    height: auto;
-    overflow: hidden;
-    position: relative;
     margin-bottom: 30px;
 
     form {
       .input-field input[type=text] {
         background-color: #ffffff;
         color: @font_colour;
-        padding-left: 4px;
-        border-radius: 2px;
       }
 
       .caret {
@@ -122,54 +117,6 @@ body.homepage {
         font-weight: normal;
         font-size: 1rem;
       }
-    }
-
-    &.hide-on-small-only {
-      min-height: 64px;
-
-      .input-field.inline input, .input-field.inline .select-dropdown, .datepicker.picker__input {
-        margin-bottom: 0.2rem;
-      }
-
-      .row {
-        margin-bottom: 0;
-      }
-
-      .select-wrapper input.select-dropdown, .datepicker.picker__input {
-        height: 2.5rem;
-      }
-
-      .datepicker-wrap {
-        margin-top: -6px;
-      }
-
-      .btn {
-        height: 39px;
-        margin-left: 20px;
-        margin-top: -4px;
-        font-weight: bold;
-        text-transform: initial;
-
-        .material-icons {
-          height: 100%;
-          line-height: inherit;
-        }
-      }
-
-      form {
-        .form-text {
-          font-weight: bold;
-          font-size: 1.2rem;
-
-          &:not(first-child) {
-            margin-left: 15px;
-          }
-
-          &:not(last-child) {
-            margin-right: 5px;
-          }
-        }
-      } 
     }
 
     &.hide-on-med-and-up {

@@ -28,7 +28,6 @@
   </head>
 
   <body class="{% block body_class %}{% endblock body_class %}">
-
     <nav class="grey darken-3 top">
       <div class="nav-wrapper">
         <div class="container">
@@ -58,14 +57,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
     {% block javascript %}
       <!-- Required by Bootstrap v4 Alpha 4 -->
-      <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+      <script src="{% static 'js/libs/jquery-3.2.1.min.js' %}"></script>
+      <script src="{% static 'js/libs/tether.min.js' %}"></script>
 
       <!-- Third-party javascript libraries -->
-      <script src="{% static 'js/materialize.min.js' %}"></script>
+      <script src="{% static 'js/libs/materialize.min.js' %}"></script>
       <script src="https://cdn.ravenjs.com/3.14.2/raven.min.js"></script>
 
       <!-- Project specific Javascript -->

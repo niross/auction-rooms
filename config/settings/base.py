@@ -52,6 +52,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.twitter',
     'raven.contrib.django.raven_compat', # sentry
     'static_precompiler', # less compiler
+    'webpack_loader', # js hotloader
+    'rest_framework', # api
 ]
 
 # Apps specific for this project go here.
@@ -331,11 +333,29 @@ STATIC_PRECOMPILER_COMPILERS = (
     ('static_precompiler.compilers.LESS', {"executable": "/usr/bin/lessc"}),
 )
 
+########## WEBPACK
+# See: https://github.com/owais/django-webpack-loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': '/', # must end with slash
+        'STATS_FILE': str(
+            str(APPS_DIR('static', 'js', 'apps', 'webpack-stats-prod.json'))
+        ),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
+########## END WEBPACK
+
+
 PROTOCOL = 'https://'
 
 SETTINGS_EXPORT = [
     'DEBUG',
     'GOOGLE_ANALYTICS_KEY',
+    'GOOGLE_MAPS_KEY',
     'HOMEPAGE_BACKGROUND_IMAGE',
     'PROVIDER_BACKGROUND_IMAGE',
 ]
@@ -345,7 +365,7 @@ RAVEN_CONFIG = {
     'DSN': ''
 }
 GOOGLE_ANALYTICS_KEY = ''
-GOOGLE_MAPS_KEY = 'AIzaSyDIfR8fIxgQV_w-lsbzyvV9UvUhMwUnmiM'
+GOOGLE_MAPS_KEY = 'AIzaSyCqKfIMgSU5OILdIsuu7dq9qD82HJa5ot4'
 
 HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-118523.jpg'
 PROVIDER_BACKGROUND_IMAGE = '/static/images/backgrounds/markus-spiske-37931.jpg'

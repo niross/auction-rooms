@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static compile_static %}
+{% load render_bundle from webpack_loader %}
+{% block title %}{% trans "Your Dashboard" %}{% endblock %}
+{% block description %}{% endblock description %}
+{% block body_class %}provider-dashboard{% endblock body_class %} 
+{% block extra_css %}
+  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_KEY }}&libraries=places"></script>
+  {% render_bundle 'add-experience' 'js' %}
+{% endblock extra_js %}
+
+{% block content %}
+
+  <div class="container">
+    <nav class="crumbs">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'users:dashboard' %}" class="breadcrumb">Your Dashboard</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- add experience modal testing -->
+    <div class="add-experience-app"></div>
+    <!-- add experience modal testing -->
+
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
