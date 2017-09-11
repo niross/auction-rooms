@@ -2,11 +2,13 @@ from unittest import skipIf
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 from selenium import webdriver
 from test_plus.test import TestCase
+from rest_framework.test import APITestCase
 
 from luckybreak.users.models import User
-from luckybreak.users.tests.factories import UserFactory
+from luckybreak.users.tests.factories import UserFactory, GuestFactory, ProviderFactory
 
 SKIP_TESTS = True
 if hasattr(settings, 'SKIP_FUNCTIONAL_TESTS'):
@@ -55,3 +57,11 @@ class BaseTestCase(TestCase):
         user.user_type = User.USER_TYPE_PROVIDER
         user.save()
         return user
+
+
+class BaseAPITestCase(APITestCase):
+    def setUp(self):
+        self.guest = GuestFactory(username='testguest')
+        self.guest.save()
+        self.provider = ProviderFactory(username='testprovider')
+        self.provider.save()
