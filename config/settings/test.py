@@ -59,3 +59,17 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
         'django.template.loaders.app_directories.Loader',
     ], ],
 ]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'js/apps/dist/js/',
+        'STATS_FILE': str(
+            str(APPS_DIR('static', 'js', 'apps', 'webpack-stats-dev.json'))
+        ),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
+COMPRESS_ENABLED = False
