@@ -2,8 +2,11 @@ from unittest import skipIf
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import LiveServerTestCase
 from selenium import webdriver
+from test_plus.test import TestCase
+
+from luckybreak.users.models import User
+from luckybreak.users.tests.factories import UserFactory
 
 SKIP_TESTS = True
 if hasattr(settings, 'SKIP_FUNCTIONAL_TESTS'):
@@ -25,10 +28,30 @@ class FunctionalTestCase(StaticLiveServerTestCase):
 
     def tearDown(self):
         # self.selenium.quit()
-        super(FunctionalTestCase, self).tearDown()
+        pass
 
     def _live_url(self, path):
         return '{}{}'.format(
             self.live_server_url,
             path
         )
+
+
+class BaseTestCase(TestCase):
+    user_factory = UserFactory
+
+    def setUp(self):
+        self.guest = self.make_guest()
+        self.provider = self.make_provider()
+
+    def make_guest(self):
+        user = self.make_user(username='testguest')
+        user.user_type = User.USER_TYPE_GUEST
+        user.save()
+        return user
+
+    def make_provider(self):
+        user = self.make_user(username='testprovider')
+        user.user_type = User.USER_TYPE_PROVIDER
+        user.save()
+        return user
