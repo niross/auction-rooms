@@ -6,6 +6,7 @@ class HomepageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomepageView, self).get_context_data(**kwargs)
+        # TODO: Add tests for contexts added here
         return context
 
 
