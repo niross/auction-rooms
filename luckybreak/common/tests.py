@@ -35,7 +35,7 @@ class BaseFunctionalTestCase(StaticLiveServerTestCase):
         self.provider.save()
 
     def tearDown(self):
-        # self.selenium.quit()
+        self.selenium.quit()
         pass
 
     def live_url(self, url_name):
