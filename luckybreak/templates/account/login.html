@@ -43,13 +43,17 @@
             {% include 'common/inc/checkbox.html' with field=form.remember %}
           </div>
           <div class="col s6 right-align">
-            <a href="{% url 'account_reset_password' %}">
+            <a href="{% url 'account_reset_password' %}" id="forgot-link">
               {% trans "Forgot Password?" %}
             </a>
           </div>
         </div>
         <div class="row right-align">
-          <button class="btn btn-large waves-effect waves-light green" type="submit">
+          <button
+            id="signin-submit"
+            class="btn btn-large waves-effect waves-light green"
+            type="submit"
+          >
             <i class="material-icons left">check_circle</i>{% trans "Sign In" %}
           </button>
         </div>
