@@ -17,6 +17,7 @@ const propTypes = {
   onCancel: PropTypes.func.isRequired,
   hasSuccessStep: PropTypes.bool,
   headerText: PropTypes.string.isRequired,
+  triggerId: PropTypes.string,
   children: (props, propName) => {
     const prop = props[propName];
     if (!prop || prop.length < 2) {
@@ -38,7 +39,8 @@ const defaultProps = {
   id: 'merlin-wizard',
   hasSuccessStep: true,
   children: null,
-  onComplete: null
+  onComplete: null,
+  triggerId: null
 };
 
 class Wizard extends React.Component {
@@ -92,7 +94,12 @@ class Wizard extends React.Component {
   }
 
   handleCancel() {
-    this.props.onCancel();
+    // On modal close reset state
+    this.setState({
+      step: this.props.initialStep,
+      formData: Object.assign({}, this.props.initialData)
+    });
+    if (this.props.onCancel) this.props.onCancel();
   }
 
   /**
@@ -140,6 +147,8 @@ class Wizard extends React.Component {
         forwardButtonIconPlacement={step.props.forwardButtonIconPlacement}
         forwardButtonStyle={step.props.forwardButtonStyle}
         onBack={() => this.handleBack()}
+        showCancel={step.props.showCancel}
+        cancelButtonText={step.props.cancelButtonText}
       />
     );
   }
@@ -153,10 +162,12 @@ class Wizard extends React.Component {
         header={this.props.headerText}
         fixedFooter
         actions={this.renderActions(child)}
-        trigger={<Button>TODO</Button>}
-        complete={() => this.handleComplete()}
+        trigger={<Button id={this.props.triggerId}>TODO</Button>}
         id={this.props.id}
         className="merlin"
+        modalOptions={{
+          complete: () => this.handleCancel()
+        }}
       >
         {child}
       </Modal>

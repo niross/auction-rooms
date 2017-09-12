@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 
 import Subheader from '../components/Subheader';
 import { InfoAlert, ErrorAlert } from '../../../libs';
+import { maxImageSize, maxImageSizeName } from '../../../Config';
 
 const propTypes = {
   formData: PropTypes.object.isRequired,
@@ -29,6 +30,14 @@ class BasicDetails extends React.Component {
 
   onDrop(files) {
     this.setState({ errors: {} });
+    if (files.find(f => f.size > maxImageSize)) {
+      this.setState({
+        errors: {
+          images: `Please ensure all images are less than ${maxImageSizeName} in size.`
+        }
+      });
+      return;
+    }
     files.forEach((file) => {
       const reader = new FileReader();
       const img = file;
@@ -72,7 +81,11 @@ class BasicDetails extends React.Component {
               accept="image/jpeg, image/png"
               onDrop={files => this.onDrop(files)}
             >
-              <p>Drag &amp; drop images here or click to upload</p>
+              <div style={{ width: '100%' }}>
+                <p><strong>Drag &amp; drop images here or click to upload.</strong></p>
+                <p>Maximum file size is <strong>7MB</strong>.</p>
+                <p>Use <strong>1920x1280</strong> resolution for best results.</p>
+              </div>
             </Dropzone>
           </Col>
         </Row>

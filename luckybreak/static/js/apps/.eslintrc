@@ -24,7 +24,9 @@
     "window": true,
     "gapi": true,
     "FB": true,
-    "FileReader": true
+    "FileReader": true,
+    "FormData": true,
+    "fetch": true
   },
   "rules": {
     "semi": 2,
