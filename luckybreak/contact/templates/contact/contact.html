@@ -43,7 +43,11 @@
 
           {% csrf_token %}
           <div class="row right-align">
-            <button class="btn btn-large waves-effect waves-light green" type="submit">
+            <button
+              id="contact-submit"
+              class="btn btn-large waves-effect waves-light green"
+              type="submit"
+            >
               <i class="material-icons left">check_circle</i>{% trans "Send Message" %}
             </button>
           </div>
