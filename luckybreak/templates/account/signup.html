@@ -1,5 +1,4 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
 {% load account socialaccount %}
 
@@ -57,7 +56,11 @@
         {% endif %}
         {% csrf_token %}
         <div class="row right-align">
-          <button class="btn btn-large waves-effect waves-light green" type="submit">
+          <button
+            id="signup-submit"
+            class="btn btn-large waves-effect waves-light green"
+            type="submit"
+          >
             <i class="material-icons left">check_circle</i>{% trans "Sign Up" %}
           </button>
         </div>

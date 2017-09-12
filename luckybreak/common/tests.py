@@ -1,5 +1,6 @@
 from unittest import skipIf
 
+from django.urls import reverse
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
@@ -17,25 +18,30 @@ if hasattr(settings, 'SKIP_FUNCTIONAL_TESTS'):
 SKIP_TEXT = 'Functional tests are disabled'
 
 
-class FunctionalTestCase(StaticLiveServerTestCase):
+class BaseFunctionalTestCase(StaticLiveServerTestCase):
     skip_tests = SKIP_TESTS
 
     @skipIf(SKIP_TESTS, SKIP_TEXT)
     def setUp(self):
+        super(BaseFunctionalTestCase, self).setUp()
+
         self.selenium = webdriver.Chrome()
         self.selenium.implicitly_wait(30)
-
         self.selenium.maximize_window()
-        super(FunctionalTestCase, self).setUp()
+
+        self.guest = GuestFactory(username='testguest')
+        self.guest.save()
+        self.provider = ProviderFactory(username='testprovider')
+        self.provider.save()
 
     def tearDown(self):
         # self.selenium.quit()
         pass
 
-    def _live_url(self, path):
+    def live_url(self, url_name):
         return '{}{}'.format(
             self.live_server_url,
-            path
+            reverse(url_name)
         )
 
 
