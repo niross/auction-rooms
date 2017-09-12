@@ -52,7 +52,9 @@ class ExperienceAPITestCase(BaseAPITestCase):
                 'images': [image1],
                 'inclusions': ['wifi', 'breakfast'],
                 'exclusions': ['parking'],
-                'banner_image': image2
+                'banner_image': image2,
+                'pax_adults': 10,
+                'pax_children': 0,
             }
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
