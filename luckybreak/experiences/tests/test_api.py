@@ -11,6 +11,8 @@ from luckybreak.experiences.models import Experience
 
 
 class ExperienceAPITestCase(BaseAPITestCase):
+    fixtures = ['currencies.json']
+
     def test_unauthed_create_experience(self):
         """
         Unauthenticated users cannot create experiences

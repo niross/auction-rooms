@@ -20,7 +20,9 @@ const propTypes = {
   cancelButtonText: PropTypes.string,
 
   onComplete: PropTypes.func,
-  completeButtonText: PropTypes.string
+  completeButtonText: PropTypes.string,
+
+  showCancel: PropTypes.bool
 };
 const defaultProps = {
   hasSuccessStep: true,
@@ -33,19 +35,23 @@ const defaultProps = {
   onCancel: null,
   cancelButtonText: 'Cancel',
   onComplete: null,
-  completeButtonText: 'I\'m Done'
+  completeButtonText: 'I\'m Done',
+
+  showCancel: false
 };
 
 const WizardControls = (props) => {
   const isFirstPage = props.currentStep === 0;
   const isLastPage = props.currentStep === props.totalSteps - 1;
+  const showBackButton = ((!isFirstPage && !isLastPage) || (isLastPage && !props.hasSuccessStep))
+    && !props.showCancel;
 
   return (
     <div>
       <Row>
         <Col s={6}>
           {/* Show the cancel button on the first page (if onCancel is provided) */}
-          {isFirstPage ?
+          {isFirstPage || props.showCancel ?
             <Button
               waves="light"
               onClick={() => {
@@ -54,7 +60,7 @@ const WizardControls = (props) => {
               disabled={props.loading}
               large
               modal="close"
-              className="grey lighten-1 grey-text text-darken-4"
+              className="grey lighten-1 grey-text text-darken-4 cancel-button"
             >
               {props.cancelButtonText}
               <Icon left>close</Icon>
@@ -62,13 +68,13 @@ const WizardControls = (props) => {
             : null}
 
           {/* If it's not the first page and not the last page show the back button */}
-          {(!isFirstPage && !isLastPage) || (isLastPage && !props.hasSuccessStep) ?
+          {showBackButton ?
             <Button
               waves="light"
               onClick={props.onBack}
               disabled={props.loading}
               large
-              className="grey lighten-1 grey-text text-darken-4"
+              className="grey lighten-1 grey-text text-darken-4 back-button"
             >
               <Icon left>arrow_back</Icon>
               Back
@@ -83,6 +89,7 @@ const WizardControls = (props) => {
               onClick={props.onComplete}
               disabled={props.loading}
               large
+              className="green lighten-1 grey-text text-darken-4 complete-button"
             >
               <Icon left>check</Icon>
               {props.completeButtonText}
@@ -96,7 +103,7 @@ const WizardControls = (props) => {
               onClick={props.onForward}
               disabled={props.loading}
               large
-              className={props.forwardButtonClass}
+              className={`${props.forwardButtonClass} next-button`}
             >
               {props.loading ?
                 <span><Preloader flashing size="small" />&nbsp;</span>

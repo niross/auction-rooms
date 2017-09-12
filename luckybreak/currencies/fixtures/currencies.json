@@ -1,0 +1,1 @@
+[{"model": "currencies.currency", "pk": 1, "fields": {"name": "Pound Sterling", "code": "GBP", "symbol": "\u00a3", "html_code": "&#xa3;"}}, {"model": "currencies.currency", "pk": 2, "fields": {"name": "Euro", "code": "EUR", "symbol": "\u20ac", "html_code": "&#x80;"}}]

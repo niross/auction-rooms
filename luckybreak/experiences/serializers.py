@@ -57,7 +57,7 @@ class ExperienceReadSerializer(serializers.ModelSerializer):
         fields = (
             'title', 'description', 'location', 'latitude', 'longitude',
             'terms', 'pax_adults', 'pax_children', 'images', 'inclusions',
-            'exclusions',
+            'exclusions', 'banner_image',
         )
 
     @staticmethod

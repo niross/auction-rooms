@@ -25,11 +25,7 @@ const defaultProps = {
   onComplete: () => {},
   onError: () => {},
   formData: {},
-  showLoader: false,
-  forwardButtonText: 'Next',
-  forwardButtonIcon: 'arrow_forward',
-  forwardButtonIconPlacement: 'right',
-  forwardButtonClass: 'green'
+  showLoader: false
 };
 
 class WizardStep extends React.Component {
