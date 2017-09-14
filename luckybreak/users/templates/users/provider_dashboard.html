@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static compile_static %}
-{% load render_bundle from webpack_loader %}
 {% block title %}{% trans "Your Dashboard" %}{% endblock %}
 {% block description %}{% endblock description %}
 {% block body_class %}provider-dashboard{% endblock body_class %} 
@@ -9,29 +8,103 @@
   <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 
-{% block extra_js %}
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_KEY }}&libraries=places"></script>
-  {% render_bundle 'add-experience' 'js' %}
-{% endblock extra_js %}
-
 {% block content %}
 
-  <div class="container">
-    <nav class="crumbs">
-      <div class="nav-wrapper">
-        <div class="col s12">
-          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
-          <a href="{% url 'users:dashboard' %}" class="breadcrumb">Your Dashboard</a>
+  <div class="main">
+
+    <div class="container">
+      <nav class="crumbs">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
 
-    <!-- add experience modal testing -->
-    <div class="add-experience-app"></div>
-    <!-- add experience modal testing -->
+    <div class="container">
+      {% include 'users/inc/provider_side_nav.html' %}
 
-    <div class="row">
-      <div class="col s12 m6 offset-m3">
+      <div class="row">
+
+        <!-- Profile -->
+        <div class="col l4 m6 s12">
+          <div class="card profile-card">
+            <div class="card-image">
+              <img src="{% static 'images/user-bg.jpg' %}">
+              <span class="card-title valign-wrapper">
+                <i class="material-icons left">face</i> {{ user.get_full_name }}
+              </span>
+              <a
+                href="{% url 'users:settings' %}"
+                class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                data-position="top"
+                data-delay="50"
+                data-tooltip="Edit your settings"
+              >
+                <i class="material-icons">edit</i>
+              </a>
+            </div>
+            <div class="card-content">
+              <p class="valign-wrapper"><i class="material-icons left">mail</i> {{ user.email }}</p>
+              <br/>
+              <p class="valign-wrapper"><i class="material-icons left">phone</i> {{ user.phone }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experiences -->
+        <div class="col l4 m6 s12">
+          <div class="card experiences-card">
+            <div class="card-image">
+              <img src="{% static 'images/experiences-bg.png' %}">
+              <span class="card-title valign-wrapper">
+                <i class="material-icons left">business_center</i> Experiences
+              </span>
+              <a
+                href="{% url 'experiences:experiences' %}"
+                class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                data-position="top"
+                data-delay="50"
+                data-tooltip="Manage your experiences"
+              >
+                <i class="material-icons">edit</i>
+              </a>
+            </div>
+            <div class="card-content">
+              <p class="valign-wrapper">&nbsp;</p>
+              <br/>
+              <p class="valign-wrapper">&nbsp;</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auctions -->
+        <div class="col l4 m6 s12">
+          <div class="card auctions-card">
+            <div class="card-image">
+              <img src="{% static 'images/auctions-bg.png' %}">
+              <span class="card-title valign-wrapper">
+                <i class="material-icons left">shopping_cart</i> Auctions
+              </span>
+              <a
+                href="#"
+                class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                data-position="top"
+                data-delay="50"
+                data-tooltip="Manage your auctions"
+              >
+                <i class="material-icons">edit</i>
+              </a>
+            </div>
+            <div class="card-content">
+              <p class="valign-wrapper">&nbsp;</p>
+              <br/>
+              <p class="valign-wrapper">&nbsp;</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

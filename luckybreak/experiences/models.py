@@ -20,6 +20,9 @@ class Experience(DeletableTimeStampedModel):
     currency = models.ForeignKey(Currency, default=settings.DEFAULT_CURRENCY_ID)
     banner_image = models.ImageField(upload_to='experiences/')
 
+    class Meta:
+        ordering = ('-created',)
+
     def __unicode__(self):
         return self.title
 

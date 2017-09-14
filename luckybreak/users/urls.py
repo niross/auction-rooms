@@ -10,6 +10,11 @@ urlpatterns = [
         name='dashboard'
     ),
     url(
+        regex=r'^dashboard/settings/$',
+        view=views.SettingsView.as_view(),
+        name='settings'
+    ),
+    url(
         regex=r'^accounts/signup/guest/$',
         view=views.GuestSignupView.as_view(),
         name='guest-signup'
