@@ -15,6 +15,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'', include('luckybreak.browse.urls', namespace='browse')),
     url(r'^contact/', include('luckybreak.contact.urls', namespace='contact')),
+    url(r'^experiences/', include('luckybreak.experiences.urls', namespace='experiences')),
 
     # API
     url(r'^api/', include('luckybreak.experiences.api_urls', namespace='experience-api')),

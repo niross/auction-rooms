@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n static compile_static %}
+{% load render_bundle from webpack_loader %}
+{% block title %}{% trans "Your Settings" %}{% endblock %}
+{% block description %}{% endblock description %}
+{% block body_class %}user-settings{% endblock body_class %}
+{% block extra_css %}
+  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+{% block content %}
+  <div class="main">
+    <div class="container">
+      <nav class="crumbs">
+        <div class="nav-wrapper"> 
+          <div class="col s12">
+            <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
+            <a href="{% url 'users:settings' %}" class="breadcrumb">Settings</a> 
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      {% if user.is_provider %}
+        {% include 'users/inc/provider_side_nav.html' %}
+      {% endif %}
+
+      <div class="row">
+        <div class="col s12 m6 offset-m3">
+          <h4>{% trans "Edit Your Account" %}</h4>
+          <p>
+            Visit the <a href="{% url 'account_change_password' %}">password reset page</a>
+            to change your password.
+          </p>
+          <br />
+
+          <form method="post">
+            <div class="row">
+              {% include 'common/inc/form_field.html' with required=True placeholder="Phileas" field=form.first_name sm=12 md=12 lg=6 %}
+              {% include 'common/inc/form_field.html' with required=True placeholder="Fogg" field=form.last_name sm=12 md=12 lg=6 %}
+              {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co.uk" field=form.email label="Email Address" sm=12 md=12 lg=6 %}
+              {% include 'common/inc/form_field.html' with placeholder="0118 999 881 999 119 7253" field=form.phone label="Contact Number" sm=12 md=12 lg=6 %}
+            </div>
+            {% csrf_token %}
+            <div class="row right-align">
+              <button
+                id="settings-submit"
+                class="btn btn-large waves-effect waves-light green"
+                type="submit"
+              >
+                <i class="material-icons left">check_circle</i>{% trans "Save Changes" %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

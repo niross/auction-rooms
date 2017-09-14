@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Button, Preloader, Icon } from 'react-materialize';
 
 const propTypes = {

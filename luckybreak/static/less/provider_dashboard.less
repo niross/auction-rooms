@@ -1,0 +1,38 @@
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 85%;
+  }
+  .side-nav {
+    z-index: 1;
+    top: 65px;
+  } 
+}
+
+.main, footer {
+  padding-left: 300px;
+}
+@media only screen and (max-width: 992px) {
+  .main, footer {
+    padding-left: 0;
+  }
+  .side-nav {
+    z-index: 999;
+    top: 0;
+  }
+}
+
+.profile-card, .experiences-card, .auctions-card {
+  .card-image {
+    img {
+      height: 150px;
+    }
+    .card-title {
+      padding: 15px 0 10px 15px;
+    }
+  }
+}
+
+.add-experience-app {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

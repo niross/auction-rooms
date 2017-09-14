@@ -1,0 +1,32 @@
+{% load common_tags %}
+<ul id="slide-out" class="side-nav fixed">
+  <li class="{% navactive request 'users:dashboard' %}">
+    <a href="{% url 'users:dashboard' %}">
+      <i class="material-icons">dashboard</i> Dashboard
+    </a>
+  </li>
+  <li class="{% navactive request 'experiences:experiences' %}">
+    <a href="{% url 'experiences:experiences' %}">
+      <i class="material-icons">business_center</i> Experiences
+    </a>
+  </li>
+  <li class="">
+    <a href="#!">
+      <i class="material-icons">shopping_cart</i> Auctions
+    </a>
+  </li>
+  <li class="{% navactive request 'users:settings' %}">
+    <a href="{% url 'users:settings' %}">
+      <i class="material-icons">settings</i> Settings
+    </a>
+  </li>
+</ul>
+<div class="fixed-action-btn hide-on-med-and-up">
+  <a
+    href="#"
+    data-activates="slide-out"
+    class="btn-floating btn-large waves-effect waves-light red button-collapse"
+  >
+    <i class="material-icons">menu</i>
+  </a>
+</div>
