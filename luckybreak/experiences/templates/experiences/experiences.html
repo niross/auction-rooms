@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static compile_static %}
+{% load render_bundle from webpack_loader %}
+{% block title %}{% trans "Your Experiences" %}{% endblock %}
+{% block description %}{% endblock description %}
+{% block body_class %}provider-experience{% endblock body_class %} 
+{% block extra_css %}
+  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+  {% render_bundle 'add-experience' 'js' %}
+{% endblock extra_js %}
+
+{% block content %}
+
+  <div class="main">
+
+    <div class="container">
+      <nav class="crumbs">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
+            <a href="{% url 'experiences:experiences' %}" class="breadcrumb">Experiences</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      {% include 'users/inc/provider_side_nav.html' %}
+      <div class="row">
+        <div class="s12">
+          <h4>Your Experiences</h4>
+          <p class="valign-wrapper">
+            <i class="material-icons left ">info</i>
+            Experiences are the items you sell via auction. Create them once and
+            they can be turned into auctions in two clicks.
+          </p>
+        </div>
+        <div class="s12">
+          <div class="add-experience-app"></div>
+        </div>
+
+        <div class="s12">
+          <table class="responsive-table striped bordered">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Total Sold</th>
+                <th>Live Auctions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for experience in object_list %}
+                <tr>
+                  <td>{{ experience.title }}</td>
+                  <td>{{ experience.location }}</td>
+                  <td>TODO</td>
+                  <td>TODO</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+

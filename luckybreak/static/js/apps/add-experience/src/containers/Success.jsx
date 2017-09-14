@@ -1,12 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';                                                                              
+import PropTypes from 'prop-types';
 import { Row, Col } from 'react-materialize';
 
 import { SuccessCheck } from '../../../libs';
 
 const propTypes = {
-  formData: PropTypes.object.isRequired
+  formData: PropTypes.object
 };
-const defaultProps = {};
+const defaultProps = {
+  formData: {}
+};
 
 class Success extends React.Component {
   constructor(props) {

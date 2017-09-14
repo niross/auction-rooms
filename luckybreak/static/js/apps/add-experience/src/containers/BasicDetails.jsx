@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Input } from 'react-materialize';
-import { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete'
+import { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
 import Subheader from '../components/Subheader';
 import { LocationAutocomplete, HelpText } from '../../../libs';
@@ -91,7 +92,7 @@ class BasicDetails extends React.Component {
               s={12}
               className="with-help"
               label="Number of Adults"
-              value={this.props.formData.pax_adults}
+              value={this.props.formData.pax_adults.toString()}
               onChange={e => this.props.onFieldChange('pax_adults', parseInt(e.target.value, 10))}
               labelClassName="active"
               error={this.state.errors.pax_adults}
@@ -106,7 +107,7 @@ class BasicDetails extends React.Component {
               s={12}
               className="with-help"
               label="Number of Children"
-              value={this.props.formData.pax_children}
+              value={this.props.formData.pax_children.toString()}
               onChange={e => this.props.onFieldChange('pax_children', parseInt(e.target.value, 10))}
               labelClassName="active"
               error={this.state.errors.pax_children}

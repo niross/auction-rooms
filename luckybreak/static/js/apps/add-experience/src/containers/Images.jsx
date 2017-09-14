@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col, Card, Input, Icon } from 'react-materialize';
 import Dropzone from 'react-dropzone';
 
@@ -7,10 +8,13 @@ import { InfoAlert, ErrorAlert } from '../../../libs';
 import { maxImageSize, maxImageSizeName } from '../../../Config';
 
 const propTypes = {
-  formData: PropTypes.object.isRequired,
-  onFieldChange: PropTypes.func.isRequired
+  formData: PropTypes.object,
+  onFieldChange: PropTypes.func
 };
-const defaultProps = {};
+const defaultProps = {
+  formData: {},
+  onFieldChange: () => {}
+};
 
 class BasicDetails extends React.Component {
   constructor(props) {
