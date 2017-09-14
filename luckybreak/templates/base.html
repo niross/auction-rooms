@@ -28,26 +28,28 @@
   </head>
 
   <body class="{% block body_class %}{% endblock body_class %}">
-    <nav class="grey darken-3 top">
-      <div class="nav-wrapper">
-        <div class="container">
-          <a href="/" class="brand-logo">{{ site.name }}</a>
-          <a href="#" data-activates="mobile-side-nav" class="button-collapse">
-            <i class="material-icons">menu</i>
-          </a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {% block nav %}
-              {% include 'inc/nav.html' with screen="desktop" %}
-            {% endblock nav %}
-          </ul>
-          <ul id="mobile-side-nav" class="side-nav">
-            {% block side_nav %}
-              {% include 'inc/nav.html' with screen="mobile" %}
-            {% endblock side_nav %}
-          </ul>
+    <div class="header-wrap">
+      <nav class="grey darken-3 top">
+        <div class="nav-wrapper">
+          <div class="container">
+            <a href="/" class="brand-logo">{{ site.name }}</a>
+            <a href="#" data-activates="mobile-side-nav" class="button-collapse">
+              <i class="material-icons">menu</i>
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              {% block nav %}
+                {% include 'inc/nav.html' with screen="desktop" %}
+              {% endblock nav %}
+            </ul>
+            <ul id="mobile-side-nav" class="side-nav">
+              {% block side_nav %}
+                {% include 'inc/nav.html' with screen="mobile" %}
+              {% endblock side_nav %}
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
 
     {% block content %}{% endblock content %}
     {% block modal %}{% endblock modal %}
