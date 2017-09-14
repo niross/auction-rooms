@@ -59,12 +59,55 @@
               {% for experience in object_list %}
                 <tr>
                   <td>{{ experience.title }}</td>
-                  <td>{{ experience.location }}</td>
+                  <td class="truncate" style="max-width:250px">
+                    <span
+                      class="tooltipped"
+                      data-tooltip="{{ experience.location }}"
+                      data-position="top"
+                    >
+                      {{ experience.location }}
+                    </span>
+                  </td>
                   <td>TODO</td>
                   <td>TODO</td>
                 </tr>
+              {% empty %}
+                <tr>
+                  <td class="center-align" colspan="4">
+                    You don't have any experiences set up yet...
+                  </td>
+                </tr>
               {% endfor %}
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <div class="row valign-wrapper">
+                    <div class="col m4 s6">
+                      <a
+                        class="waves-effect waves-light btn grey lighten-2 grey-text text-darken-3{% if not page_obj.has_previous %} disabled{% endif %}"
+                        href="{% url 'experiences:experiences' %}?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}"
+                      >
+                        <i class="material-icons left">arrow_back</i>Last Page
+                      </a>
+                    </div>
+                    <div class="col m4 s6 center-align hide-on-small-only">
+                      <span>
+                      Page X of X
+                      </span>
+                    </div>
+                    <div class="col m4 s6 right-align">
+                      <a
+                        class="waves-effect waves-light btn grey lighten-2 grey-text text-darken-3{% if not page_obj.has_next %} disabled{% endif %}"
+                        href="{% url 'experiences:experiences' %}?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}"
+                      >
+                        <i class="material-icons right">arrow_forward</i>Next Page
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
 

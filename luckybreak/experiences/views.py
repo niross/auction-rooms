@@ -7,6 +7,7 @@ from . import models
 class ExperiencesView(UserIsProviderMixin, ListView):
     model = models.Experience
     template_name = 'experiences/experiences.html'
+    paginate_by = 10
 
     def get_queryset(self):
         qs = super(ExperiencesView, self).get_queryset()

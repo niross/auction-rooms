@@ -61,7 +61,7 @@ const WizardControls = (props) => {
               disabled={props.loading}
               large
               modal="close"
-              className="grey lighten-1 grey-text text-darken-4 cancel-button"
+              className="grey lighten-2 grey-text text-darken-3 cancel-button"
             >
               {props.cancelButtonText}
               <Icon left>close</Icon>
@@ -75,7 +75,7 @@ const WizardControls = (props) => {
               onClick={props.onBack}
               disabled={props.loading}
               large
-              className="grey lighten-1 grey-text text-darken-4 back-button"
+              className="grey lighten-2 grey-text text-darken-3 back-button"
             >
               <Icon left>arrow_back</Icon>
               Back
