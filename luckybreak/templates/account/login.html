@@ -7,77 +7,79 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block inner %}
-  <nav class="crumbs">
-    <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
-        <a href="{% url 'account_login' %}" class="breadcrumb">Sign In</a>
-      </div>
-    </div>
-  </nav>
-
-  {% if form.non_field_errors %}
-    {% include 'common/inc/alerts/warning.html' with message=form.non_field_errors.0 grid="s6 offset-s3" %}
-  {% endif %}
-
-  <div class="row">
-    <div class="col s12 m6 offset-m3">
-      <h2>{% trans "Sign In" %}</h2>
-      <p>
-        {% blocktrans %}If you have not created an account yet, please
-        either sign up as a
-        {% endblocktrans %}
-        <a href="{% url 'users:provider-signup' %}">{% trans 'Provider' %}</a>
-        {% trans 'or a' %}
-        <a href="{% url 'users:guest-signup' %}">{% trans 'Guest' %}</a>
-        {% blocktrans %}first.{% endblocktrans %}
-      </p>
-      <br />
-
-      <form class="login" method="POST" action="{% url 'account_login' %}">
-        <div class="row">
-          {% include 'common/inc/form_field.html' with required=True placeholder="Enter your email address" field=form.login label="Email" %}
-          {% include 'common/inc/form_field.html' with required=True placeholder="Enter your password" field=form.password label="Password" %}
-
-          <div class="col s6">
-            {% include 'common/inc/checkbox.html' with field=form.remember %}
-          </div>
-          <div class="col s6 right-align">
-            <a href="{% url 'account_reset_password' %}" id="forgot-link">
-              {% trans "Forgot Password?" %}
-            </a>
-          </div>
-        </div>
-        <div class="row right-align">
-          <button
-            id="signin-submit"
-            class="btn btn-large waves-effect waves-light green"
-            type="submit"
-          >
-            <i class="material-icons left">check_circle</i>{% trans "Sign In" %}
-          </button>
-        </div>
-        {% csrf_token %}
-        {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-      </div>
-    </form>
-    {% get_providers as socialaccount_providers %}
-    {% if socialaccount_providers %}
-      <div class="row">
-        <div class="col s12 m6 offset-m3">
-          <p class="divider"></p>
-          <br />
-          <div>
-            {% include "socialaccount/snippets/provider_list.html" with process="login" action="Sign In" %}
-          </div>
-
-          {% include "socialaccount/snippets/login_extra.html" %}
+  <div class="container">
+    <nav class="crumbs">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'account_login' %}" class="breadcrumb">Sign In</a>
         </div>
       </div>
+    </nav>
+
+    {% if form.non_field_errors %}
+      {% include 'common/inc/alerts/warning.html' with message=form.non_field_errors.0 grid="s6 offset-s3" %}
     {% endif %}
 
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <h2>{% trans "Sign In" %}</h2>
+        <p>
+          {% blocktrans %}If you have not created an account yet, please
+          either sign up as a
+          {% endblocktrans %}
+          <a href="{% url 'users:provider-signup' %}">{% trans 'Provider' %}</a>
+          {% trans 'or a' %}
+          <a href="{% url 'users:guest-signup' %}">{% trans 'Guest' %}</a>
+          {% blocktrans %}first.{% endblocktrans %}
+        </p>
+        <br />
+
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+          <div class="row">
+            {% include 'common/inc/form_field.html' with required=True placeholder="Enter your email address" field=form.login label="Email" %}
+            {% include 'common/inc/form_field.html' with required=True placeholder="Enter your password" field=form.password label="Password" %}
+
+            <div class="col s6">
+              {% include 'common/inc/checkbox.html' with field=form.remember %}
+            </div>
+            <div class="col s6 right-align">
+              <a href="{% url 'account_reset_password' %}" id="forgot-link">
+                {% trans "Forgot Password?" %}
+              </a>
+            </div>
+          </div>
+          <div class="row right-align">
+            <button
+              id="signin-submit"
+              class="btn btn-large waves-effect waves-light green"
+              type="submit"
+            >
+              <i class="material-icons left">check_circle</i>{% trans "Sign In" %}
+            </button>
+          </div>
+          {% csrf_token %}
+          {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+        </div>
+      </form>
+      {% get_providers as socialaccount_providers %}
+      {% if socialaccount_providers %}
+        <div class="row">
+          <div class="col s12 m6 offset-m3">
+            <p class="divider"></p>
+            <br />
+            <div>
+              {% include "socialaccount/snippets/provider_list.html" with process="login" action="Sign In" %}
+            </div>
+
+            {% include "socialaccount/snippets/login_extra.html" %}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
   </div>
 
 {% endblock %}

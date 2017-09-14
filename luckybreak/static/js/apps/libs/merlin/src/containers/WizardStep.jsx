@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import WizardLoading from '../components/WizardLoading';
 
@@ -7,22 +8,18 @@ const propTypes = {
   onFieldChange: PropTypes.func,
   onSuccess: PropTypes.func,
   onComplete: PropTypes.func,
+  onCancel: PropTypes.func,
   onError: PropTypes.func,
   formData: PropTypes.object,
   showLoader: PropTypes.bool,
-  children: (props) => {
-    const prop = props.children;
-    if (!prop || props.length !== 1) {
-      return new Error('`WizardStep` component requires a single child');
-    }
-    return null;
-  }
+  children: PropTypes.element.isRequired
 };
 const defaultProps = {
   loading: false,
   onFieldChange: () => {},
   onSuccess: () => {},
   onComplete: () => {},
+  onCancel: () => {},
   onError: () => {},
   formData: {},
   showLoader: false
@@ -39,11 +36,11 @@ class WizardStep extends React.Component {
         loading: this.props.loading,
         onFieldChange: (name, value) => this.props.onFieldChange(name, value),
         onComplete: () => this.props.onComplete(),
+        onCancel: () => this.props.onCancel(),
         formData: this.props.formData,
         onError: () => this.props.onError(),
         onSkip: () => this.props.onSuccess(),
-        onSubmit: () => this.handleSubmit(),
-        siteConfig: this.props.siteConfig
+        onSubmit: () => this.handleSubmit()
       }
     );
     return form;
@@ -106,7 +103,7 @@ class WizardStep extends React.Component {
       <div className="wizard-step">
         {this.props.showLoader ?
           <WizardLoading />
-        : this.getChildForm()}
+          : this.getChildForm()}
       </div>
     );
   }

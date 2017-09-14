@@ -1,5 +1,7 @@
+from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
+from django.contrib import messages
 
 from allauth.account.views import SignupView
 
@@ -17,6 +19,22 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         if self.request.user.is_provider():
             return [self.provider_template_name]
         return [self.guest_template_name]
+
+
+class SettingsView(LoginRequiredMixin, UpdateView):
+    model = models.User
+    template_name = 'users/settings.html'
+    fields = ['first_name', 'last_name', 'email', 'phone']
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Your settings were updated successfully')
+        return super(SettingsView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('users:settings')
 
 
 class GuestSignupView(SignupView):

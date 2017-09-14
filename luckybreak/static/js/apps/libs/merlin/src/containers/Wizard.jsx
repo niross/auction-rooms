@@ -1,8 +1,5 @@
-/**
- * The OffPeaks wizard component
- */
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-materialize';
 
 import WizardStep from './WizardStep';
@@ -14,10 +11,10 @@ const propTypes = {
   initialData: PropTypes.object,
   id: PropTypes.string,
   onComplete: PropTypes.func,
-  onCancel: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
   hasSuccessStep: PropTypes.bool,
   headerText: PropTypes.string.isRequired,
-  triggerId: PropTypes.string,
+  trigger: PropTypes.node.isRequired,
   children: (props, propName) => {
     const prop = props[propName];
     if (!prop || prop.length < 2) {
@@ -40,7 +37,7 @@ const defaultProps = {
   hasSuccessStep: true,
   children: null,
   onComplete: null,
-  triggerId: null
+  onCancel: null,
 };
 
 class Wizard extends React.Component {
@@ -99,6 +96,7 @@ class Wizard extends React.Component {
       step: this.props.initialStep,
       formData: Object.assign({}, this.props.initialData)
     });
+    if (this.visibleNode.props.onCancel) this.visibleNode.props.onCancel();
     if (this.props.onCancel) this.props.onCancel();
   }
 
@@ -140,7 +138,7 @@ class Wizard extends React.Component {
         hasSuccessStep={this.props.hasSuccessStep}
         currentStep={this.state.step}
         totalSteps={this.getChildren().length}
-        onCancel={this.props.onCancel}
+        onCancel={() => this.handleCancel()}
         onForward={() => this.handleSubmit()}
         forwardButtonText={step.props.forwardButtonText}
         forwardButtonIcon={step.props.forwardButtonIcon}
@@ -162,7 +160,7 @@ class Wizard extends React.Component {
         header={this.props.headerText}
         fixedFooter
         actions={this.renderActions(child)}
-        trigger={<Button id={this.props.triggerId}>TODO</Button>}
+        trigger={this.props.trigger}
         id={this.props.id}
         className="merlin"
         modalOptions={{

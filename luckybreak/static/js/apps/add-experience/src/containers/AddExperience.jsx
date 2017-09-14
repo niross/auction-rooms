@@ -1,6 +1,8 @@
-import React, { PropTypes } from 'react';
-import { Wizard, WizardStep } from '../../../libs/merlin';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Icon } from 'react-materialize';
 
+import { Wizard, WizardStep } from '../../../libs/merlin';
 import BasicDetails from './BasicDetails';
 import Images from './Images';
 import ExtraDetails from './ExtraDetails';
@@ -34,6 +36,14 @@ class AddExperience extends React.Component {
         headerText="Add an Experience"
         initialData={initialData}
         triggerId="add-experience-button"
+        trigger={
+          <Button
+            id="add-experience-button"
+            className="waves-effect waves-light btn green"
+          >
+            <Icon left>add</Icon>Add Experience
+          </Button>
+        }
       >
         <WizardStep>
           <BasicDetails />
@@ -50,6 +60,7 @@ class AddExperience extends React.Component {
           forwardButtonIconPlacement="left"
           showCancel
           cancelButtonText="Close"
+          onCancel={() => window.location.reload()}
         >
           <Success />
         </WizardStep>

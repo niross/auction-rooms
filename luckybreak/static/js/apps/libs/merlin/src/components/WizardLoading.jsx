@@ -1,22 +1,24 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Preloader } from 'react-materialize';
 
 const propTypes = {
   minHeight: PropTypes.number,
-  loadingMesage: PropTypes.string
+  loadingMessage: PropTypes.string
 };
 const defaultProps = {
   minHeight: 100,
   loadingMessage: 'Loading...'
 };
 
-const WizardLoading = ({ minHeight, loadingMessage }) =>
+const WizardLoading = ({ minHeight, loadingMessage }) => (
   <div className="wizard-loading" style={{ minHeight: `${minHeight}px` }}>
     <div>
       <Preloader flashing /> {loadingMessage}
     </div>
-  </div>;
+  </div>
+);
 
 WizardLoading.propTypes = propTypes;
 WizardLoading.defaultProps = defaultProps;

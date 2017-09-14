@@ -38,7 +38,7 @@ class AddExperienceTestCase(BaseFunctionalTestCase):
     @override_settings(DEBUG=True)
     def test_add_experience(self):
         self.client.force_login(self.provider)
-        self.selenium.get(self.live_url('users:dashboard'))
+        self.selenium.get(self.live_url('experiences:experiences'))
         self.selenium.find_element_by_id('add-experience-button').click()
 
         # Basic
