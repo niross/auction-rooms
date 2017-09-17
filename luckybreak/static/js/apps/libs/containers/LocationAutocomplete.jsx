@@ -10,6 +10,7 @@ const propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   helpText: PropTypes.string.isRequired,
@@ -47,6 +48,7 @@ class LocationAutocomplete extends React.Component {
               },
               placeholder: this.props.placeholder,
               id: this.props.id,
+              name: this.props.name,
               value: this.props.value,
               onBlur: () => {
                 if (!this.state.valid) {

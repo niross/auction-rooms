@@ -5,10 +5,12 @@ import { Row, Col } from 'react-materialize';
 import { SuccessCheck } from '../../../libs';
 
 const propTypes = {
-  formData: PropTypes.object
+  formData: PropTypes.object,
+  savedExperience: PropTypes.object
 };
 const defaultProps = {
-  formData: {}
+  formData: {},
+  savedExperience: null
 };
 
 class Success extends React.Component {
@@ -20,12 +22,22 @@ class Success extends React.Component {
   render() {
     return (
       <span className="experience-success">
-        <SuccessCheck message="Experience Added!" />
+        <SuccessCheck
+          message={this.props.savedExperience ? 'Experience Added!' : 'Experience Updated'}
+        />
         <Row>
           <Col s={12} className="center-align">
             <p>
-              Your experience <strong>{this.props.formData.savedExperience.title}</strong> was
-              created successfully.
+              Your experience&nbsp;
+              <strong>
+                {
+                  this.props.formData.savedExperience ?
+                    this.props.formData.savedExperience.title
+                    :
+                    this.props.formData.updatedExperience.title
+                }
+              </strong> was&nbsp;
+              {this.props.savedExperience ? 'created' : 'updated'} successfully.
             </p>
             <p>
               To create an auction for this experience click the

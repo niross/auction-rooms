@@ -18,7 +18,6 @@ class Experience(DeletableTimeStampedModel):
     pax_adults = models.PositiveSmallIntegerField(default=2)
     pax_children = models.PositiveSmallIntegerField(default=0)
     currency = models.ForeignKey(Currency, default=settings.DEFAULT_CURRENCY_ID)
-    banner_image = models.ImageField(upload_to='experiences/')
 
     class Meta:
         ordering = ('-created',)

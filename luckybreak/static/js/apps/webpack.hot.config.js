@@ -8,12 +8,17 @@ module.exports = {
   cache: true,
   context: __dirname,
   entry: {
-    'add-experience': [
+    'experience': [
       `webpack-dev-server/client?${PUBLIC_PATH}`,
       'webpack/hot/only-dev-server',
-      './add-experience/src/index.jsx'
+      './experience/src/index.jsx',
     ],
-    vendors: ['react']
+    'add-auction': [
+      `webpack-dev-server/client?${PUBLIC_PATH}`,
+      'webpack/hot/only-dev-server',
+      './add-auction/src/index.jsx'
+    ],
+    vendors: ['react', 'react-materialize']
   },
   output: {
     path: path.join(__dirname, '/dist/js'),

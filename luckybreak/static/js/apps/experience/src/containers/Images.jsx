@@ -98,14 +98,14 @@ class BasicDetails extends React.Component {
             {this.props.formData.images.map(img => (
               <Col
                 s={3}
-                key={`img-${img.index}`}
+                key={`img-${img.id ? img.id : img.index}`}
               >
                 <Card
                   className="image-card"
                   header={
                     <div
                       className="image-preview card-image"
-                      style={{ backgroundImage: `url(${img.result})` }}
+                      style={{ backgroundImage: `url(${img.id ? img.image : img.result})` }}
                     />
                   }
                 >
@@ -115,9 +115,18 @@ class BasicDetails extends React.Component {
                     title="Remove this image"
                     onClick={(e) => {
                       e.preventDefault();
-                      this.props.onFieldChange('images', this.props.formData.images.filter(
-                        i => i !== img
-                      ));
+                      const formData = this.props.formData;
+
+                      // Add to the deleted images array
+                      const deleted = formData.deleted_images;
+                      deleted.push(formData.images.find(i => i.id === img.id));
+                      this.props.onFieldChange('deleted_images', deleted);
+
+                      // Remove from the images array
+                      this.props.onFieldChange('images', formData.images.filter((i) => {
+                        if (i.id) return i.id !== img.id;
+                        return i !== img;
+                      }));
                     }}
                   >
                     <Icon tiny>cancel</Icon>

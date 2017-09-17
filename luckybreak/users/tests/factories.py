@@ -4,6 +4,7 @@ from luckybreak.users.models import User
 
 
 class UserFactory(factory.django.DjangoModelFactory):
+    id = factory.Sequence(lambda n: n + 1)
     username = factory.Sequence(lambda n: 'user-{0}'.format(n))
     email = factory.Sequence(lambda n: 'user-{0}@example.com'.format(n))
     password = factory.PostGenerationMethodCall('set_password', 'password')
