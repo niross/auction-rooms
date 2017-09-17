@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'react-materialize';
+import { Modal } from 'react-materialize';
 
 import WizardStep from './WizardStep';
 import WizardControls from '../components/WizardControls';
@@ -15,6 +15,8 @@ const propTypes = {
   hasSuccessStep: PropTypes.bool,
   headerText: PropTypes.string.isRequired,
   trigger: PropTypes.node.isRequired,
+  onOpen: PropTypes.func,
+  className: PropTypes.string,
   children: (props, propName) => {
     const prop = props[propName];
     if (!prop || prop.length < 2) {
@@ -38,6 +40,7 @@ const defaultProps = {
   children: null,
   onComplete: null,
   onCancel: null,
+  onOpen: null
 };
 
 class Wizard extends React.Component {
@@ -134,7 +137,6 @@ class Wizard extends React.Component {
   renderActions(step) {
     return (
       <WizardControls
-        loading={this.state.loading}
         hasSuccessStep={this.props.hasSuccessStep}
         currentStep={this.state.step}
         totalSteps={this.getChildren().length}
@@ -147,6 +149,7 @@ class Wizard extends React.Component {
         onBack={() => this.handleBack()}
         showCancel={step.props.showCancel}
         cancelButtonText={step.props.cancelButtonText}
+        disabled={this.getVisibleChild(this.state.step).props.showLoader}
       />
     );
   }
@@ -164,10 +167,15 @@ class Wizard extends React.Component {
         id={this.props.id}
         className="merlin"
         modalOptions={{
-          complete: () => this.handleCancel()
+          complete: () => this.handleCancel(),
+          ready: () => {
+            if (this.props.onOpen) this.props.onOpen();
+          }
         }}
       >
-        {child}
+        <span className={this.props.className}>
+          {child}
+        </span>
       </Modal>
     );
   }

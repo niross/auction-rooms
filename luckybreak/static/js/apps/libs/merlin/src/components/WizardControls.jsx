@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Button, Preloader, Icon } from 'react-materialize';
 
 const propTypes = {
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
 
   hasSuccessStep: PropTypes.bool,
   currentStep: PropTypes.number.isRequired,
@@ -23,9 +23,11 @@ const propTypes = {
   onComplete: PropTypes.func,
   completeButtonText: PropTypes.string,
 
-  showCancel: PropTypes.bool
+  showCancel: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 const defaultProps = {
+  loading: false,
   hasSuccessStep: true,
 
   forwardButtonText: 'Next',
@@ -38,7 +40,8 @@ const defaultProps = {
   onComplete: null,
   completeButtonText: 'I\'m Done',
 
-  showCancel: false
+  showCancel: false,
+  disabled: false
 };
 
 const WizardControls = (props) => {
@@ -58,7 +61,7 @@ const WizardControls = (props) => {
               onClick={() => {
                 if (props.onCancel) props.onCancel();
               }}
-              disabled={props.loading}
+              disabled={props.loading || props.disabled}
               large
               modal="close"
               className="grey lighten-2 grey-text text-darken-3 cancel-button"
@@ -73,7 +76,7 @@ const WizardControls = (props) => {
             <Button
               waves="light"
               onClick={props.onBack}
-              disabled={props.loading}
+              disabled={props.loading || props.disabled}
               large
               className="grey lighten-2 grey-text text-darken-3 back-button"
             >
@@ -88,7 +91,7 @@ const WizardControls = (props) => {
             <Button
               waves="light"
               onClick={props.onComplete}
-              disabled={props.loading}
+              disabled={props.loading || props.disabled}
               large
               className="green lighten-1 grey-text text-darken-4 complete-button"
             >
@@ -102,7 +105,7 @@ const WizardControls = (props) => {
             <Button
               waves="light"
               onClick={props.onForward}
-              disabled={props.loading}
+              disabled={props.loading || props.disabled}
               large
               className={`${props.forwardButtonClass} next-button`}
             >
