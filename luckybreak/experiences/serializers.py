@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
+import os
 
 from django.contrib.gis.geos import Point
 
@@ -55,9 +56,9 @@ class ExperienceReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Experience
         fields = (
-            'title', 'description', 'location', 'latitude', 'longitude',
+            'id', 'title', 'description', 'location', 'latitude', 'longitude',
             'terms', 'pax_adults', 'pax_children', 'images', 'inclusions',
-            'exclusions', 'banner_image',
+            'exclusions', 'user',
         )
 
     @staticmethod
@@ -69,24 +70,20 @@ class ExperienceReadSerializer(serializers.ModelSerializer):
         return obj.coords.y
 
 
-class TestImageSerializer(serializers.Serializer):
-    image = serializers.ImageField(required=True)
-    default = serializers.BooleanField(default=False)
-
-
-class ExperienceWriteSerializer(serializers.ModelSerializer):
+class ExperienceCreateSerializer(serializers.ModelSerializer):
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
     images = serializers.ListField(child=serializers.ImageField(required=True))
     inclusions = serializers.ListField(child=serializers.CharField(required=True))
     exclusions = serializers.ListField(child=serializers.CharField(required=True))
+    default_image = serializers.CharField()
 
     class Meta:
         model = models.Experience
         fields = (
             'user', 'title', 'description', 'location', 'latitude',
             'longitude', 'terms', 'pax_adults', 'pax_children', 'images',
-            'inclusions', 'exclusions', 'banner_image'
+            'inclusions', 'exclusions', 'default_image'
         )
 
     def validate_images(self, images):
@@ -100,13 +97,18 @@ class ExperienceWriteSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         images = validated_data.pop('images')
+        default_image = validated_data.pop('default_image')
         inclusions = validated_data.pop('inclusions')
         exclusions = validated_data.pop('exclusions')
 
-        experience = super(ExperienceWriteSerializer, self).create(validated_data)
+        experience = super(ExperienceCreateSerializer, self).create(validated_data)
         for image in images:
             image_serializer = ExperienceImageWriteSerializer(
-                data={'image': image, 'experience': experience.id}
+                data={
+                    'image': image,
+                    'experience': experience.id,
+                    'default': image.name == default_image
+                }
             )
             image_serializer.is_valid(raise_exception=True)
             image_serializer.save()
@@ -124,5 +126,88 @@ class ExperienceWriteSerializer(serializers.ModelSerializer):
             )
             exc_serializer.is_valid(raise_exception=True)
             exc_serializer.save()
+
+        return experience
+
+
+class ExperienceUpdateSerializer(serializers.ModelSerializer):
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
+    images = serializers.ListField(child=serializers.ImageField(required=True))
+    deleted_images = serializers.ListField(child=serializers.PrimaryKeyRelatedField(
+        allow_null=True, required=False, queryset=models.ExperienceImage.objects.all()
+    ))
+    inclusions = serializers.ListField(child=serializers.CharField(required=True))
+    exclusions = serializers.ListField(child=serializers.CharField(required=True))
+    default_image = serializers.CharField()
+
+    class Meta:
+        model = models.Experience
+        fields = (
+            'user', 'title', 'description', 'location', 'latitude',
+            'longitude', 'terms', 'pax_adults', 'pax_children', 'images',
+            'deleted_images', 'inclusions', 'exclusions', 'default_image'
+        )
+
+    def validate(self, attrs):
+        attrs['coords'] = Point(attrs.pop('latitude'), attrs.pop('longitude'))
+        return attrs
+
+    def update(self, instance, validated_data):
+        images = validated_data.pop('images')
+        default_image = validated_data.pop('default_image')
+        deleted_images = validated_data.pop('deleted_images')
+
+        inclusions = validated_data.pop('inclusions')
+        exclusions = validated_data.pop('exclusions')
+
+        experience = super(ExperienceUpdateSerializer, self).update(
+            instance, validated_data
+        )
+
+        # Delete any relevant images
+        experience.images.filter(pk__in=[d.id for d in deleted_images]).delete()
+
+        # Add any new images
+        for image in images:
+            image_serializer = ExperienceImageWriteSerializer(
+                data={
+                    'image': image,
+                    'experience': experience.id,
+                }
+            )
+            image_serializer.is_valid(raise_exception=True)
+            image_serializer.save()
+
+        # Set the default image
+        for image in experience.images.all():
+            if default_image == os.path.basename(image.image.name):
+                image.default = True
+                image.save()
+                break
+
+        # Delete any inclusions not included
+        experience.inclusions.exclude(name__in=inclusions).delete()
+
+        # Add any new inclusions
+        for inclusion in inclusions:
+            if not experience.inclusions.filter(name=inclusion).exists():
+                inc_serializer = ExperienceInclusionSerializer(
+                    data={'name': inclusion, 'experience': experience.id}
+                )
+                inc_serializer.is_valid(raise_exception=True)
+                inc_serializer.save()
+
+        # Delete any exclusions not included
+        experience.exclusions.exclude(name__in=exclusions).delete()
+
+        # Add any new exclusions
+        for exclusion in exclusions:
+            if not experience.exclusions.filter(name=exclusion).exists():
+                exc_serializer = ExperienceExclusionSerializer(
+                    data={'name': exclusion, 'experience': experience.id}
+                )
+                exc_serializer.is_valid(raise_exception=True)
+                exc_serializer.save()
 
         return experience

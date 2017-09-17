@@ -11,6 +11,8 @@ from luckybreak.users.models import User
 
 
 class AuthTestCase(BaseFunctionalTestCase):
+    fixtures = ['users.json']
+
     def test_guest_signin(self):
         self.selenium.get(self.live_url('account_login'))
         self.selenium.find_element_by_id('id_login').send_keys(self.guest.email)
@@ -66,6 +68,7 @@ class AuthTestCase(BaseFunctionalTestCase):
 
 
 class SettingsTestCase(BaseFunctionalTestCase):
+    fixtures = ['users.json']
     # TODO: Need to write tests for guests
 
     def test_edit_settings(self):

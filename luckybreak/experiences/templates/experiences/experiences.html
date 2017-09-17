@@ -11,7 +11,9 @@
 
 {% block extra_js %}
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
-  {% render_bundle 'add-experience' 'js' %}
+  {% render_bundle 'experience' 'js' %}
+
+  {% render_bundle 'add-auction' 'js' %}
 {% endblock extra_js %}
 
 {% block content %}
@@ -42,7 +44,13 @@
           </p>
         </div>
         <div class="s12">
-          <div class="add-experience-app"></div>
+          <div
+            class="experience-app"
+            data-modal-id="add-experience-modal"
+            data-button-id="add-experience-button"
+            data-button-icon="add"
+            data-button-text="Add Experience"
+          ></div>
         </div>
 
         <div class="s12">
@@ -53,27 +61,46 @@
                 <th>Location</th>
                 <th>Total Sold</th>
                 <th>Live Auctions</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {% for experience in object_list %}
                 <tr>
-                  <td>{{ experience.title }}</td>
-                  <td class="truncate" style="max-width:250px">
-                    <span
-                      class="tooltipped"
-                      data-tooltip="{{ experience.location }}"
-                      data-position="top"
-                    >
-                      {{ experience.location }}
-                    </span>
+                  <td>{{ experience.title|title }}</td>
+                  <td style="max-width:250px">
+                    {{ experience.location|title }}
                   </td>
                   <td>TODO</td>
                   <td>TODO</td>
+                  <td>
+                    <span
+                      class="experience-app tooltipped"
+                      data-modal-id="experience-modal-{{ experience.id }}"
+                      data-experience-id="{{ experience.id }}"
+                      data-button-id="edit-experience-button-{{ experience.id }}"
+                      data-button-icon="edit"
+                      data-button-text="Edit Experience"
+                      data-button-colour="blue lighten-1"
+                      data-button-floating="true"
+
+                      data-tooltip="Edit this experience"
+                      data-position="top"
+                    ></span>
+                    &nbsp;
+                    <span
+                      class="add-auction-app tooltipped"
+                      data-button-size="small"
+                      data-button-floating="true"
+
+                      data-tooltip="Create an auction for this experience"
+                      data-position="top"
+                    ></span>
+                  </td>
                 </tr>
               {% empty %}
                 <tr>
-                  <td class="center-align" colspan="4">
+                  <td class="center-align" colspan="5">
                     You don't have any experiences set up yet...
                   </td>
                 </tr>
@@ -81,7 +108,7 @@
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="4">
+                <td colspan="5">
                   <div class="row valign-wrapper">
                     <div class="col m4 s6">
                       <a

@@ -9,13 +9,14 @@ const propTypes = {
 };
 const defaultProps = {
   minHeight: 100,
-  loadingMessage: 'Loading...'
+  loadingMessage: null
 };
 
 const WizardLoading = ({ minHeight, loadingMessage }) => (
-  <div className="wizard-loading" style={{ minHeight: `${minHeight}px` }}>
-    <div>
-      <Preloader flashing /> {loadingMessage}
+  <div className="wizard-loading valign-wrapper center-align" style={{ minHeight: '400px' }}>
+    <div style={{ width: '100%' }}>
+      <Preloader flashing />
+      {loadingMessage ? <span><br />loadingMessage</span> : null}
     </div>
   </div>
 );
