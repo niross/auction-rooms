@@ -23,19 +23,18 @@ SKIP_TEXT = 'Functional tests are disabled'
 
 class BaseFunctionalTestCase(StaticLiveServerTestCase):
     skip_tests = SKIP_TESTS
+    fixtures = ['users.json']
 
     @skipIf(SKIP_TESTS, SKIP_TEXT)
     def setUp(self):
-        super(BaseFunctionalTestCase, self).setUp()
-
         self.selenium = webdriver.Chrome()
-        self.selenium.implicitly_wait(30)
-        self.selenium.maximize_window()
-
-        self.guest = GuestFactory(username='testguest')
+        self.guest = User.objects.get(pk=1)
+        self.guest.set_password('password')
         self.guest.save()
-        self.provider = ProviderFactory(username='testprovider')
+        self.provider = User.objects.get(pk=2)
+        self.provider.set_password('password')
         self.provider.save()
+        super(BaseFunctionalTestCase, self).setUp()
 
     def tearDown(self):
         self.selenium.quit()
@@ -69,10 +68,15 @@ class BaseFunctionalTestCase(StaticLiveServerTestCase):
 
 class BaseTestCase(TestCase):
     user_factory = UserFactory
+    fixtures = ['users.json']
 
     def setUp(self):
-        self.guest = self.make_guest()
-        self.provider = self.make_provider()
+        self.guest = User.objects.get(pk=1)
+        self.guest.set_password('password')
+        self.guest.save()
+        self.provider = User.objects.get(pk=2)
+        self.provider.set_password('password')
+        self.provider.save()
 
     def make_guest(self):
         user = self.make_user(username='testguest')
@@ -88,8 +92,12 @@ class BaseTestCase(TestCase):
 
 
 class BaseAPITestCase(APITestCase):
+    fixtures = ['users.json']
+
     def setUp(self):
-        self.guest = GuestFactory(username='testguest')
+        self.guest = User.objects.get(pk=1)
+        self.guest.set_password('password')
         self.guest.save()
-        self.provider = ProviderFactory(username='testprovider')
+        self.provider = User.objects.get(pk=2)
+        self.provider.set_password('password')
         self.provider.save()
