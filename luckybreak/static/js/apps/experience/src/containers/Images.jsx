@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Card, Input, Icon } from 'react-materialize';
 import Dropzone from 'react-dropzone';
 
-import Subheader from '../components/Subheader';
-import { InfoAlert, ErrorAlert } from '../../../libs';
+import { InfoAlert, ErrorAlert, Subheader } from '../../../libs';
 import { maxImageSize, maxImageSizeName } from '../../../Config';
 
 const propTypes = {

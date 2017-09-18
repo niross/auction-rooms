@@ -9,9 +9,4 @@ urlpatterns = [
         view=views.ExperiencesView.as_view(),
         name='experiences'
     ),
-    url(
-        regex=r'^experience/(?P<pk>[0-9]+)/$',
-        view=views.ExperienceView.as_view(),
-        name='experience'
-    ),
 ]

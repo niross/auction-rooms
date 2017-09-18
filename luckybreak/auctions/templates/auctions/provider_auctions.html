@@ -2,30 +2,27 @@
 {% load i18n %}
 {% load static compile_static %}
 {% load render_bundle from webpack_loader %}
-{% block title %}{% trans "Your Experiences" %}{% endblock %}
+{% block title %}{% trans "Your Auctions" %}{% endblock %}
 {% block description %}{% endblock description %}
-{% block body_class %}provider-experience{% endblock body_class %} 
+{% block body_class %}provider-auctions{% endblock body_class %} 
 {% block extra_css %}
   <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 
 {% block extra_js %}
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
-  {% render_bundle 'experience' 'js' %}
   {% render_bundle 'provider-auction' 'js' %}
 {% endblock extra_js %}
 
 {% block content %}
 
   <div class="main">
-
     <div class="container">
       <nav class="crumbs">
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
             <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
-            <a href="{% url 'experiences:experiences' %}" class="breadcrumb">Experiences</a>
+            <a href="{% url 'auctions:provider-auctions' %}" class="breadcrumb">Auctions</a>
           </div>
         </div>
       </nav>
@@ -35,20 +32,19 @@
       {% include 'users/inc/provider_side_nav.html' %}
       <div class="row">
         <div class="s12">
-          <h4>Your Experiences</h4>
+          <h4>Your Auctions</h4>
           <p class="valign-wrapper">
             <i class="material-icons left ">info</i>
-            Experiences are the items you sell via auction. Create them once and
-            they can be turned into auctions in two clicks.
+            Manage your current and past auctions.
           </p>
         </div>
         <div class="s12">
           <div
-            class="experience-app"
-            data-modal-id="add-experience-modal"
-            data-button-id="add-experience-button"
-            data-button-icon="add"
-            data-button-text="Add Experience"
+            class="provider-auction-app"
+            data-modal-id="provider-auction-modal"
+            data-button-id="provider-auction-button"
+            data-button-icon="add_shopping_cart"
+            data-button-text="Add Auction"
           ></div>
         </div>
 
@@ -58,41 +54,31 @@
               <tr>
                 <th>Title</th>
                 <th>Location</th>
-                <th>Total Sold</th>
-                <th>Live Auctions</th>
+                <th>Bids</th>
+                <th>Highest Bid</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {% for experience in object_list %}
+              {% for auction in object_list %}
                 <tr>
-                  <td>{{ experience.title|title }}</td>
+                  <td>{{ auction.title|title }}</td>
                   <td style="max-width:250px">
-                    {{ experience.location|title }}
+                    {{ auction.location|title }}
                   </td>
-                  <td>TODO</td>
-                  <td>TODO</td>
+                  <td>{{ auction.bids.count }}</td>
+                  <td>{{ auction.highest_bid }}</td>
                   <td>
                     <span
-                      class="experience-app tooltipped"
-                      data-modal-id="experience-modal-{{ experience.id }}"
-                      data-experience-id="{{ experience.id }}"
-                      data-button-id="edit-experience-button-{{ experience.id }}"
+                      class="provider-auction-app tooltipped"
+                      data-modal-id="auction-modal-{{ auction.id }}"
+                      data-auction-id="{{ auction.id }}"
+                      data-button-id="edit-auction-button-{{ auction.id }}"
                       data-button-icon="edit"
-                      data-button-text="Edit Experience"
+                      data-button-text="Edit Auction"
                       data-button-colour="blue lighten-1"
                       data-button-floating="true"
-
-                      data-tooltip="Edit this experience"
-                      data-position="top"
-                    ></span>
-                    &nbsp;
-                    <span
-                      class="add-auction-app tooltipped"
-                      data-button-size="small"
-                      data-button-floating="true"
-
-                      data-tooltip="Create an auction for this experience"
+                      data-tooltip="Edit this auction"
                       data-position="top"
                     ></span>
                   </td>
