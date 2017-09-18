@@ -13,10 +13,10 @@ module.exports = {
       'webpack/hot/only-dev-server',
       './experience/src/index.jsx',
     ],
-    'add-auction': [
+    'provider-auction': [
       `webpack-dev-server/client?${PUBLIC_PATH}`,
       'webpack/hot/only-dev-server',
-      './add-auction/src/index.jsx'
+      './provider-auction/src/index.jsx'
     ],
     vendors: ['react', 'react-materialize']
   },

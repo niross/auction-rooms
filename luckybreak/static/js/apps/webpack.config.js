@@ -6,8 +6,8 @@ module.exports = {
   cache: true,
   context: __dirname,
   entry: {
-    'experience': './experience/src/index.jsx',
-    'add-auction': './add-auction/src/index.jsx',
+    experience: './experience/src/index.jsx',
+    'provider-auction': './provider-auction/src/index.jsx',
     vendors: [
       'react', 'react-dom', 'react-materialize', 'redux', 'redux-thunk',
       'react-redux', 'immutable', 'whatwg-fetch', 'isomorphic-fetch',

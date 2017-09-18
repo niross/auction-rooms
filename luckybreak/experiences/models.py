@@ -9,7 +9,7 @@ from luckybreak.currencies.models import Currency
 
 
 class Experience(DeletableTimeStampedModel):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='experiences')
     title = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255)
