@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Input } from 'react-materialize';
 import { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
-import Subheader from '../components/Subheader';
-import { LocationAutocomplete, HelpText } from '../../../libs';
+import { LocationAutocomplete, HelpText, Subheader } from '../../../libs';
 
 const propTypes = {
   formData: PropTypes.object,

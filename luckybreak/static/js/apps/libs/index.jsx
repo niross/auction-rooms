@@ -6,6 +6,7 @@ import WarningAlert from './components/alerts/WarningAlert';
 import ErrorAlert from './components/alerts/ErrorAlert';
 import { makeApiCall } from './utils/request';
 import SuccessCheck from './components/SuccessCheck';
+import Subheader from './components/Subheader';
 
 export {
   LocationAutocomplete,
@@ -15,5 +16,6 @@ export {
   WarningAlert,
   ErrorAlert,
   makeApiCall,
-  SuccessCheck
+  SuccessCheck,
+  Subheader
 };
