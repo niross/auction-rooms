@@ -10,8 +10,8 @@
       <i class="material-icons">business_center</i> Experiences
     </a>
   </li>
-  <li class="">
-    <a href="#!">
+  <li class="{% navactive request 'auctions:provider-auctions' %}">
+    <a href="{% url 'auctions:provider-auctions' %}">
       <i class="material-icons">shopping_cart</i> Auctions
     </a>
   </li>

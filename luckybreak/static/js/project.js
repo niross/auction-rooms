@@ -21,9 +21,14 @@ $(document).ready(function() {
     $(this).find('form').submit();
   });
 
-	// Initialise collapsibles
+  // Initialise collapsibles
   $('.collapsible').collapsible();
 
   // Initialise tooltips
-  $('.tooltipped').tooltip({delay: 50});
+  $('.tooltipped').tooltip({ delay: 50 });
+
+  // Initialise time pickers
+  $('.timepicker').pickatime({
+    twelvehour: false
+  });
 });

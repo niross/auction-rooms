@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Input } from 'react-materialize';
 import path from 'path';
 
-import Subheader from '../components/Subheader';
-import { HelpText, makeApiCall, WarningAlert } from '../../../libs';
+import { HelpText, makeApiCall, WarningAlert, Subheader } from '../../../libs';
 import { apiEndpoints } from '../../../Config';
 
 const propTypes = {

@@ -12,13 +12,15 @@ urlpatterns = [
     url(r'^', include('luckybreak.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
 
-    # Your stuff: custom urls includes go here
+    # App Views
     url(r'', include('luckybreak.browse.urls', namespace='browse')),
     url(r'^contact/', include('luckybreak.contact.urls', namespace='contact')),
     url(r'^experiences/', include('luckybreak.experiences.urls', namespace='experiences')),
+    url(r'^auctions/', include('luckybreak.auctions.urls', namespace='auctions')),
 
     # API
     url(r'^api/', include('luckybreak.experiences.api_urls', namespace='experience-api')),
+    url(r'^api/', include('luckybreak.auctions.api_urls', namespace='auction-api')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,7 +4,7 @@ from django.db.models.signals import post_delete, pre_delete
 from django_extensions.db.models import TimeStampedModel
 
 
-class DeletableTimeStampedQuerySet(models.Manager):
+class DeletableTimeStampedManager(models.Manager):
     def live(self):
         """
         Returns objects that have not been deleted
@@ -15,7 +15,7 @@ class DeletableTimeStampedQuerySet(models.Manager):
 
 class DeletableTimeStampedModel(TimeStampedModel):
     deleted = models.BooleanField(default=False)
-    objects = DeletableTimeStampedQuerySet()
+    objects = DeletableTimeStampedManager()
 
     class Meta:
         abstract = True
