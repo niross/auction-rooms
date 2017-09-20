@@ -68,7 +68,7 @@ class Experience extends React.Component {
             waves={this.props.buttonWaves}
             fabClickOnly
             large={this.props.buttonLarge}
-            data-tooltip="Add an Experience"
+            data-tooltip={this.props.experienceId ? 'Edit this Experience' : 'Add an Experience'}
             data-position="top"
           >
             <Icon left>{this.props.buttonIcon}</Icon>
