@@ -18,13 +18,15 @@ const propTypes = {
   buttonColour: PropTypes.string,
   buttonId: PropTypes.string.isRequired,
   buttonIcon: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired
+  buttonText: PropTypes.string.isRequired,
+  buttonLarge: PropTypes.bool
 };
 const defaultProps = {
   experienceId: null,
   buttonFloating: false,
   buttonWaves: 'light',
-  buttonColour: 'green'
+  buttonColour: 'green',
+  buttonLarge: false
 };
 
 const initialData = {
@@ -61,9 +63,13 @@ class Experience extends React.Component {
         trigger={
           <Button
             id={this.props.buttonId}
-            className={this.props.buttonColour}
+            className={`tooltipped ${this.props.buttonColour}`}
             floating={this.props.buttonFloating}
             waves={this.props.buttonWaves}
+            fabClickOnly
+            large={this.props.buttonLarge}
+            data-tooltip="Add an Experience"
+            data-position="top"
           >
             <Icon left>{this.props.buttonIcon}</Icon>
             {this.props.buttonText}

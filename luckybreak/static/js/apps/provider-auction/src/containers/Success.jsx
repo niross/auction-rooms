@@ -1,4 +1,4 @@
-import React from 'react';                                                                              
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-materialize';
 
@@ -19,7 +19,6 @@ class Success extends React.Component {
 
   render() {
     const auctions = this.props.formData.auctions;
-    console.log('AUCTIONS', auctions);
     const numAuctions = auctions.length;
     return (
       <span className="auction-success">
@@ -43,4 +42,3 @@ Success.propTypes = propTypes;
 Success.defaultProps = defaultProps;
 
 export default Success;
-

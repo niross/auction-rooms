@@ -1,12 +1,10 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const eslint = require('gulp-eslint');
-const nodemon = require('gulp-nodemon');
 const connect = require('gulp-connect');
 const shell = require('gulp-shell');
 const webpack = require('webpack');
 const rimraf = require('gulp-rimraf');
-const less = require('gulp-less');
 
 const buildCfg = require('./webpack.config');
 
@@ -14,6 +12,8 @@ const buildCfg = require('./webpack.config');
 // Constants
 // ----------------------------------------------------------------------------
 const FRONTEND_FILES = [
+  '*/src/**/*.jsx',
+  '*/src/**/*.js'
 ];
 
 // ----------------------------------------------------------------------------
