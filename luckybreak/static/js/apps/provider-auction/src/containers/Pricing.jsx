@@ -55,7 +55,6 @@ class Schedule extends React.Component {
 
   render() {
     const formData = this.props.formData;
-    console.log('Submissoin errors', this.state.submissionErrors);
     return (
       <span>
         {Object.keys(this.state.submissionErrors).length > 0 ?
@@ -79,8 +78,8 @@ class Schedule extends React.Component {
               value={formData.starting_price}
               labelClassName="active"
               error={this.state.errors.starting_price}
-              id="experience-starting-price"
-              name="experience-starting-price"
+              id="auction-starting-price"
+              name="auction-starting-price"
               type="number"
               onChange={e => this.props.onFieldChange('starting_price', e.target.value)}
               step="0.1"
@@ -101,8 +100,8 @@ class Schedule extends React.Component {
               value={formData.reserve_price}
               labelClassName="active"
               error={this.state.errors.reserve_price}
-              id="experience-reserve-price"
-              name="experience-reserve-price"
+              id="auction-reserve-price"
+              name="auction-reserve-price"
               type="number"
               onChange={e => this.props.onFieldChange('reserve_price', e.target.value)}
               step="0.1"
@@ -125,8 +124,8 @@ class Schedule extends React.Component {
               value={formData.duration_days}
               labelClassName="active"
               error={this.state.errors.duration_days}
-              id="experience-duration"
-              name="experience-duration"
+              id="auction-duration"
+              name="auction-duration"
               type="select"
               onChange={e => this.props.onFieldChange('duration_days', e.target.value)}
             >
@@ -145,8 +144,8 @@ class Schedule extends React.Component {
               value={formData.lots}
               labelClassName="active"
               error={this.state.errors.lots}
-              id="experience-lots"
-              name="experience-lots"
+              id="auction-lots"
+              name="auction-lots"
               type="number"
               onChange={e => this.props.onFieldChange('lots', e.target.value)}
               step="1"
