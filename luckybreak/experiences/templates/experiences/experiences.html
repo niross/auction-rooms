@@ -78,7 +78,7 @@
                   <td>TODO</td>
                   <td>
                     <span
-                      class="experience-app tooltipped"
+                      class="experience-app"
                       data-modal-id="experience-modal-{{ experience.id }}"
                       data-experience-id="{{ experience.id }}"
                       data-button-id="edit-experience-button-{{ experience.id }}"
@@ -86,18 +86,17 @@
                       data-button-text="Edit Experience"
                       data-button-colour="blue lighten-1"
                       data-button-floating="true"
-
-                      data-tooltip="Edit this experience"
-                      data-position="top"
                     ></span>
                     &nbsp;
                     <span
-                      class="add-auction-app tooltipped"
-                      data-button-size="small"
+                      class="provider-auction-app"
+                      data-modal-id="auction-modal-{{ experience.id }}"
+                      data-button-id="add-auction-button-{{ experience.id }}"
+                      data-button-icon="add_shopping_cart"
+                      data-button-text="Add Auction"
+                      data-button-colour="light-blue lighten-1"
                       data-button-floating="true"
-
-                      data-tooltip="Create an auction for this experience"
-                      data-position="top"
+                      data-experience-id="{{ experience.id }}"
                     ></span>
                   </td>
                 </tr>
