@@ -31,14 +31,12 @@ class Schedule extends React.Component {
       twelvehour: false,
       default: '11:00'
     });
-    $('.checkin-time').on('change', e => this.props.onFieldChange('check_in_time', e.target.value));
-    $('.checkout-time').on('change', e => this.props.onFieldChange('check_out_time', e.target.value));
-  }
-
-  handleSubmit(successCallback) {
-    this.props.onFieldChange('check_in', this.getCheckIn());
-    this.props.onFieldChange('check_out', this.getCheckOut());
-    successCallback();
+    $('.checkin-time').on(
+      'change', e => this.props.onFieldChange('check_in_time', e.target.value)
+    );
+    $('.checkout-time').on(
+      'change', e => this.props.onFieldChange('check_out_time', e.target.value)
+    );
   }
 
   getCheckIn() {
@@ -55,6 +53,12 @@ class Schedule extends React.Component {
       hour: form.check_out_time.split(':')[0],
       minute: form.check_out_time.split(':')[1]
     });
+  }
+
+  handleSubmit(successCallback) {
+    this.props.onFieldChange('check_in', this.getCheckIn());
+    this.props.onFieldChange('check_out', this.getCheckOut());
+    successCallback();
   }
 
   handleValidate() {
@@ -89,8 +93,8 @@ class Schedule extends React.Component {
               }
               labelClassName="active"
               error={this.state.errors.check_in_date}
-              id="experience-checkin-date"
-              name="experience-checkin-date"
+              id="auction-checkin-date"
+              name="auction-checkin-date"
               type="date"
               options={{
                 closeOnSelect: true,
@@ -120,8 +124,8 @@ class Schedule extends React.Component {
               value={this.props.formData.check_in_time}
               labelClassName="active"
               error={this.state.errors.check_in_time}
-              id="experience-checkin-time"
-              name="experience-checkin-time"
+              id="auction-checkin-time"
+              name="auction-checkin-time"
             />
             <HelpText s={12}>Enter the time guests can check in</HelpText>
           </Col>
@@ -138,8 +142,8 @@ class Schedule extends React.Component {
               }
               labelClassName="active"
               error={this.state.errors.check_out_date}
-              id="experience-checkout-date"
-              name="experience-checkout-date"
+              id="auction-checkout-date"
+              name="auction-checkout-date"
               type="date"
               options={{
                 closeOnSelect: true,
@@ -163,8 +167,8 @@ class Schedule extends React.Component {
               value={this.props.formData.check_out_time}
               labelClassName="active"
               error={this.state.errors.check_out_time}
-              id="experience-checkout-time"
-              name="experience-checkout-time"
+              id="auction-checkout-time"
+              name="auction-checkout-time"
             />
             <HelpText s={12}>Enter the time guests can check out</HelpText>
           </Col>

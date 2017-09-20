@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
 
+
 @python_2_unicode_compatible
 class User(AbstractUser):
     USER_TYPE_GUEST = 1
@@ -23,3 +24,7 @@ class User(AbstractUser):
 
     def is_provider(self):
         return self.user_type == self.USER_TYPE_PROVIDER
+
+    def auctions(self):
+        from luckybreak.auctions.models import Auction
+        return Auction.objects.filter(experience__user=self)
