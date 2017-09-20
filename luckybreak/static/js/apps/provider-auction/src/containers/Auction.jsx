@@ -51,6 +51,35 @@ class Auction extends React.Component {
     };
   }
 
+  renderSteps() {
+    // If experience id is added there is no
+    // need to include the experience selector
+    const steps = [];
+    if (!this.props.experienceId) {
+      steps.push(
+        <WizardStep showLoader={this.state.loading} key="experience">
+          <Experience experiences={this.state.experiences} />
+        </WizardStep>
+      );
+    }
+    return steps.concat([
+      <WizardStep key="schedule">
+        <Schedule />
+      </WizardStep>,
+      <WizardStep key="pricing">
+        <Pricing />
+      </WizardStep>,
+      <WizardStep
+        key="success"
+        forwardButtonText="Create Auction"
+        forwardButtonIcon="add_shopping_cart"
+        forwardButtonIconPlacement="left"
+      >
+        <Success />
+      </WizardStep>
+    ]);
+  }
+
   render() {
     return (
       <Wizard
@@ -68,7 +97,9 @@ class Auction extends React.Component {
             waves={this.props.buttonWaves}
             fabClickOnly
             large={this.props.buttonLarge}
-            data-tooltip="Add an Auction"
+            data-tooltip={this.props.experienceId ?
+              'Create an auction for this experience' : 'Add an auction'
+            }
             data-position="top"
           >
             <Icon left>{this.props.buttonIcon}</Icon>
@@ -82,6 +113,8 @@ class Auction extends React.Component {
             });
         }}
       >
+        {this.renderSteps()}
+        {/*
         <WizardStep showLoader={this.state.loading}>
           <Experience experiences={this.state.experiences} />
         </WizardStep>
@@ -98,6 +131,7 @@ class Auction extends React.Component {
         >
           <Success />
         </WizardStep>
+        */}
       </Wizard>
     );
   }

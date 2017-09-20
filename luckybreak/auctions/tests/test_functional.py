@@ -50,14 +50,18 @@ class AddAuctionTestCase(BaseFunctionalTestCase):
 
         # Check in time
         WebDriverWait(self.selenium, 10).until(
-            EC.visibility_of_element_located((By.ID, 'auction-checkin-time'))
+            EC.element_to_be_clickable((By.ID, 'auction-checkin-time'))
         )
-        self.selenium.find_element_by_id('auction-checkin-time').click()
+        self.selenium.execute_script('$(\'#auction-checkin-time\').click()')
+        WebDriverWait(self.selenium, 10).until(
+            EC.visibility_of_element_located((By.CLASS_NAME, 'picker--opened'))
+        )
+        picker = self.selenium.find_element_by_class_name('picker--opened')
+
         hours = self.selenium.find_element_by_class_name('clockpicker-hours')
         minutes = self.selenium.find_element_by_class_name('clockpicker-minutes')
         hours.find_elements_by_class_name('clockpicker-tick')[14].click()
         minutes.find_elements_by_class_name('clockpicker-tick')[0].click()
-        picker = self.selenium.find_element_by_class_name('picker--opened')
         WebDriverWait(picker, 10).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'picker__close'))
         )
@@ -81,7 +85,7 @@ class AddAuctionTestCase(BaseFunctionalTestCase):
         WebDriverWait(self.selenium, 10).until(
             EC.visibility_of_element_located((By.ID, 'auction-checkout-time'))
         )
-        self.selenium.find_element_by_id('auction-checkout-time').click()
+        self.selenium.execute_script('$(\'#auction-checkout-time\').click()')
 
         WebDriverWait(self.selenium, 10).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'picker--opened'))

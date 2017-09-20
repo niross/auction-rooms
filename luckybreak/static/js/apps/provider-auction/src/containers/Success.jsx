@@ -30,7 +30,7 @@ class Success extends React.Component {
               <strong>{auctions[0].experience.title}</strong>&nbsp;
               {numAuctions === 1 ? 'was' : 'were'} created successfully.
             </p>
-            <p>To go back to your dashboard click the <strong>Close</strong> button.</p>
+            <p>To go back to your dashboard click the <strong>I&#39;m Done</strong> button.</p>
           </Col>
         </Row>
       </span>
