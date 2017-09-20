@@ -66,7 +66,7 @@ class ProviderAuctionAPITestCase(BaseAPITestCase):
                 'starting_price': 99.99,
                 'reserve_price': 199.99,
                 'lots': 3,
-                'duration_days': 3,
+                'duration_days': 7,
             }
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -91,7 +91,7 @@ class ProviderAuctionAPITestCase(BaseAPITestCase):
                 'starting_price': 99.99,
                 'reserve_price': 199.99,
                 'lots': 3,
-                'duration_days': 7,
+                'duration_days': 3,
             }
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

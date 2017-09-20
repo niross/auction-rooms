@@ -9,14 +9,15 @@ $('.provider-auction-app').each((i, target) => {
   ReactDOM.render(
     <Auction
       modalId={data.modalId}
-      auctionId={data.auctionId}
-      experienceId={data.experienceId}
+      auctionId={data.auctionId ? parseInt(data.auctionId, 10) : null}
+      experienceId={data.experienceId ? parseInt(data.experienceId, 10) : null}
       buttonFloating={data.buttonFloating != null}
       buttonWaves={data.buttonWaves}
       buttonColour={data.buttonColour}
       buttonId={data.buttonId}
       buttonIcon={data.buttonIcon}
       buttonText={data.buttonText}
+      buttonLarge={data.buttonLarge != null}
     />,
     target
   );

@@ -6,7 +6,8 @@ const propTypes = {
   s: PropTypes.number,
   m: PropTypes.number,
   l: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  className: PropTypes.string
 };
 const defaultProps = {
   s: 12,
@@ -18,12 +19,13 @@ const defaultProps = {
 const styles = {
   marginBottom: '20px',
   fontSize: '12px',
-  color: '#9e9e9e'
+  color: '#9e9e9e',
+  className: ''
 };
 
 const HelpText = props => (
   <div
-    className={`helptext col s${props.s} m${props.m} l${props.l}`}
+    className={`helptext col s${props.s} m${props.m} l${props.l} ${props.className}`}
     style={Object.assign(props.style, styles)}
   >
     {props.children}

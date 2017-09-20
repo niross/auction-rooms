@@ -10,10 +10,28 @@
       <i class="material-icons">business_center</i> Experiences
     </a>
   </li>
-  <li class="{% navactive request 'auctions:provider-auctions' %}">
-    <a href="{% url 'auctions:provider-auctions' %}">
-      <i class="material-icons">shopping_cart</i> Auctions
-    </a>
+  <li>
+    <ul class="collapsible collapsible-accordion">
+      <li>
+        <a class="collapsible-header active">
+          <i class="material-icons">shopping_cart</i> Auctions
+        </a>
+        <div class="collapsible-body">
+          <ul>
+            <li class="{% navactive request 'auctions:provider-live-auctions' %}">
+              <a href="{% url 'auctions:provider-live-auctions' %}">
+                <i class="material-icons">add_shopping_cart</i> Live Auctions
+              </a>
+            </li>
+            <li class="{% navactive request 'auctions:provider-finished-auctions' %}">
+              <a href="{% url 'auctions:provider-finished-auctions' %}">
+                <i class="material-icons">remove_shopping_cart</i>Finished Auctions
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
   </li>
   <li class="{% navactive request 'users:settings' %}">
     <a href="{% url 'users:settings' %}">

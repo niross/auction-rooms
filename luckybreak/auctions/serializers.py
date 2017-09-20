@@ -8,6 +8,7 @@ from rest_framework.exceptions import ValidationError
 import pytz
 
 from luckybreak.experiences.models import Experience
+from luckybreak.experiences.serializers import ExperienceReadSerializer
 from . import models
 
 
@@ -34,6 +35,7 @@ class AuctionReadSerializer(serializers.ModelSerializer):
     images = AuctionImageSerializer(many=True)
     inclusions = AuctionInclusionSerializer(many=True)
     exclusions = AuctionExclusionSerializer(many=True)
+    experience = ExperienceReadSerializer()
 
     class Meta:
         model = models.Auction
@@ -41,7 +43,7 @@ class AuctionReadSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'location', 'latitude', 'longitude',
             'terms', 'pax_adults', 'pax_children', 'images', 'inclusions',
             'exclusions', 'check_in', 'check_out', 'starting_price',
-            'reserve_price',
+            'reserve_price', 'experience',
         )
 
     @staticmethod
@@ -84,7 +86,7 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
             })
 
         # Check the check in date is after auction completion
-        if attrs['end_date'] <= attrs['check_in']:
+        if attrs['check_in'] <= attrs['end_date']:
             raise ValidationError({
                 'check_in': 'Check in cannot be before auction end date'
             })

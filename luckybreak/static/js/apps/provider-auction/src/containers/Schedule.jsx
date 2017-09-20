@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Input } from 'react-materialize';
+import moment from 'moment';
 
 import { HelpText, Subheader } from '../../../libs';
 
@@ -20,48 +21,59 @@ class Schedule extends React.Component {
       loading: true,
       errors: {}
     };
-    this.requiredFields = ['check_in', 'check_out'];
+    this.requiredFields = [
+      'check_in_date', 'check_in_time', 'check_out_date', 'check_out_time'
+    ];
+  }
+
+  componentDidMount() {
+    $('.timepicker').pickatime({
+      twelvehour: false,
+      default: '11:00'
+    });
+    $('.checkin-time').on('change', e => this.props.onFieldChange('check_in_time', e.target.value));
+    $('.checkout-time').on('change', e => this.props.onFieldChange('check_out_time', e.target.value));
+  }
+
+  handleSubmit(successCallback) {
+    this.props.onFieldChange('check_in', this.getCheckIn());
+    this.props.onFieldChange('check_out', this.getCheckOut());
+    successCallback();
+  }
+
+  getCheckIn() {
+    const form = this.props.formData;
+    return moment(form.check_in_date).set({
+      hour: form.check_in_time.split(':')[0],
+      minute: form.check_in_time.split(':')[1]
+    });
+  }
+
+  getCheckOut() {
+    const form = this.props.formData;
+    return moment(form.check_out_date).set({
+      hour: form.check_out_time.split(':')[0],
+      minute: form.check_out_time.split(':')[1]
+    });
   }
 
   handleValidate() {
     const errors = {};
-    const form = this.props.formData;
 
-    // Validate that start is before end
-
-    // Validate that auction will end before check in date
-
-    if (!form.placeId && !form.latitude && !form.longitude) {
-      errors.location = 'Please select a valid location';
+    if (this.getCheckIn() < moment()) {
+      errors.check_in_date = 'Start date must be in the future';
     }
-    if (form.pax_adults === 0 && form.pax_children === 0) {
-      errors.pax_adults = 'An adult or child is required';
-      errors.pax_children = 'An adult or child is required';
+
+    if (this.getCheckOut() <= this.getCheckIn()) {
+      errors.check_out_date = 'Check out must be after check in';
     }
+
     this.setState({ errors });
     return Object.keys(errors).length === 0;
   }
 
-  // handleSubmit(successCallback, errorCallback) {
-  //   if (this.props.formData.placeId) {
-  //     geocodeByPlaceId(this.props.formData.placeId)
-  //       .then(results => getLatLng(results[0]))
-  //       .then(({ lat, lng }) => {
-  //         this.props.onFieldChange('latitude', lat);
-  //         this.props.onFieldChange('longitude', lng);
-  //         successCallback();
-  //       })
-  //       .catch(() => {
-  //         this.setState({ errors: { location: 'Error finding address. Please try again' } });
-  //         errorCallback();
-  //       });
-  //   }
-  //   else {
-  //     successCallback();
-  //   }
-  // }
-
   render() {
+    const formData = this.props.formData;
     return (
       <span>
         <Subheader text="Scheduling" />
@@ -72,24 +84,40 @@ class Schedule extends React.Component {
               className="with-help"
               placeholder="1 February 2029"
               label="Check In Date"
-              value={this.props.formData.check_in_date}
-              onChange={e => this.props.onFieldChange('check_in_date', e.target.value)}
+              value={
+                formData.check_in_date ? formData.check_in_date.format('ddd, D MMM YYYY') : ''
+              }
               labelClassName="active"
               error={this.state.errors.check_in_date}
               id="experience-checkin-date"
               name="experience-checkin-date"
               type="date"
+              options={{
+                closeOnSelect: true,
+                format: 'ddd, D MMM YYYY',
+                onStart: function () { // eslint-disable-line
+                  if (formData.check_in_date) {
+                    this.set('select', formData.check_in_date.toDate());
+                  }
+                },
+                onSet: (e) => {
+                  const d = moment(e.select, 'x');
+                  this.props.onFieldChange('check_in_date', d);
+                  if (!formData.check_out_date || formData.check_out_date.isBefore(d)) {
+                    this.props.onFieldChange('check_out_date', moment(d).add(1, 'days'));
+                  }
+                }
+              }}
             />
             <HelpText s={12}>Enter the check in date for the experience</HelpText>
           </Col>
           <Col s={12} m={6}>
             <Input
               s={12}
-              className="with-help timepicker"
+              className="with-help timepicker checkin-time"
               placeholder="14:00"
               label="Check In Time"
               value={this.props.formData.check_in_time}
-              onChange={e => this.props.onFieldChange('check_in_time', e.target.value)}
               labelClassName="active"
               error={this.state.errors.check_in_time}
               id="experience-checkin-time"
@@ -105,24 +133,34 @@ class Schedule extends React.Component {
               className="with-help"
               placeholder="2 February 2029"
               label="Check Out Date"
-              value={this.props.formData.check_out_date}
-              onChange={e => this.props.onFieldChange('check_out_date', e.target.value)}
+              value={
+                formData.check_out_date ? formData.check_out_date.format('ddd, D MMM YYYY') : ''
+              }
               labelClassName="active"
               error={this.state.errors.check_out_date}
               id="experience-checkout-date"
               name="experience-checkout-date"
               type="date"
+              options={{
+                closeOnSelect: true,
+                format: 'ddd, D MMM YYYY',
+                onStart: function () { // eslint-disable-line
+                  if (formData.check_out_date) {
+                    this.set('select', formData.check_out_date.toDate());
+                  }
+                },
+                onSet: e => this.props.onFieldChange('check_out_date', moment(e.select, 'x'))
+              }}
             />
             <HelpText s={12}>Enter the check out date for the experience</HelpText>
           </Col>
           <Col s={12} m={6}>
             <Input
               s={12}
-              className="with-help timepicker"
+              className="with-help timepicker checkout-time"
               placeholder="11:00"
               label="Check Out Time"
               value={this.props.formData.check_out_time}
-              onChange={e => this.props.onFieldChange('check_out_time', e.target.value)}
               labelClassName="active"
               error={this.state.errors.check_out_time}
               id="experience-checkout-time"

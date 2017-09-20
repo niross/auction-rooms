@@ -99,9 +99,6 @@ class Experience extends React.Component {
         >
           <Success />
         </WizardStep>
-        <WizardStep>
-          <span>TODO</span>
-        </WizardStep>
       </Wizard>
     );
   }
