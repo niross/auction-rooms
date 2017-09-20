@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
 from luckybreak.common.mixins import UserIsProviderMixin
 from . import models
@@ -16,7 +15,8 @@ class ProviderLiveAuctionsView(UserIsProviderMixin, ListView):
         qs = super(ProviderLiveAuctionsView, self).get_queryset()
         return qs.filter(
             experience__user=self.request.user,
-            deleted=False
+            deleted=False,
+            end_date__gte=datetime.utcnow()
         ).order_by('end_date')
 
 

@@ -24,10 +24,6 @@ class ExtraDetails extends React.Component {
     };
   }
 
-  handleValidate() {
-    return true;
-  }
-
   handleSubmit(successCallback, errorCallback) {
     this.setState({ errors: {}, submissionErrors: {} });
     const form = this.props.formData;
@@ -70,6 +66,7 @@ class ExtraDetails extends React.Component {
     makeApiCall(apiEndpoints.experiences, 'POST', data, true, null)
       .then((resp) => {
         this.props.onFieldChange('savedExperience', resp);
+        this.props.onFieldChange('experience', resp.id);
         successCallback();
       })
       .catch((err) => {
@@ -82,6 +79,7 @@ class ExtraDetails extends React.Component {
     makeApiCall(`${apiEndpoints.experiences}${this.props.formData.id}/`, 'PATCH', data, true, null)
       .then((resp) => {
         this.props.onFieldChange('updatedExperience', resp);
+        this.props.onFieldChange('experience', resp.id);
         successCallback();
       })
       .catch((err) => {

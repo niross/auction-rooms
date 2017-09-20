@@ -80,8 +80,8 @@
                   </td>
                   <td>{{ auction.end_date|date:"H:i on D, j N Y" }}</td>
                   <td>{{ auction.bids.count }}</td>
-                  <td>{{ auction.formatted_current_price }}</td>
                   <td>{{ auction.formatted_reserve_price }}</td>
+                  <td>{{ auction.formatted_current_price }}</td>
                 </tr>
               {% empty %}
                 <tr>
