@@ -1,17 +1,10 @@
-import os
-import time
-
 from django.test.utils import override_settings
 
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from PIL import Image
-
 from luckybreak.common.tests import BaseFunctionalTestCase
-from luckybreak.auctions.models import Auction
 
 
 class AddAuctionTestCase(BaseFunctionalTestCase):
