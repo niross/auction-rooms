@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load static compile_static %}
+{% load static compile_static common_tags %}
 {% load render_bundle from webpack_loader %}
-{% block title %}{% trans "Your Auctions" %}{% endblock %}
+{% block title %}{% trans "Your Finished Auctions" %}{% endblock %}
 {% block description %}{% endblock description %}
 {% block body_class %}provider-auctions{% endblock body_class %} 
 {% block extra_css %}
@@ -22,7 +22,9 @@
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
             <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
-            <a href="{% url 'auctions:provider-auctions' %}" class="breadcrumb">Auctions</a>
+            <a href="{% url 'auctions:provider-finished-auctions' %}" class="breadcrumb">
+              Finished Auctions
+            </a>
           </div>
         </div>
       </nav>
@@ -32,19 +34,23 @@
       {% include 'users/inc/provider_side_nav.html' %}
       <div class="row">
         <div class="s12">
-          <h4>Your Auctions</h4>
+          <h4>Your Finished Auctions</h4>
           <p class="valign-wrapper">
             <i class="material-icons left ">info</i>
-            Manage your current and past auctions.
+            View your completed auctions
           </p>
         </div>
         <div class="s12">
           <div
-            class="provider-auction-app"
+            class="provider-auction-app fixed-action-btn"
             data-modal-id="provider-auction-modal"
             data-button-id="provider-auction-button"
             data-button-icon="add_shopping_cart"
             data-button-text="Add Auction"
+            data-button-floating="true"
+            data-button-colour="red"
+            data-button-fixed="true"
+            data-button-large="true"
           ></div>
         </div>
 
@@ -53,40 +59,34 @@
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Location</th>
+                <th>Ended At</th>
                 <th>Bids</th>
-                <th>Highest Bid</th>
-                <th>Actions</th>
+                <th>Reserve Price</th>
+                <th>Final Price</th>
               </tr>
             </thead>
             <tbody>
               {% for auction in object_list %}
                 <tr>
-                  <td>{{ auction.title|title }}</td>
-                  <td style="max-width:250px">
-                    {{ auction.location|title }}
-                  </td>
-                  <td>{{ auction.bids.count }}</td>
-                  <td>{{ auction.highest_bid }}</td>
                   <td>
-                    <span
-                      class="provider-auction-app tooltipped"
-                      data-modal-id="auction-modal-{{ auction.id }}"
-                      data-auction-id="{{ auction.id }}"
-                      data-button-id="edit-auction-button-{{ auction.id }}"
-                      data-button-icon="edit"
-                      data-button-text="Edit Auction"
-                      data-button-colour="blue lighten-1"
-                      data-button-floating="true"
-                      data-tooltip="Edit this auction"
+                    <a
+                      href="#"
+                      class="tooltipped"
                       data-position="top"
-                    ></span>
+                      data-tooltip="View auction details"
+                    >
+                      {{ auction.title|title }}
+                    </a>
                   </td>
+                  <td>{{ auction.end_date|date:"H:i on D, j N Y" }}</td>
+                  <td>{{ auction.bids.count }}</td>
+                  <td>{{ auction.formatted_current_price }}</td>
+                  <td>{{ auction.formatted_reserve_price }}</td>
                 </tr>
               {% empty %}
                 <tr>
                   <td class="center-align" colspan="5">
-                    You don't have any experiences set up yet...
+                    You don't have any finished auctions yet...
                   </td>
                 </tr>
               {% endfor %}
@@ -98,7 +98,7 @@
                     <div class="col m4 s6">
                       <a
                         class="waves-effect waves-light btn grey lighten-2 grey-text text-darken-3{% if not page_obj.has_previous %} disabled{% endif %}"
-                        href="{% url 'experiences:experiences' %}?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}"
+                        href="{% url 'auctions:provider-finished-auctions' %}?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}"
                       >
                         <i class="material-icons left">arrow_back</i>Last Page
                       </a>
@@ -111,7 +111,7 @@
                     <div class="col m4 s6 right-align">
                       <a
                         class="waves-effect waves-light btn grey lighten-2 grey-text text-darken-3{% if not page_obj.has_next %} disabled{% endif %}"
-                        href="{% url 'experiences:experiences' %}?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}"
+                        href="{% url 'auctions:provider-finished-auctions' %}?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}"
                       >
                         <i class="material-icons right">arrow_forward</i>Next Page
                       </a>

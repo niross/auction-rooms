@@ -93,7 +93,8 @@ const WizardControls = (props) => {
               onClick={props.onComplete}
               disabled={props.loading || props.disabled}
               large
-              className="green lighten-1 grey-text text-darken-4 complete-button"
+              className={`${props.forwardButtonClass} complete-button`}
+              modal="close"
             >
               <Icon left>check</Icon>
               {props.completeButtonText}

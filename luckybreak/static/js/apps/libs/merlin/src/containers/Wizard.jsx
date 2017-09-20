@@ -77,6 +77,7 @@ class Wizard extends React.Component {
 
     return React.cloneElement(
       this.getChildren()[nextStep], {
+        step: nextStep,
         onSuccess: () => this.handleForward(),
         onError: () => this.setState({ loading: false }),
         onComplete: () => this.handleComplete(),
@@ -129,7 +130,7 @@ class Wizard extends React.Component {
   }
 
   handleComplete() {
-    if (this.props.onComplete()) {
+    if (this.props.onComplete) {
       this.props.onComplete();
     }
   }
@@ -140,7 +141,8 @@ class Wizard extends React.Component {
         hasSuccessStep={this.props.hasSuccessStep}
         currentStep={this.state.step}
         totalSteps={this.getChildren().length}
-        onCancel={() => this.handleCancel()}
+        onCancel={step.props.onComplete}
+        onComplete={() => this.handleComplete()}
         onForward={() => this.handleSubmit()}
         forwardButtonText={step.props.forwardButtonText}
         forwardButtonIcon={step.props.forwardButtonIcon}
