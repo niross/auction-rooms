@@ -7,14 +7,11 @@ import { HelpText, Subheader, ErrorAlert } from '../../../libs';
 const propTypes = {
   formData: PropTypes.object,
   onFieldChange: PropTypes.func,
-  experiences: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSkip: PropTypes.func.isRequired,
-  initialExperience: PropTypes.number
+  experiences: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 const defaultProps = {
   formData: {},
-  onFieldChange: () => {},
-  initialExperience: null
+  onFieldChange: () => {}
 };
 
 class Experience extends React.Component {

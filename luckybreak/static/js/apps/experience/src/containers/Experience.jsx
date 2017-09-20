@@ -10,6 +10,10 @@ import Success from './Success';
 import { makeApiCall } from '../../../libs';
 import { apiEndpoints } from '../../../Config';
 
+import AuctionSchedule from '../../../provider-auction/src/containers/Schedule';
+import AuctionPricing from '../../../provider-auction/src/containers/Pricing';
+import AuctionSuccess from '../../../provider-auction/src/containers/Success';
+
 const propTypes = {
   modalId: PropTypes.string.isRequired,
   experienceId: PropTypes.number,
@@ -39,7 +43,9 @@ const initialData = {
   deleted_images: [],
   inclusions: [],
   exclusions: [],
-  terms: ''
+  terms: '',
+  duration_days: '7',
+  lots: '1'
 };
 
 class Experience extends React.Component {
@@ -75,6 +81,7 @@ class Experience extends React.Component {
             {this.props.buttonText}
           </Button>
         }
+        onComplete={() => window.location.reload()}
         onOpen={() => {
           // When the modal opens fetch the experience data if we are editing
           if (this.props.experienceId) {
@@ -104,6 +111,15 @@ class Experience extends React.Component {
           onCancel={() => window.location.reload()}
         >
           <Success />
+        </WizardStep>
+        <WizardStep>
+          <AuctionSchedule />
+        </WizardStep>
+        <WizardStep>
+          <AuctionPricing />
+        </WizardStep>
+        <WizardStep>
+          <AuctionSuccess />
         </WizardStep>
       </Wizard>
     );
