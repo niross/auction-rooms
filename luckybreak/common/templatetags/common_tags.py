@@ -1,5 +1,10 @@
+from datetime import datetime, timedelta
+
+import pytz
+
 from django import template
 from django.urls import reverse
+
 
 register = template.Library()
 
@@ -58,3 +63,8 @@ def add_validation(field, errors):
     if errors:
         return add_class(field, 'invalid')
     return add_class(field, 'valid')
+
+
+@register.filter
+def hours_away(date, hours):
+    return date < datetime.now().replace(tzinfo=pytz.utc) + timedelta(hours=hours)
