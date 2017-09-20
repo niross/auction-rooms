@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'react-materialize';
 
 import { Wizard, WizardStep } from '../../../libs/merlin';
+import { makeApiCall } from '../../../libs';
+import { apiEndpoints } from '../../../Config';
+import Experience from './Experience';
 import Schedule from './Schedule';
+import Pricing from './Pricing';
+import Success from './Success';
 
 const propTypes = {
   modalId: PropTypes.string.isRequired,
@@ -13,28 +18,36 @@ const propTypes = {
   buttonColour: PropTypes.string,
   buttonId: PropTypes.string.isRequired,
   buttonIcon: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired
+  buttonText: PropTypes.string.isRequired,
+  buttonLarge: PropTypes.bool
 };
 const defaultProps = {
   experienceId: '',
   buttonFloating: false,
   buttonWaves: 'light',
-  buttonColour: 'green'
+  buttonColour: 'green',
+  buttonLarge: false
 };
 
 const initialData = {
   check_in: '',
+  check_in_date: '',
+  check_in_time: '',
   check_out: '',
+  check_out_date: '',
+  check_out_time: '',
   starting_price: '',
   reserve_price: '',
-  end_date: ''
+  duration_days: '7',
+  lots: '1'
 };
 
 class Auction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: true,
+      experiences: []
     };
   }
 
@@ -46,28 +59,44 @@ class Auction extends React.Component {
         headerText="Add an Auction"
         initialData={Object.assign({ experience: this.props.experienceId }, initialData)}
         className="provider-auction-modal"
+        onComplete={() => window.location.reload()}
         trigger={
           <Button
             id={this.props.buttonId}
-            className={this.props.buttonColour}
+            className={`tooltipped ${this.props.buttonColour}`}
             floating={this.props.buttonFloating}
             waves={this.props.buttonWaves}
+            fabClickOnly
+            large={this.props.buttonLarge}
+            data-tooltip="Add an Auction"
+            data-position="top"
           >
             <Icon left>{this.props.buttonIcon}</Icon>
             {this.props.buttonText}
           </Button>
         }
         onOpen={() => {
+          makeApiCall(`${apiEndpoints.experiences}`, 'GET')
+            .then((resp) => {
+              this.setState({ loading: false, experiences: resp });
+            });
         }}
       >
+        <WizardStep showLoader={this.state.loading}>
+          <Experience experiences={this.state.experiences} />
+        </WizardStep>
         <WizardStep>
           <Schedule />
         </WizardStep>
         <WizardStep>
-          <span>two</span>
+          <Pricing />
         </WizardStep>
-        <WizardStep>
-          <span>TODO</span>
+        <WizardStep
+          forwardButtonText="Create Auction"
+          forwardButtonIcon="add_shopping_cart"
+          forwardButtonIconPlacement="left"
+        >
+          <Success />
         </WizardStep>
       </Wizard>
     );

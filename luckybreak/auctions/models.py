@@ -126,6 +126,12 @@ class Auction(DeletableTimeStampedModel):
             self.current_price()
         )
 
+    def formatted_reserve_price(self):
+        return '{}{}'.format(
+            self.currency.symbol,
+            self.reserve_price
+        )
+
 
 class AuctionImage(models.Model):
     auction = models.ForeignKey(Auction, related_name='images')

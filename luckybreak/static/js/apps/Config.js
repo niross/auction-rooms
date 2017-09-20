@@ -1,5 +1,6 @@
 export const apiEndpoints = {
-  experiences: '/api/experiences/'
+  experiences: '/api/experiences/',
+  providerAuctions: '/api/auctions/provider/'
 };
 
 // Max image size is 7mb
