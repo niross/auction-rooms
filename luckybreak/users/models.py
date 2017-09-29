@@ -27,4 +27,13 @@ class User(AbstractUser):
 
     def auctions(self):
         from luckybreak.auctions.models import Auction
-        return Auction.objects.filter(experience__user=self)
+        return Auction.objects.filter(deleted=False, experience__user=self)
+
+    def live_auctions(self):
+        return self.auctions().live()
+
+    def finished_auctions(self):
+        return self.auctions().finished()
+
+    def total_live_auctions_by_experience(self):
+        return self.live_auctions().distinct('experience').count()

@@ -16,7 +16,30 @@ from luckybreak.users.models import User
 from luckybreak.currencies.models import Currency
 
 
+class AuctionQuerySet(models.QuerySet):
+    def live(self):
+        """
+        Returns auctions that have not yet finished
+        """
+        return self.filter(
+            deleted=False,
+            end_date__gt=datetime.utcnow()
+        )
+
+    def finished(self):
+        """
+        Returns auctions that have finished
+        """
+        return self.filter(
+            deleted=False,
+            end_date__lte=datetime.utcnow()
+        )
+
+
 class AuctionManager(DeletableTimeStampedManager):
+    def get_queryset(self):
+        return AuctionQuerySet(self.model, using=self._db)
+
     def create_auction(self, experience, check_in, check_out, # pylint: disable=too-many-arguments
                        starting_price, reserve_price, end_date):
         """
@@ -66,6 +89,18 @@ class AuctionManager(DeletableTimeStampedManager):
             )
 
         return auction
+
+    def live(self):
+        """
+        Returns auctions that have not yet finished
+        """
+        return self.get_queryset().live()
+
+    def finished(self):
+        """
+        Returns auctions that have finished
+        """
+        return self.get_queryset().finished()
 
 
 class Auction(DeletableTimeStampedModel):
