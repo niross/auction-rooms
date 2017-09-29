@@ -23,26 +23,27 @@ class AuctionAdmin(admin.ModelAdmin):
         'experience', 'view_count', 'search_appearance_count'
     )
     fields = (
-        'experience', 'check_in', 'check_out', 'starting_price',
-        'reserve_price', 'end_date', 'view_count', 'search_appearance_count',
+        'experience', 'check_in', 'check_out', 'currency',
+        'starting_price', 'reserve_price', 'end_date', 'featured',
+        'view_count', 'search_appearance_count',
     )
 
     inlines = (BidAdmin,)
 
-    def formatted_name(auction):
+    def formatted_name(self, auction):  # pylint: disable=no-self-use
         return '{} Auction: {}'.format(
             auction.status(), auction.experience.title
         )
     formatted_name.short_description = 'Auction'
 
-    def formatted_current_price(auction):
-        return auction.formatted_current_price
+    def formatted_current_price(self, auction):  # pylint: disable=no-self-use
+        return auction.formatted_current_price()
     formatted_current_price.short_description = 'Current Price'
 
-    def bids(auction):
+    def bids(self, auction):  # pylint: disable=no-self-use
         return auction.bids.count()
 
-    def experience_link(auction):
+    def experience_link(self, auction):  # pylint: disable=no-self-use
         return format_html(
             '<a href="{}">{}</a>',
             reverse(
