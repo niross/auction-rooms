@@ -153,6 +153,7 @@ class AddExperienceTestCase(BaseExperienceTestCase):
         )
         picker = self.selenium.find_element_by_class_name('picker--opened')
         picker.find_element_by_class_name('picker__nav--next').click()
+        picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__day--infocus').click()
 
         # Check in time
@@ -184,6 +185,7 @@ class AddExperienceTestCase(BaseExperienceTestCase):
         )
         picker = self.selenium.find_element_by_class_name('picker--opened')
 
+        picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__day--infocus').click()
@@ -407,6 +409,7 @@ class UpdateExperienceTestCase(BaseExperienceTestCase):
         )
         picker = self.selenium.find_element_by_class_name('picker--opened')
         picker.find_element_by_class_name('picker__nav--next').click()
+        picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__day--infocus').click()
 
         # Check in time
@@ -438,6 +441,7 @@ class UpdateExperienceTestCase(BaseExperienceTestCase):
         )
         picker = self.selenium.find_element_by_class_name('picker--opened')
 
+        picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__nav--next').click()
         picker.find_element_by_class_name('picker__day--infocus').click()

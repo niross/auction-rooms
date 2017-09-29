@@ -17,7 +17,7 @@ from luckybreak.currencies.models import Currency
 
 
 class AuctionManager(DeletableTimeStampedManager):
-    def create_auction(self, experience, check_in, check_out,
+    def create_auction(self, experience, check_in, check_out, # pylint: disable=too-many-arguments
                        starting_price, reserve_price, end_date):
         """
         Create an auction from an experience
@@ -44,7 +44,7 @@ class AuctionManager(DeletableTimeStampedManager):
             image_copy = ContentFile(experience_image.image.read())
             new_path = os.path.join(
                 settings.MEDIA_ROOT,
-                AuctionImage.image.field.upload_to,
+                AuctionImage.image.field.upload_to,  # pylint: disable=no-member
                 os.path.basename(experience_image.image.name)
             )
             auction_image = AuctionImage(auction=auction)
@@ -69,25 +69,76 @@ class AuctionManager(DeletableTimeStampedManager):
 
 
 class Auction(DeletableTimeStampedModel):
-    experience = models.ForeignKey(Experience, related_name='auctions')
-
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    location = models.CharField(max_length=255)
-    coords = models.PointField()
-    terms = models.TextField(null=True, blank=True)
-    pax_adults = models.PositiveSmallIntegerField(default=2)
-    pax_children = models.PositiveSmallIntegerField(default=0)
-    currency = models.ForeignKey(Currency, default=settings.DEFAULT_CURRENCY_ID)
-
-    check_in = models.DateTimeField()
-    check_out = models.DateTimeField()
-    starting_price = models.DecimalField(max_digits=10, decimal_places=2)
-    reserve_price = models.DecimalField(max_digits=10, decimal_places=2)
-    end_date = models.DateTimeField()
-
-    view_count = models.PositiveIntegerField(default=0)
-    search_appearance_count = models.PositiveIntegerField(default=0)
+    experience = models.ForeignKey(
+        Experience,
+        related_name='auctions',
+        help_text='The experience this auction was created from'
+    )
+    title = models.CharField(
+        max_length=255,
+        help_text='Title of the experience being auctioned'
+    )
+    description = models.TextField(
+        help_text='Description of the experience being auctioned'
+    )
+    location = models.CharField(
+        max_length=255,
+        help_text='Location name of the experience'
+    )
+    coords = models.PointField(
+        help_text='Location coordinates of the experience'
+    )
+    terms = models.TextField(
+        null=True,
+        blank=True,
+        help_text='Terms and conditions for the auction/experience'
+    )
+    pax_adults = models.PositiveSmallIntegerField(
+        default=2,
+        help_text='Number of adults accepted as part of the experience'
+    )
+    pax_children = models.PositiveSmallIntegerField(
+        default=0,
+        help_text='Number of children accepted as part of the experience'
+    )
+    currency = models.ForeignKey(
+        Currency,
+        default=settings.DEFAULT_CURRENCY_ID,
+        help_text='The date and time the experience starts'
+    )
+    check_in = models.DateTimeField(
+        help_text='The date and time the experience starts'
+    )
+    check_out = models.DateTimeField(
+        help_text='The date and time the experience ends'
+    )
+    starting_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        help_text='The initial price for the auction when it goes live'
+    )
+    reserve_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        help_text='The minimum price that will be accpeted to win this auction'
+    )
+    end_date = models.DateTimeField(
+        help_text='The date and time the auction finishes'
+    )
+    view_count = models.PositiveIntegerField(
+        default=0,
+        help_text='The number of times auction details have been viewed'
+    )
+    search_appearance_count = models.PositiveIntegerField(
+        default=0,
+        help_text='The number of times this auction has ' \
+                  'appeared in search results or on the homepage'
+    )
+    featured = models.BooleanField(
+        default=False,
+        help_text='Set to true to show this auction in ' \
+                  'the featured section on the homepage'
+    )
 
     objects = AuctionManager()
 
