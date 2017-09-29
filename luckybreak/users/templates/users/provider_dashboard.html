@@ -73,9 +73,14 @@
               </a>
             </div>
             <div class="card-content">
-              <p class="valign-wrapper">&nbsp;</p>
+              <p class="valign-wrapper">
+                <i class="material-icons left">business_center</i>
+                {{ user.experiences.count }} Experiences
+              </p>
               <br/>
-              <p class="valign-wrapper">&nbsp;</p>
+              <p class="valign-wrapper">
+                &nbsp;
+              </p>
             </div>
           </div>
         </div>
@@ -99,9 +104,15 @@
               </a>
             </div>
             <div class="card-content">
-              <p class="valign-wrapper">&nbsp;</p>
+              <p class="valign-wrapper">
+                <i class="material-icons left">shopping_cart</i>
+                {{ user.live_auctions.count }} Live Auctions
+              </p>
               <br/>
-              <p class="valign-wrapper">&nbsp;</p>
+              <p class="valign-wrapper">
+                <i class="material-icons left">remove_shopping_cart</i>
+                {{ user.finished_auctions.count }} Finished Auctions
+              </p>
             </div>
           </div>
         </div>
