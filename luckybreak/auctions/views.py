@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.views.generic import ListView
 
 from luckybreak.common.mixins import UserIsProviderMixin
@@ -12,11 +10,8 @@ class ProviderLiveAuctionsView(UserIsProviderMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = super(ProviderLiveAuctionsView, self).get_queryset()
-        return qs.filter(
+        return models.Auction.objects.live().filter(
             experience__user=self.request.user,
-            deleted=False,
-            end_date__gte=datetime.utcnow()
         ).order_by('end_date')
 
 
@@ -26,9 +21,6 @@ class ProviderFinishedAuctionsView(UserIsProviderMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = super(ProviderFinishedAuctionsView, self).get_queryset()
-        return qs.filter(
-            experience__user=self.request.user,
-            deleted=False,
-            end_date__lt=datetime.utcnow()
+        return models.Auction.objects.finished().filter(
+            experience__user=self.request.user
         ).order_by('-end_date')
