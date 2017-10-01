@@ -4,7 +4,7 @@
 {% load render_bundle from webpack_loader %}
 {% block title %}{% trans "Your Finished Auctions" %}{% endblock %}
 {% block description %}{% endblock description %}
-{% block body_class %}provider-auctions{% endblock body_class %} 
+{% block body_class %}provider-auctions{% endblock body_class %}
 {% block extra_css %}
   <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
@@ -70,7 +70,7 @@
                 <tr>
                   <td>
                     <a
-                      href="#"
+                      href="{% url 'auctions:provider-auction' pk=auction.id %}"
                       class="tooltipped"
                       data-position="top"
                       data-tooltip="View auction details"
