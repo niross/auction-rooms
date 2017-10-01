@@ -50,10 +50,11 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    'raven.contrib.django.raven_compat', # sentry
-    'static_precompiler', # less compiler
-    'webpack_loader', # js hotloader
-    'rest_framework', # api
+    'raven.contrib.django.raven_compat',  # sentry
+    'static_precompiler',  # less compiler
+    'webpack_loader',  # js hotloader
+    'rest_framework',  # api
+    'easy_thumbnails',  # thumbnails
 ]
 
 # Apps specific for this project go here.
@@ -371,3 +372,9 @@ HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-1185
 PROVIDER_BACKGROUND_IMAGE = '/static/images/backgrounds/markus-spiske-37931.jpg'
 
 DEFAULT_CURRENCY_ID = 1  # GBP
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'gallery_thumb': {'size': (300, 200), 'crop': 'scale'},
+    },
+}

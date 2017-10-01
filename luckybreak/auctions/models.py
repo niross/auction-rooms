@@ -71,7 +71,8 @@ class AuctionManager(DeletableTimeStampedManager):
                 os.path.basename(experience_image.image.name)
             )
             auction_image = AuctionImage(auction=auction)
-            auction_image.image.save(new_path, image_copy)
+            auction_image.image.save(new_path, image_copy, True)
+            auction_image.image.name = os.path.join(AuctionImage.image.field.upload_to, os.path.basename(experience_image.image.name))
             auction_image.save()
 
         # Copy the inclusions over
@@ -190,6 +191,12 @@ class Auction(DeletableTimeStampedModel):
         """
         return self.end_date > datetime.utcnow().replace(tzinfo=pytz.utc)
 
+    def is_finished(self):
+        """
+        Return whether the auction is still biddable
+        """
+        return self.end_date <= datetime.utcnow().replace(tzinfo=pytz.utc)
+
     def status(self):
         if self.is_live():
             return 'Live'
@@ -217,6 +224,11 @@ class Auction(DeletableTimeStampedModel):
             self.currency.symbol,
             self.reserve_price
         )
+
+    def get_default_image(self):
+        if self.images.filter(default=True).exists():
+            return self.images.filter(default=True).first()
+        return self.images.first()
 
 
 class AuctionImage(models.Model):
