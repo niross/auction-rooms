@@ -18,12 +18,12 @@
         </a>
         <div class="collapsible-body">
           <ul>
-            <li class="{% navactive request 'auctions:provider-live-auctions' %}">
+            <li class="{% navactive request 'auctions:provider-live-auctions' %} {%  if current_auction.is_live %}active{% endif %} %}">
               <a href="{% url 'auctions:provider-live-auctions' %}">
                 <i class="material-icons">add_shopping_cart</i> Live Auctions
               </a>
             </li>
-            <li class="{% navactive request 'auctions:provider-finished-auctions' %}">
+            <li class="{% navactive request 'auctions:provider-finished-auctions' %} {%  if current_auction.is_finished %}active{% endif %} %}">
               <a href="{% url 'auctions:provider-finished-auctions' %}">
                 <i class="material-icons">remove_shopping_cart</i>Finished Auctions
               </a>

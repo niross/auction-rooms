@@ -8,7 +8,7 @@ module.exports = {
   cache: true,
   context: __dirname,
   entry: {
-    'experience': [
+    experience: [
       `webpack-dev-server/client?${PUBLIC_PATH}`,
       'webpack/hot/only-dev-server',
       './experience/src/index.jsx',
@@ -18,12 +18,17 @@ module.exports = {
       'webpack/hot/only-dev-server',
       './provider-auction/src/index.jsx'
     ],
+    gallery: [
+      `webpack-dev-server/client?${PUBLIC_PATH}`,
+      'webpack/hot/only-dev-server',
+      './gallery/src/index.jsx'
+    ],
     vendors: ['react', 'react-materialize']
   },
   output: {
     path: path.join(__dirname, '/dist/js'),
     filename: '[name].bundle.js',
-    publicPath: PUBLIC_PATH + '/static/js/apps/dist/js/'
+    publicPath: `${PUBLIC_PATH}/static/js/apps/dist/js/`
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

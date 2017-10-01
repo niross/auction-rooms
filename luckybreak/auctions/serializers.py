@@ -23,6 +23,7 @@ class AuctionInclusionSerializer(serializers.ModelSerializer):
         model = models.AuctionInclusion
         fields = ('id', 'auction', 'name')
 
+
 class AuctionExclusionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AuctionExclusion

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static compile_static common_tags thumbnail %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Auction: #{{ auction.id }} - {{ auction.title }}{% endblock %}
+{% block description %}{% endblock description %}
+{% block body_class %}provider-auction{% endblock body_class %}
+{% block extra_css %}
+  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block extra_js %}
+  {% render_bundle 'gallery' 'js' %}
+{% endblock extra_js %}
+
+{% block content %}
+  <div class="main">
+
+    <div class="hero-wrap">
+      <div
+        class="hero"
+        style="background-image:url('{{ auction.get_default_image.image.url }}')"
+      >
+        <div>
+          <div>
+            <h2>{{ auction.title|title }}</h2>
+            <h5>
+              <i class="material-icons">location_on</i>
+              {{ auction.location }}
+            </h5>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <nav class="crumbs">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
+            {% if auction.is_live %}
+              <a href="{% url 'auctions:provider-live-auctions' %}" class="breadcrumb">
+                Live Auctions
+              </a>
+            {% else %}
+              <a href="{% url 'auctions:provider-finished-auctions' %}" class="breadcrumb">
+                Finished Auctions
+              </a>
+            {% endif %}
+            <a href="{% url 'auctions:provider-auction' pk=auction.id %}" class="breadcrumb">
+              {{ auction.id }}: {{ auction.title }}
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      {% include 'users/inc/provider_side_nav.html' with current_auction=auction %}
+      <div class="row">
+        <div class="col s12 m8 l7">
+          <div class="row">
+            <div class="col s12">
+              <h5>About this Experience</h5>
+              {{ auction.description|linebreaks }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m12 l6">
+              <h5>What's Included</h5>
+              <ul>
+                {% for inclusion in auction.inclusions.all %}
+                  <li>
+                    <i class="material-icons left">check_box</i>
+                    {{ inclusion }}
+                  </li>
+                {% empty %}
+                  <li>No Inclusions</li>
+                {%  endfor %}
+              </ul>
+            </div>
+            <div class="col s12 m12 l6">
+              <h5>What's Not Included</h5>
+              <ul>
+                {% for exclusion in auction.exclusions.all %}
+                  <li>
+                    <i class="material-icons left">check_box_outline_blank</i>
+                    {{ exclusion }}
+                  </li>
+                {% empty %}
+                  <li>No Exclusions</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {% if auction.terms %}
+            <div class="row">
+              <div class="col s12">
+                <h5>Terms & Conditions</h5>
+                {{ auction.terms|linebreaks }}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="col s12 m4 l5 green">
+          &nbsp;
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <h5>Images</h5>
+          <div class="gallery-app">
+            {% for image in auction.images.all %}
+              <span
+                class="hide img-src"
+                data-src="{{ image.image.url }}"
+                data-thumb="{{ image.image|thumbnail_url:'gallery_thumb' }}"
+              />
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
