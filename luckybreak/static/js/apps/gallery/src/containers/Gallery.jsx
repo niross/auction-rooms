@@ -24,16 +24,20 @@ class Gallery extends React.Component {
       <Row className="gallery">
         <Col s={12} className="thumbs">
           {this.props.images.map((img, idx) => (
-            <img
-              className="thumb"
-              src={img.thumb}
-              alt=""
+            <span
+              role="button"
+              tabIndex={0}
               onClick={() =>
                 this.setState({ isOpen: true, currentImageIndex: idx })
               }
-            />
+            >
+              <img
+                className="thumb"
+                src={img.thumb}
+                alt=""
+              />
+            </span>
           ))}
-
         </Col>
         <Lightbox
           isOpen={this.state.isOpen}
@@ -51,7 +55,7 @@ class Gallery extends React.Component {
           onClickPrev={() =>
             this.setState({ currentImageIndex: this.state.currentImageIndex - 1 })
           }
-          onClickThumbnail={(i) => this.setState({ currentImageIndex: i })}
+          onClickThumbnail={i => this.setState({ currentImageIndex: i })}
         />
       </Row>
     );
