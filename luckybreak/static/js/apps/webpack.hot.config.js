@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const BundleTracker = require('webpack-bundle-tracker');
+
 const PUBLIC_PATH = 'http://localhost:3000';
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
     experience: [
       `webpack-dev-server/client?${PUBLIC_PATH}`,
       'webpack/hot/only-dev-server',
-      './experience/src/index.jsx',
+      './experience/src/index.jsx'
     ],
     'provider-auction': [
       `webpack-dev-server/client?${PUBLIC_PATH}`,

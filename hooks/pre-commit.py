@@ -6,6 +6,11 @@ import re
 import subprocess
 
 
+USE_PYLINT = False
+USE_PYFLAKES = False
+USE_PEP8 = False
+USE_FLAKE8 = True
+
 devnull = open(os.devnull, 'w')
 
 
@@ -66,21 +71,25 @@ def check_python():
     has_pep8 = exists('pep8')
     has_pylint = exists('pylint')
     has_pyflakes = exists('pyflakes')
-    if not (has_pep8 or has_pylint or has_pyflakes):
+    has_flake8 = exists('flake8')
+    if not (has_pep8 or has_pylint or has_pyflakes or has_flake8):
         die('Install PEP8, PyLint and PyFlakes!')
 
     rrcode = 0
     for f in modifieds:
-        if has_pep8:
+        if has_pep8 and USE_PEP8:
             out, err, _ = call('pep8 %s' % f)
             if out or err:
                 output('pep8', out, err)
                 rrcode = rrcode | 1
-        if has_pylint:
+        if has_pylint and USE_PYLINT:
             retcode = execute('pylint -f parseable -E -d E0213,E1101,E1002,E1121,E0211,E0611,E0602,E1103 %s' % f)
             rrcode = retcode | rrcode
-        if has_pyflakes:
+        if has_pyflakes and USE_PYFLAKES:
             retcode = execute('pyflakes %s' % f)
+            rrcode = retcode | rrcode
+        if has_flake8 and USE_FLAKE8:
+            retcode = execute('flake8 %s' % f)
             rrcode = retcode | rrcode
 
     if rrcode != 0:
