@@ -5,7 +5,7 @@
   .side-nav {
     z-index: 1;
     top: 65px;
-  } 
+  }
 }
 
 .main, footer {
@@ -42,10 +42,53 @@
     height: 64px;
     position: relative;
     z-index: 997;
-
-    nav {
-      position: fixed;
-    }
   }
 }
 
+@media only screen and (max-width: 601px) {
+  .provider-auction-app {
+    left: 20px;
+    width: 56px;
+  }
+}
+
+.provider-auction {
+  .hero-wrap {
+    margin-top: 0px;
+    min-height: 300px;
+    position: relative;
+
+    .hero {
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      background-size: cover !important;
+      min-height: 300px;
+      text-align: center;
+      position: absolute;
+      padding: 0 0 0 0;
+      width: 100%;
+      overflow: hidden;
+      top: 0;
+      z-index: 0;
+
+      &>div {
+        display: table;
+        width: 100%;
+        height: 300px;
+        background-color: rgba(0, 0, 0, .25);
+
+        &>div {
+          text-align: center;
+          display: table-cell;
+          vertical-align: middle;
+          color: #ffffff;
+
+          h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

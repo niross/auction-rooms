@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from luckybreak.common.mixins import UserIsProviderMixin
 from . import models
@@ -24,3 +24,9 @@ class ProviderFinishedAuctionsView(UserIsProviderMixin, ListView):
         return models.Auction.objects.finished().filter(
             experience__user=self.request.user
         ).order_by('-end_date')
+
+
+class ProviderAuctionView(UserIsProviderMixin, DetailView):
+    model = models.Auction
+    context_object_name = 'auction'
+    template_name = 'auctions/provider_auction.html'
