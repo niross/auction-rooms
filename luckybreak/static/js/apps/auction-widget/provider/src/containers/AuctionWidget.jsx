@@ -26,15 +26,13 @@ const AuctionWidget = class extends React.Component {
       currentPrice: props.currentPrice,
       bidCount: props.bidCount,
       bids: [],
-      endDate: moment(props.endDate)
+      endDate: moment(props.endDate),
+      isLive: moment(props.endDate).isAfter(moment())
     };
 
-    this.socket = new WebSocket(
-      `ws://${window.location.host}/provider/auctions/${this.props.auctionId}/stream/`
-    );
-    this.socket.onmessage = message => this.handleData(message.data);
-    this.socket.onopen = () => this.setState({ socketOpen: true });
-    this.socket.onclose = () => this.setState({ socketOpen: false });
+    if (this.state.isLive) {
+      this.initSocket();
+    }
   }
 
   componentDidMount() {
@@ -52,7 +50,16 @@ const AuctionWidget = class extends React.Component {
   }
 
   componentWillUnmount() {
-    this.socket.close();
+    if (this.socket) this.socket.close();
+  }
+
+  initSocket() {
+    this.socket = new WebSocket(
+      `ws://${window.location.host}/provider/auctions/${this.props.auctionId}/stream/`
+    );
+    this.socket.onmessage = message => this.handleData(message.data);
+    this.socket.onopen = () => this.setState({ socketOpen: true });
+    this.socket.onclose = () => this.setState({ socketOpen: false });
   }
 
   handleData(data) {
@@ -76,7 +83,7 @@ const AuctionWidget = class extends React.Component {
           />
         }
       >
-        {!this.state.socketOpen ?
+        {this.state.isLive && !this.state.socketOpen ?
           <SocketErrorMask /> : null}
         <div className="card-body">
           {this.state.loading ?
