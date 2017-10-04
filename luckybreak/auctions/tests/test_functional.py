@@ -120,3 +120,35 @@ class AddAuctionTestCase(BaseFunctionalTestCase):
 
         # 3 auctions should be created
         self.assertEqual(self.provider.auctions().count(), auction_count + 3)
+
+
+class ProviderAuctionListTestCase(BaseFunctionalTestCase):
+    fixtures = ['users.json', 'currencies.json', 'experiences.json']
+
+    def setUp(self):
+        super(ProviderAuctionListTestCase, self).setUp()
+        self.provider_login()
+
+    def test_live_auctions(self):
+        self.selenium.get(self.live_url('auctions:provider-live-auctions'))
+        self.selenium.find_element_by_class_name('provider-auctions').click()
+
+    def test_finished_auctions(self):
+        self.selenium.get(self.live_url('auctions:provider-finished-auctions'))
+        self.selenium.find_element_by_class_name('provider-auctions').click()
+
+
+class ProviderAuctionDetailTestCase(BaseFunctionalTestCase):
+    fixtures = [
+        'users.json', 'currencies.json', 'experiences.json', 'auctions.json'
+    ]
+
+    def setUp(self):
+        super(ProviderAuctionDetailTestCase, self).setUp()
+        self.provider_login()
+
+    def test_page_load(self):
+        self.selenium.get(
+            self.live_url('auctions:provider-auction', {'pk': 1})
+        )
+        self.selenium.find_element_by_class_name('provider-auction').click()
