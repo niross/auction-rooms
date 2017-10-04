@@ -4,6 +4,7 @@
 {% block title %}{% trans "Your Settings" %}{% endblock %}
 {% block description %}{% endblock description %}
 {% block body_class %}user-settings{% endblock body_class %}
+{% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
   <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
@@ -11,11 +12,11 @@
   <div class="main">
     <div class="container">
       <nav class="crumbs">
-        <div class="nav-wrapper"> 
+        <div class="nav-wrapper">
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
             <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
-            <a href="{% url 'users:settings' %}" class="breadcrumb">Settings</a> 
+            <a href="{% url 'users:settings' %}" class="breadcrumb">Settings</a>
           </div>
         </div>
       </nav>
