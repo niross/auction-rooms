@@ -119,14 +119,15 @@ def check_javascript():
 
 
 def django_tests():
-    rrcode = 0
-    out, err, retcode = call('python manage.py test --settings config.settings.test --keepdb')
-    if err:
-        output('django', out, err)
-        rrcode = rrcode | retcode
+    if hasattr(sys, 'real_prefix'):
+        rrcode = 0
+        out, err, retcode = call('python manage.py test --settings config.settings.test --keepdb')
+        if err:
+            output('django', out, err)
+            rrcode = rrcode | retcode
 
-    if rrcode != 0:
-        sys.exit(rrcode)
+        if rrcode != 0:
+            sys.exit(rrcode)
 
 
 def main():
