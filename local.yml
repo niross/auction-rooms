@@ -23,27 +23,28 @@ services:
     depends_on:
       - postgres
       - mailhog
+      - redis
     environment:
       - POSTGRES_USER=luckybreak
       - USE_DOCKER=yes
+      #- DJANGO_SETTINGS_MODULE=config.settings.local
+      - DATABASE_URL=postgis://luckybreak@postgres/luckybreak
     volumes:
       - .:/app
     ports:
       - "8000:8000"
+    links:
+      - redis
+      - postgres
+      - mailhog
 
-
-  pycharm:
+  redis:
     build:
       context: .
-      dockerfile: ./compose/django/Dockerfile-dev
-    depends_on:
-      - postgres
-    environment:
-      - POSTGRES_USER=luckybreak
-    volumes:
-      - .:/app
-
-
+      dockerfile: ./compose/redis/Dockerfile
+    restart: always
+    expose:
+      - "6379"
 
   mailhog:
     image: mailhog/mailhog:v1.0.0

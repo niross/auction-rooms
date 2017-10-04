@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+import json
 from datetime import datetime, timedelta
 
 from django.urls import reverse
@@ -92,8 +96,14 @@ class ProviderAuctionAPITestCase(BaseAPITestCase):
                 'reserve_price': 199.99,
                 'lots': 3,
                 'duration_days': 3,
+            },
+            format='json',
+            headers={
+                'Content-Type': "application/json; charset=utf-8"
             }
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(response.json()), 3)
+        # DRF test client fails to parse json as it's expecting ascii
+        json_response = json.loads(response.content)
+        self.assertEqual(len(json_response), 3)
         self.assertEqual(models.Auction.objects.all().count(), count + 3)

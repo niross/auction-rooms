@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 
 import pytz
+from channels import Group
 
 from django.core.files.base import ContentFile
 from django.conf import settings
@@ -204,7 +205,7 @@ class Auction(DeletableTimeStampedModel):
 
     def highest_bid(self):
         if self.bids.count() > 0:
-            return self.bids().order_by('-price').first()
+            return self.bids.order_by('-price').first()
         return None
 
     def current_price(self):
@@ -225,10 +226,28 @@ class Auction(DeletableTimeStampedModel):
             self.reserve_price
         )
 
-    def get_default_image(self):
+    def formatted_starting_price(self):
+        return '{}{}'.format(
+            self.currency.symbol,
+            self.starting_price
+        )
+
+    def Get_default_image(self):
         if self.images.filter(default=True).exists():
             return self.images.filter(default=True).first()
         return self.images.first()
+
+    @property
+    def provider_websocket_group(self):
+        """
+        Return the channel name that a provider should subscribe to
+        when viewing a live auction.
+        :return:
+        """
+        return Group('provider-auction-{}'.format(self.id))
+
+    def send_provider_message(self, message):
+        self.provider_websocket_group.send(message)
 
 
 class AuctionImage(models.Model):
