@@ -39,10 +39,10 @@ class BaseFunctionalTestCase(StaticLiveServerTestCase):
     def tearDown(self):
         self.selenium.quit()
 
-    def live_url(self, url_name):
+    def live_url(self, url_name, kwargs=None):
         return '{}{}'.format(
             self.live_server_url,
-            reverse(url_name)
+            reverse(url_name, kwargs=kwargs)
         )
 
     @contextmanager
