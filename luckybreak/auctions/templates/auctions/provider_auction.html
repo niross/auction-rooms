@@ -5,12 +5,15 @@
 {% block title %}Auction: #{{ auction.id }} - {{ auction.title }}{% endblock %}
 {% block description %}{% endblock description %}
 {% block body_class %}provider-auction{% endblock body_class %}
+{% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
   <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 
 {% block extra_js %}
+  {% render_bundle 'vendors' 'js' %}
   {% render_bundle 'gallery' 'js' %}
+  {% render_bundle 'provider-auction-widget' 'js' %}
 {% endblock extra_js %}
 
 {% block content %}
@@ -35,7 +38,7 @@
     </div>
 
     <div class="container">
-      <nav class="crumbs">
+      <nav class="crumbs truncate">
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
@@ -59,8 +62,8 @@
 
     <div class="container">
       {% include 'users/inc/provider_side_nav.html' with current_auction=auction %}
-      <div class="row">
-        <div class="col s12 m8 l7">
+      <div class="row orderable-cols">
+        <div class="col s12 m8 l8 detail-col">
           <div class="row">
             <div class="col s12">
               <h5>About this Experience</h5>
@@ -72,7 +75,7 @@
               <h5>What's Included</h5>
               <ul>
                 {% for inclusion in auction.inclusions.all %}
-                  <li>
+                  <li style="clear:left;">
                     <i class="material-icons left">check_box</i>
                     {{ inclusion }}
                   </li>
@@ -85,7 +88,7 @@
               <h5>What's Not Included</h5>
               <ul>
                 {% for exclusion in auction.exclusions.all %}
-                  <li>
+                  <li style="clear:left;">
                     <i class="material-icons left">check_box_outline_blank</i>
                     {{ exclusion }}
                   </li>
@@ -104,8 +107,14 @@
             </div>
           {% endif %}
         </div>
-        <div class="col s12 m4 l5 green">
-          &nbsp;
+        <div class="col s12 m4 l4 widget-col">
+          <div
+            id="provider-auction-widget-app"
+            data-auction-id="{{ auction.id }}"
+            data-current-price="{{ auction.formatted_current_price }}"
+            data-bid-count="{{ auction.bids.count }}"
+            data-end-date="{{ auction.end_date|date:"c" }}"
+          ></div>
         </div>
       </div>
       <div class="row">

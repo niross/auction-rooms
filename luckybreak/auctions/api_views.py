@@ -4,7 +4,6 @@ import logging
 
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework import mixins
 from rest_framework.response import Response
 
 from luckybreak.common.permissions import IsProviderPerm
@@ -14,16 +13,24 @@ from . import serializers
 log = logging.getLogger(__name__)
 
 
-class ProviderAuctionViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class ProviderAuctionViewSet(viewsets.ModelViewSet):
     """
     API endpoint for creating auctions
     """
-    queryset = models.Auction.objects.live()
-    serializer_class = serializers.AuctionCreateSerializer
+    queryset = models.Auction.objects.filter(deleted=False)
+    serializer_class = serializers.AuctionReadSerializer
     permission_classes = [IsProviderPerm]
 
+    def get_queryset(self):
+        return self.queryset.filter(experience__user=self.request.user)
+
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        serializer = serializers.AuctionCreateSerializer(
+            data=request.data,
+            context={
+                'request': request
+            }
+        )
         serializer.is_valid(raise_exception=True)
         auction = serializer.save()
 

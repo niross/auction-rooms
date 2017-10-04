@@ -55,6 +55,7 @@ THIRD_PARTY_APPS = [
     'webpack_loader',  # js hotloader
     'rest_framework',  # api
     'easy_thumbnails',  # thumbnails
+    'channels',  # realtime api
 ]
 
 # Apps specific for this project go here.
@@ -377,4 +378,11 @@ THUMBNAIL_ALIASES = {
     '': {
         'gallery_thumb': {'size': (300, 200), 'crop': 'scale'},
     },
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgiref.inmemory.ChannelLayer',
+        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+    }
 }

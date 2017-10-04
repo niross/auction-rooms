@@ -64,3 +64,5 @@ crispy-forms-materialize==0.2
 django-webpack-loader==0.5.0
 djangorestframework==3.6.4
 easy-thumbnails==2.4.2
+channels==1.1.8
+asgi_redis==1.4.3
