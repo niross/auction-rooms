@@ -21,9 +21,14 @@ const CardTitle = class extends React.Component {
         (ts) => {
           if (this.timer) {
             this.timer.innerHTML = ts.toString();
+            if (this.props.endDate.isBefore(moment())) {
+              window.clearInterval(this.state.timer);
+              window.location.reload();
+              // and
+            }
           }
         },
-        countdown.ALL,
+        ~countdown.MILLISECONDS, // eslint-disable-line no-bitwise
         2
       )
     };
