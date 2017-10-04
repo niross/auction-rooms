@@ -9,6 +9,7 @@ import pytz
 
 from luckybreak.experiences.models import Experience
 from luckybreak.experiences.serializers import ExperienceReadSerializer
+from luckybreak.users.serializers import PublicUserSerializer
 from . import models
 
 
@@ -30,6 +31,19 @@ class AuctionExclusionSerializer(serializers.ModelSerializer):
         fields = ('id', 'auction', 'name')
 
 
+class BidSerializer(serializers.ModelSerializer):
+    user = PublicUserSerializer()
+    formatted_price = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Bid
+        fields = ('id', 'user', 'price', 'formatted_price', 'created')
+
+    @staticmethod
+    def get_formatted_price(obj):
+        return obj.formatted_price()
+
+
 class AuctionReadSerializer(serializers.ModelSerializer):
     latitude = serializers.SerializerMethodField()
     longitude = serializers.SerializerMethodField()
@@ -37,6 +51,9 @@ class AuctionReadSerializer(serializers.ModelSerializer):
     inclusions = AuctionInclusionSerializer(many=True)
     exclusions = AuctionExclusionSerializer(many=True)
     experience = ExperienceReadSerializer()
+    bids = BidSerializer(many=True)
+    formatted_current_price = serializers.SerializerMethodField()
+    formatted_starting_price = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Auction
@@ -44,7 +61,8 @@ class AuctionReadSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'location', 'latitude', 'longitude',
             'terms', 'pax_adults', 'pax_children', 'images', 'inclusions',
             'exclusions', 'check_in', 'check_out', 'starting_price',
-            'reserve_price', 'experience',
+            'reserve_price', 'experience', 'bids', 'formatted_current_price',
+            'formatted_starting_price', 'created',
         )
 
     @staticmethod
@@ -54,6 +72,14 @@ class AuctionReadSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_longitude(obj):
         return obj.coords.y
+
+    @staticmethod
+    def get_formatted_current_price(obj):
+        return obj.formatted_current_price()
+
+    @staticmethod
+    def get_formatted_starting_price(obj):
+        return obj.formatted_starting_price()
 
 
 class AuctionCreateSerializer(serializers.ModelSerializer):

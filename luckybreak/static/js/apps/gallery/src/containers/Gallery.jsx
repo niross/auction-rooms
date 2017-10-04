@@ -25,6 +25,7 @@ class Gallery extends React.Component {
         <Col s={12} className="thumbs">
           {this.props.images.map((img, idx) => (
             <span
+              key={img.thumb}
               role="button"
               tabIndex={0}
               onClick={() =>
