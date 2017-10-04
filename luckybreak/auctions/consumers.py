@@ -1,5 +1,7 @@
 from channels.generic.websockets import JsonWebsocketConsumer
 
+from luckybreak.auctions.models import Auction
+
 
 class ProviderAuctionConsumer(JsonWebsocketConsumer):
     http_user = True
@@ -10,13 +12,20 @@ class ProviderAuctionConsumer(JsonWebsocketConsumer):
 
     # Perform actions on connection start
     def connect(self, message, **kwargs):
-        print("*"*89)
-        print("Connection start")
+        # Ensure the current user owns the auction
+        try:
+            Auction.objects.get(
+                pk=kwargs['pk'],
+                experience__user=message.user
+            )
+        except Auction.DoesNotExist:
+            message.reply_channel.send({'accept': False})
+            return
+
         message.reply_channel.send({'accept': True})
 
     # Called when a message is received
     def receive(self, content, **kwargs):
-        http_user = True
         print("*"*89)
         print("Received a message")
 
