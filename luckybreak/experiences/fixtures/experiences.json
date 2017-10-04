@@ -1,1 +1,70 @@
-[{"model": "experiences.experience", "pk": 1, "fields": {"created": "2017-09-16T09:42:47.202Z", "modified": "2017-09-16T09:42:47.202Z", "deleted": false, "user": 2, "title": "Test Experience 1", "description": "This is the experience description", "location": "Albuquerque, NM, United States", "coords": "SRID=4326;POINT (35.0853336 -106.6055534)", "terms": "These are the terms and conditions", "pax_adults": 2, "pax_children": 0, "currency": 1}}, {"model": "experiences.experienceimage", "pk": 51, "fields": {"experience": 1, "image": "experiences/jorge-gordo-205017_lcBBSyA.jpg", "default": false}}, {"model": "experiences.experienceimage", "pk": 52, "fields": {"experience": 1, "image": "experiences/atlas-green-1507.jpg", "default": true}}, {"model": "experiences.experienceinclusion", "pk": 30, "fields": {"experience": 1, "name": "Inclusion 1"}}, {"model": "experiences.experienceinclusion", "pk": 31, "fields": {"experience": 1, "name": "Inclusion 2"}}, {"model": "experiences.experienceexclusion", "pk": 16, "fields": {"experience": 1, "name": "Exclusion 1"}}, {"model": "experiences.experienceexclusion", "pk": 17, "fields": {"experience": 1, "name": "Exclusion 2"}}]
+[
+  {
+    "model": "experiences.experience",
+    "pk": 1,
+    "fields": {
+      "created": "2017-09-16T09:42:47.202Z",
+      "modified": "2017-09-16T09:42:47.202Z",
+      "deleted": false,
+      "user": 2,
+      "title": "Test Experience 1",
+      "description": "This is the experience description",
+      "location": "Albuquerque, NM, United States",
+      "coords": "SRID=4326;POINT (35.0853336 -106.6055534)",
+      "terms": "These are the terms and conditions",
+      "pax_adults": 2,
+      "pax_children": 0,
+      "currency": 1
+    }
+  },
+  {
+    "model": "experiences.experienceimage",
+    "pk": 51,
+    "fields": {
+      "experience": 1,
+      "image": "experiences/jorge-gordo-205017_lcBBSyA.jpg",
+      "default": false
+    }
+  },
+  {
+    "model": "experiences.experienceimage",
+    "pk": 52,
+    "fields": {
+      "experience": 1,
+      "image": "experiences/atlas-green-1507.jpg",
+      "default": true
+    }
+  },
+  {
+    "model": "experiences.experienceinclusion",
+    "pk": 30,
+    "fields": {
+      "experience": 1,
+      "name": "Inclusion 1"
+    }
+  },
+  {
+    "model": "experiences.experienceinclusion",
+    "pk": 31,
+    "fields": {
+      "experience": 1,
+      "name": "Inclusion 2"
+    }
+  },
+  {
+    "model": "experiences.experienceexclusion",
+    "pk": 16,
+    "fields": {
+      "experience": 1,
+      "name": "Exclusion 1"
+    }
+  },
+  {
+    "model": "experiences.experienceexclusion",
+    "pk": 17,
+    "fields": {
+      "experience": 1,
+      "name": "Exclusion 2"
+    }
+  }
+]

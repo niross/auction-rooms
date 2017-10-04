@@ -24,7 +24,6 @@ const CardTitle = class extends React.Component {
             if (this.props.endDate.isBefore(moment())) {
               window.clearInterval(this.state.timer);
               window.location.reload();
-              // and
             }
           }
         },

@@ -1,0 +1,78 @@
+[
+  {
+    "model": "auctions.auction",
+    "pk": 1,
+    "fields": {
+      "created": "2017-10-03T07:02:56.779Z",
+      "modified": "2017-10-03T07:02:56.780Z",
+      "deleted": false,
+      "experience": 1,
+      "title": "Test Experience 1",
+      "description": "This is the experience description",
+      "location": "Albuquerque, NM, United States",
+      "coords": "SRID=4326;POINT (35.0853336 -106.6055534)",
+      "terms": "These are the terms and conditions",
+      "pax_adults": 2,
+      "pax_children": 0,
+      "currency": 1,
+      "check_in": "2027-12-01T11:00:00Z",
+      "check_out": "2027-12-02T11:00:00Z",
+      "starting_price": "33.00",
+      "reserve_price": "44.00",
+      "end_date": "2027-10-10T07:02:56.765Z",
+      "view_count": 0,
+      "search_appearance_count": 0,
+      "featured": false
+    }
+  },
+  {
+    "model": "auctions.auctionimage",
+    "pk": 1,
+    "fields": {
+      "auction": 1,
+      "image": "auctions/jorge-gordo-205017_lcBBSyA.jpg",
+      "default": false
+    }
+  },
+  {
+    "model": "auctions.auctionimage",
+    "pk": 2,
+    "fields": {
+      "auction": 1,
+      "image": "auctions/atlas-green-1507.jpg",
+      "default": false
+    }
+  },
+  {
+    "model": "auctions.auctioninclusion",
+    "pk": 1,
+    "fields": {
+      "auction": 1,
+      "name": "Inclusion 1"
+    }
+  },
+  {
+    "model": "auctions.auctioninclusion",
+    "pk": 2,
+    "fields": {
+      "auction": 1,
+      "name": "Inclusion 2"
+    }
+  },
+  {
+    "model": "auctions.auctionexclusion",
+    "pk": 1,
+    "fields": {
+      "auction": 1,
+      "name": "Exclusion 1"
+    }
+  },
+  {
+    "model": "auctions.auctionexclusion",
+    "pk": 2,
+    "fields": {
+      "auction": 1,
+      "name": "Exclusion 2"
+    }
+  }
+]
