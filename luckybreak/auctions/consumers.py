@@ -12,6 +12,10 @@ class ProviderAuctionConsumer(JsonWebsocketConsumer):
 
     # Perform actions on connection start
     def connect(self, message, **kwargs):
+        if not message.user.is_authenticated():
+            message.reply_channel.send({'accept': False})
+            return
+
         # Ensure the current user owns the auction
         try:
             Auction.objects.get(
