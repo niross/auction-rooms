@@ -1,6 +1,7 @@
 from unittest import skipIf
 from contextlib import contextmanager
 
+from channels.test import ChannelTestCase
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -92,6 +93,18 @@ class BaseTestCase(TestCase):
 
 
 class BaseAPITestCase(APITestCase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.guest = User.objects.get(pk=1)
+        self.guest.set_password('password')
+        self.guest.save()
+        self.provider = User.objects.get(pk=2)
+        self.provider.set_password('password')
+        self.provider.save()
+
+
+class BaseChannelTestCase(ChannelTestCase):
     fixtures = ['users.json']
 
     def setUp(self):
