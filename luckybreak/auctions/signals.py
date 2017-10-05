@@ -17,7 +17,6 @@ def bid_save(sender, instance, created, **kwargs):
     :param kwargs:
     :return:
     """
-    print "SIGNAL"
     if created:
         instance.auction.send_provider_message({
             'text': json.dumps(BidSerializer(instance).data)
