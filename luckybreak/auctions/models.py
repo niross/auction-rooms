@@ -214,6 +214,10 @@ class Auction(DeletableTimeStampedModel):
     def get_provider_absolute_url(self):
         return reverse('auctions:provider-auction', args=(self.id,))
 
+    def get_guest_absolute_url(self):
+        return '#TODO'
+        # return reverse('auctions:provider-auction', args=(self.id,))
+
     def is_live(self):
         """
         Return whether the auction is still biddable
@@ -255,7 +259,7 @@ class Auction(DeletableTimeStampedModel):
             self.starting_price
         )
 
-    def Get_default_image(self):
+    def get_default_image(self):
         if self.images.filter(default=True).exists():
             return self.images.filter(default=True).first()
         return self.images.first()
@@ -271,6 +275,18 @@ class Auction(DeletableTimeStampedModel):
 
     def send_provider_message(self, message):
         self.provider_websocket_group.send(message)
+
+    def mark_complete(self):
+        from luckybreak.auctions.signals import auction_completed
+
+        if self.bids.count() == 0 or self.current_price() < self.reserve_price:
+            # Auction did not sell
+            self.status = self.STATUS_FINISHED_UNSOLD
+        else:
+            # Auction sold
+            self.status = self.STATUS_FINISHED_SOLD
+        self.save()
+        auction_completed.send(sender=self.__class__, auction=self)
 
 
 class AuctionImage(models.Model):

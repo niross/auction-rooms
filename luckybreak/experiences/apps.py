@@ -4,4 +4,8 @@ from django.apps import AppConfig
 
 
 class ExperiencesConfig(AppConfig):
-    name = 'experiences'
+    name = 'luckybreak.experiences'
+
+    def ready(self):
+        super(ExperiencesConfig, self).ready()
+        from . import signals  # noqa
