@@ -106,9 +106,11 @@ class Schedule extends React.Component {
                 },
                 onSet: (e) => {
                   const d = moment(e.select, 'x');
-                  this.props.onFieldChange('check_in_date', d);
-                  if (!formData.check_out_date || formData.check_out_date.isBefore(d)) {
-                    this.props.onFieldChange('check_out_date', moment(d).add(1, 'days'));
+                  if (d.isValid()) {
+                    this.props.onFieldChange('check_in_date', d);
+                    if (!formData.check_out_date || formData.check_out_date.isBefore(d)) {
+                      this.props.onFieldChange('check_out_date', moment(d).add(1, 'days'));
+                    }
                   }
                 }
               }}
