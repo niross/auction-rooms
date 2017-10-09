@@ -32,7 +32,7 @@ class AuctionAdmin(admin.ModelAdmin):
 
     def formatted_name(self, auction):  # pylint: disable=no-self-use
         return '{} Auction: {}'.format(
-            auction.status(), auction.experience.title
+            auction.get_status_display(), auction.experience.title
         )
     formatted_name.short_description = 'Auction'
 
