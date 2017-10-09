@@ -35,5 +35,11 @@ class User(AbstractUser):
     def finished_auctions(self):
         return self.auctions().finished()
 
+    def sold_auctions(self):
+        return self.auctions().sold()
+
     def total_live_auctions_by_experience(self):
         return self.live_auctions().distinct('experience').count()
+
+    def total_sold_auctions_by_experience(self):
+        return self.sold_auctions().distinct('experience').count()
