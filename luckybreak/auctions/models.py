@@ -37,6 +37,12 @@ class AuctionQuerySet(models.QuerySet):
             end_date__lte=datetime.utcnow()
         )
 
+    def sold(self):
+        return self.filter(
+            deleted=False,
+            status=Auction.STATUS_FINISHED_SOLD
+        )
+
 
 class AuctionManager(DeletableTimeStampedManager):
     def get_queryset(self):
@@ -105,8 +111,26 @@ class AuctionManager(DeletableTimeStampedManager):
         """
         return self.get_queryset().finished()
 
+    def sold(self):
+        """
+        Returns auctions that have finished
+        """
+        return self.get_queryset().sold()
+
 
 class Auction(DeletableTimeStampedModel):
+    STATUS_LIVE = 1
+    STATUS_FINISHED_SOLD = 2
+    STATUS_FINISHED_UNSOLD = 3
+    _STATUS_CHOICES = (
+        (STATUS_LIVE, 'Live'),
+        (STATUS_FINISHED_SOLD, 'Finished Sold'),
+        (STATUS_FINISHED_UNSOLD, 'Finished Unsold'),
+    )
+    status = models.IntegerField(
+        choices=_STATUS_CHOICES,
+        default=STATUS_LIVE
+    )
     experience = models.ForeignKey(
         Experience,
         related_name='auctions',
@@ -201,11 +225,6 @@ class Auction(DeletableTimeStampedModel):
         Return whether the auction is still biddable
         """
         return self.end_date <= datetime.utcnow().replace(tzinfo=pytz.utc)
-
-    def status(self):
-        if self.is_live():
-            return 'Live'
-        return 'Complete'
 
     def highest_bid(self):
         if self.bids.count() > 0:
