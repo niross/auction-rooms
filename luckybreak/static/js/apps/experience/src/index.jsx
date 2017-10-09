@@ -17,6 +17,7 @@ $('.experience-app').each((i, target) => {
       buttonIcon={data.buttonIcon}
       buttonText={data.buttonText}
       buttonLarge={data.buttonLarge != null}
+      buttonFlat={data.buttonFlat != null}
     />,
     target
   );
