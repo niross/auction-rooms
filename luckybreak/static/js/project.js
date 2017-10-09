@@ -31,4 +31,7 @@ $(document).ready(function() {
   $('.timepicker').pickatime({
     twelvehour: false
   });
+
+  // Initialise feature discovery
+  $('.tap-target').tapTarget('open');
 });

@@ -114,24 +114,6 @@ class Auction extends React.Component {
         }}
       >
         {this.renderSteps()}
-        {/*
-        <WizardStep showLoader={this.state.loading}>
-          <Experience experiences={this.state.experiences} />
-        </WizardStep>
-        <WizardStep>
-          <Schedule />
-        </WizardStep>
-        <WizardStep>
-          <Pricing />
-        </WizardStep>
-        <WizardStep
-          forwardButtonText="Create Auction"
-          forwardButtonIcon="add_shopping_cart"
-          forwardButtonIconPlacement="left"
-        >
-          <Success />
-        </WizardStep>
-        */}
       </Wizard>
     );
   }
