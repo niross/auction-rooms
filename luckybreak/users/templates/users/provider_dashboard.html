@@ -53,9 +53,15 @@
               </a>
             </div>
             <div class="card-content">
-              <p class="valign-wrapper"><i class="material-icons left">mail</i> {{ user.email }}</p>
+              <p class="valign-wrapper">
+                <i class="material-icons left">mail</i>
+                {{ user.email }}
+              </p>
               <br/>
-              <p class="valign-wrapper"><i class="material-icons left">phone</i> {{ user.phone }}</p>
+              <p class="valign-wrapper">
+                <i class="material-icons left">phone</i>
+                {% if user.phone %}{{ user.phone }}{% else %}Not Provided{% endif %}
+              </p>
             </div>
           </div>
         </div>
