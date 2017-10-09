@@ -34,6 +34,20 @@
 
       <div class="row">
 
+        <!-- Welcome Message -->
+        {% if show_dashboard_welcome %}
+          <div class="card blue lighten-1 white-text">
+            <div class="card-content white-text">
+              <span class="card-title">Welcome to {{ site.name }}!</span>
+              <p>You are now ready to start auctioning your experiences.</p>
+              <br />
+              <p>Head to your <a href="{%  url 'experiences:experiences' %}">experiences page</a> to get started.</p>
+              <p>Once you have some experiences set up you can manage your auctions on your <a href="{% url 'auctions:provider-live-auctions' %}">auctions page.</a></p>
+              <p>If you have any questions don't hesitate to <a href="{% url 'contact:contact' %}">contact us</a>.</p>
+            </div>
+          </div>
+        {% endif %}
+
         <!-- Profile -->
         <div class="col l4 m6 s12">
           <div class="card profile-card">

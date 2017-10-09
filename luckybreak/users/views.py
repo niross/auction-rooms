@@ -13,7 +13,18 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     guest_template_name = 'users/guest_dashboard.html'
 
     def get_context_data(self, **kwargs):
-        return super(DashboardView, self).get_context_data(**kwargs)
+        context = super(DashboardView, self).get_context_data(**kwargs)
+
+        # Show auction the welcome message if it hasn't already
+        # been shown.
+        user = self.request.user
+        context['show_dashboard_welcome'] = user.show_dashboard_welcome
+        if context['show_dashboard_welcome']:
+            user.show_dashboard_welcome = False
+            user.save()
+
+        return context
+
 
     def get_template_names(self):
         if self.request.user.is_provider():

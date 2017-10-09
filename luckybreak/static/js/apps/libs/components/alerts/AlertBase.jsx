@@ -5,14 +5,16 @@ import { Card } from 'react-materialize';
 const propTypes = {
   icon: PropTypes.string,
   colour: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  size: PropTypes.string
 };
 const defaultProps = {
-  icon: null
+  icon: null,
+  size: ''
 };
 
 const AlertBase = props => (
-  <Card className={`white-text valign-wrapper ${props.colour}`}>
+  <Card className={`custom-alert white-text valign-wrapper ${props.colour} ${props.size}`}>
     {props.icon ?
       <span>
         <i className="material-icons left">{props.icon}</i>
