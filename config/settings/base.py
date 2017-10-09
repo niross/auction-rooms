@@ -67,6 +67,7 @@ LOCAL_APPS = [
     'luckybreak.auctions',
     'luckybreak.currencies',
     'luckybreak.contact',
+    'luckybreak.event_log',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

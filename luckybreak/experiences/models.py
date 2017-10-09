@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.urls import reverse
 
 from luckybreak.users.models import User
 from luckybreak.common.models import DeletableTimeStampedModel

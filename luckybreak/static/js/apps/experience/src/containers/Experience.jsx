@@ -23,14 +23,16 @@ const propTypes = {
   buttonId: PropTypes.string.isRequired,
   buttonIcon: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
-  buttonLarge: PropTypes.bool
+  buttonLarge: PropTypes.bool,
+  buttonFlat: PropTypes.bool
 };
 const defaultProps = {
   experienceId: null,
   buttonFloating: false,
   buttonWaves: 'light',
   buttonColour: 'green',
-  buttonLarge: false
+  buttonLarge: false,
+  buttonFlat: false
 };
 
 const initialData = {
@@ -69,7 +71,7 @@ class Experience extends React.Component {
         trigger={
           <Button
             id={this.props.buttonId}
-            className={`tooltipped ${this.props.buttonColour}`}
+            className={`tooltipped ${this.props.buttonFlat ? 'btn-flat' : this.props.buttonColour}`}
             floating={this.props.buttonFloating}
             waves={this.props.buttonWaves}
             fabClickOnly
@@ -77,7 +79,9 @@ class Experience extends React.Component {
             data-tooltip={this.props.experienceId ? 'Edit this Experience' : 'Add an Experience'}
             data-position="top"
           >
-            <Icon left>{this.props.buttonIcon}</Icon>
+            {this.props.buttonIcon ?
+              <Icon left>{this.props.buttonIcon}</Icon>
+              : null}
             {this.props.buttonText}
           </Button>
         }
