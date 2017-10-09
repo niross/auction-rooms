@@ -14,6 +14,21 @@ class ProviderLiveAuctionsView(UserIsProviderMixin, ListView):
             experience__user=self.request.user,
         ).order_by('end_date')
 
+    def get_context_data(self, **kwargs):
+        context = super(ProviderLiveAuctionsView, self).get_context_data(
+            **kwargs
+        )
+
+        # Show auction feature discovery if the user has at least one
+        # experience, no auctions and has not seen it before
+        user = self.request.user
+        if user.show_auction_help and user.experiences.exists():
+            context['show_auction_help'] = not user.auctions().exists()
+            user.show_auction_help = False
+            user.save()
+
+        return context
+
 
 class ProviderFinishedAuctionsView(UserIsProviderMixin, ListView):
     model = models.Auction

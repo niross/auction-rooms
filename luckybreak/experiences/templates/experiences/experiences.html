@@ -140,9 +140,21 @@
             </tfoot>
           </table>
         </div>
-
       </div>
     </div>
   </div>
+
+  {% if show_experience_help %}
+    <div
+      class="tap-target blue lighten-1 white-text"
+      data-activates="add-experience-button"
+    >
+      <div class="tap-target-content">
+        <h5>Create your first experience</h5>
+        <p>Create an experience once and auction it off as and when you choose.</p>
+        <p>Click the plus button to get started.</p>
+      </div>
+    </div>
+  {% endif %}
 {% endblock content %}
 

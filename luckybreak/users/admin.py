@@ -5,12 +5,12 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from .models import User
 
 
-class MyUserChangeForm(UserChangeForm):
+class LBUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
 
 
-class MyUserCreationForm(UserCreationForm):
+class LBUserCreationForm(UserCreationForm):
 
     error_message = UserCreationForm.error_messages.update({
         'duplicate_username': 'This username has already been taken.'
@@ -29,11 +29,13 @@ class MyUserCreationForm(UserCreationForm):
 
 
 @admin.register(User)
-class MyUserAdmin(AuthUserAdmin):
-    form = MyUserChangeForm
-    add_form = MyUserCreationForm
+class UserAdmin(AuthUserAdmin):
+    form = LBUserChangeForm
+    add_form = LBUserCreationForm
     fieldsets = (
-            ('User Profile', {'fields': ('first_name', 'last_name', 'email')}),
+        ('User Profile', {'fields': ('first_name', 'last_name', 'email')}),
     ) + AuthUserAdmin.fieldsets
-    list_display = ('first_name', 'last_name', 'email', 'is_provider', 'is_superuser')
+    list_display = (
+        'first_name', 'last_name', 'email', 'is_provider', 'is_superuser'
+    )
     search_fields = ['first_name', 'last_name', 'email']
