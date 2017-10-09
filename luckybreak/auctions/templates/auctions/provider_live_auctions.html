@@ -31,6 +31,7 @@
 
     <div class="container">
       {% include 'users/inc/provider_side_nav.html' %}
+
       <div class="row">
         <div class="s12">
           <h4>Your Live Auctions</h4>
@@ -39,19 +40,27 @@
             View and manage any currently live auctions.
           </p>
         </div>
-        <div class="s12">
-          <div
-            class="provider-auction-app fixed-action-btn"
-            data-modal-id="provider-auction-modal"
-            data-button-id="provider-add-auction-button"
-            data-button-icon="add_shopping_cart"
-            data-button-text="Add Auction"
-            data-button-floating="true"
-            data-button-colour="red"
-            data-button-fixed="true"
-            data-button-large="true"
-          ></div>
-        </div>
+
+        {% if not user.experiences.exists %}
+          {% include 'common/inc/alerts/warning.html' with grid="s12" message="You don't have any experiences to auction yet. Please&nbsp;<a href='/experiences/'>create one</a>&nbsp;before adding an auction." %}
+        {% endif %}
+
+
+        {% if user.experiences.exists %}
+          <div class="s12">
+            <div
+              class="provider-auction-app fixed-action-btn"
+              data-modal-id="provider-auction-modal"
+              data-button-id="provider-add-auction-button"
+              data-button-icon="add_shopping_cart"
+              data-button-text="Add Auction"
+              data-button-floating="true"
+              data-button-colour="red"
+              data-button-fixed="true"
+              data-button-large="true"
+            ></div>
+          </div>
+        {% endif %}
 
         <div class="s12">
           <table class="responsive-table striped bordered">
@@ -129,9 +138,22 @@
             </tfoot>
           </table>
         </div>
-
       </div>
     </div>
   </div>
+
+  {% if show_auction_help %}
+    <div
+      class="tap-target blue lighten-1 white-text"
+      data-activates="provider-add-auction-button"
+    >
+      <div class="tap-target-content">
+        <h5>Create your first auction</h5>
+        <p>Add an auction for one of your experiences and start earning ASAP!</p>
+        <p>Click the add auction button to get started.</p>
+      </div>
+    </div>
+  {% endif %}
+
 {% endblock content %}
 

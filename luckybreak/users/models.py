@@ -19,6 +19,11 @@ class User(AbstractUser):
         max_length=100, null=True, blank=True
     )
 
+    # Feature Discovery
+    show_dashboard_welcome = models.BooleanField(default=True)
+    show_experience_help = models.BooleanField(default=True)
+    show_auction_help = models.BooleanField(default=True)
+
     def __str__(self):
         return self.get_full_name()
 

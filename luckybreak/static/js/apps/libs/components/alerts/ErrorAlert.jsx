@@ -5,16 +5,19 @@ import AlertBase from './AlertBase';
 
 const propTypes = {
   showIcon: PropTypes.bool,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  size: PropTypes.string
 };
 const defaultProps = {
-  showIcon: true
+  showIcon: true,
+  size: null
 };
 
-const InfoAlert = ({ showIcon, children }) => (
+const InfoAlert = ({ showIcon, children, size }) => (
   <AlertBase
     icon={showIcon ? 'error' : null}
     colour="red lighten-1"
+    size={size}
   >
     {children}
   </AlertBase>

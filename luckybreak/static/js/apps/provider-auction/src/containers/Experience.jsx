@@ -36,30 +36,40 @@ class Experience extends React.Component {
       <span>
         <Subheader text="Experience" />
         <Row>
-          <Col s={12} m={8} offset="m2">
-            {this.state.errors.experience ?
-              <ErrorAlert>{this.state.errors.experience}</ErrorAlert>
-              : null}
-            <Collection>
-              {this.props.experiences.map((exp) => {
-                const defaultImage = exp.images.find(i => i.default);
-                return (
-                  <CollectionItem
-                    key={`experience-${exp.id}`}
-                    href="#"
-                    active={this.props.formData.experience === exp.id}
-                    className="avatar valign-wrapper"
-                    onClick={() => this.props.onFieldChange('experience', exp.id)}
-                  >
-                    <img src={defaultImage.image} alt={exp.title} className="circle" />
-                    <span className="title">{exp.title}</span>
-                    <p>{exp.location}</p>
-                  </CollectionItem>
-                );
-              })}
-            </Collection>
-            <HelpText s={12}>Select the experience to auction from the list above</HelpText>
-          </Col>
+          {this.props.experiences.length === 0 ?
+            <ErrorAlert size="s12">
+              <strong>You don't have any experiences to auction.</strong>
+              <p>
+                Please <a href="/experiences/">create an experience</a>&nbsp;
+                and come back here to auction it.
+              </p>
+            </ErrorAlert>
+            :
+            <Col s={12} m={8} offset="m2">
+              {this.state.errors.experience ?
+                <ErrorAlert>{this.state.errors.experience}</ErrorAlert>
+                : null}
+              <Collection>
+                {this.props.experiences.map((exp) => {
+                  const defaultImage = exp.images.find(i => i.default);
+                  return (
+                    <CollectionItem
+                      key={`experience-${exp.id}`}
+                      href="#"
+                      active={this.props.formData.experience === exp.id}
+                      className="avatar valign-wrapper"
+                      onClick={() => this.props.onFieldChange('experience', exp.id)}
+                    >
+                      <img src={defaultImage.image} alt={exp.title} className="circle"/>
+                      <span className="title">{exp.title}</span>
+                      <p>{exp.location}</p>
+                    </CollectionItem>
+                  );
+                })}
+              </Collection>
+              <HelpText s={12}>Select the experience to auction from the list above</HelpText>
+            </Col>
+          }
         </Row>
       </span>
     );
