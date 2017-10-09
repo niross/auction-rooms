@@ -24,7 +24,7 @@ class Gallery extends React.Component {
       <Row className="gallery">
         <Col s={12} className="thumbs">
           {this.props.images.map((img, idx) => (
-            <span
+            <div
               key={img.thumb}
               role="button"
               tabIndex={0}
@@ -37,7 +37,7 @@ class Gallery extends React.Component {
                 src={img.thumb}
                 alt=""
               />
-            </span>
+            </div>
           ))}
         </Col>
         <Lightbox
