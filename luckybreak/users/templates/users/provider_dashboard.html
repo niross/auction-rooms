@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static compile_static %}
+{% load render_bundle from webpack_loader %}
 {% block title %}{% trans "Your Dashboard" %}{% endblock %}
 {% block description %}{% endblock description %}
 {% block body_class %}provider-dashboard{% endblock body_class %}
@@ -8,6 +9,10 @@
 {% block extra_css %}
   <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+  {% render_bundle 'experience' 'js' %}
+{% endblock extra_js %}
 
 {% block content %}
 
@@ -44,7 +49,7 @@
                 data-delay="50"
                 data-tooltip="Edit your settings"
               >
-                <i class="material-icons">edit</i>
+                <i class="material-icons">build</i>
               </a>
             </div>
             <div class="card-content">
@@ -70,7 +75,7 @@
                 data-delay="50"
                 data-tooltip="Manage your experiences"
               >
-                <i class="material-icons">edit</i>
+                <i class="material-icons">build</i>
               </a>
             </div>
             <div class="card-content">
@@ -101,7 +106,7 @@
                 data-delay="50"
                 data-tooltip="Manage your auctions"
               >
-                <i class="material-icons">edit</i>
+                <i class="material-icons">build</i>
               </a>
             </div>
             <div class="card-content">
@@ -114,6 +119,40 @@
                 <i class="material-icons left">remove_shopping_cart</i>
                 {{ user.finished_auctions.count }} Finished Auctions
               </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content recent-activity">
+              <span class="card-title">
+                <i class="material-icons left">access_time</i> Recent Activity
+              </span>
+              <table class="bordered striped">
+                <thead>
+                  <tr>
+                    <th>Event Date</th>
+                    <th>Event Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for event in user.events.all|slice:":50" %}
+                    <tr>
+                      <td>{{ event.created|date:"H:i, D, j N Y" }}</td>
+                      <td>{{ event.get_log_message|safe }}</td>
+                    </tr>
+                  {% empty %}
+                    <tr>
+                      <td class="center-align" colspan="2">
+                        You don't have any recent events right now.
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
