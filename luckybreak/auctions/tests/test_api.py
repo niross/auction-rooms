@@ -80,6 +80,7 @@ class ProviderAuctionAPITestCase(BaseAPITestCase):
         )
 
     def test_create_auction(self):
+        events = self.provider.events.count()
         self.client.force_authenticate(user=self.provider)
         experience = self.provider.experiences.last()
         count = models.Auction.objects.all().count()
@@ -107,3 +108,4 @@ class ProviderAuctionAPITestCase(BaseAPITestCase):
         json_response = json.loads(response.content)
         self.assertEqual(len(json_response), 3)
         self.assertEqual(models.Auction.objects.all().count(), count + 3)
+        self.assertEqual(self.provider.events.count(), events + 3)
