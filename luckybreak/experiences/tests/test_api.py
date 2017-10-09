@@ -34,6 +34,7 @@ class ExperienceAPITestCase(BaseAPITestCase):
 
     def test_provider_create_experience(self):
         self.client.force_authenticate(user=self.provider)
+        events = self.provider.events.count()
         fp = io.BytesIO()
         Image.new('RGB', (10, 100)).save(fp, 'jpeg')
         fp.seek(0)
@@ -69,6 +70,7 @@ class ExperienceAPITestCase(BaseAPITestCase):
         self.assertEqual(experience.exclusions.count(), 1)
         self.assertEqual(experience.exclusions.filter(name='parking').count(), 1)
         self.assertEqual(experience.images.filter(default=True).count(), 1)
+        self.assertEqual(self.provider.events.count(), events + 1)
 
     def test_unauthed_update_experience(self):
         """
@@ -90,7 +92,6 @@ class ExperienceAPITestCase(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_provider_update_experience(self):
-        experience = Experience.objects.first()
         self.client.force_authenticate(user=self.provider)
         fp = io.BytesIO()
         Image.new('RGB', (10, 100)).save(fp, 'jpeg')
