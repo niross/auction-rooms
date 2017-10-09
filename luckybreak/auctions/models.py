@@ -8,6 +8,7 @@ from channels import Group
 from django.core.files.base import ContentFile
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.urls import reverse
 
 from luckybreak.common.models import (
     DeletableTimeStampedModel, DeletableTimeStampedManager
@@ -185,6 +186,9 @@ class Auction(DeletableTimeStampedModel):
             self.formatted_current_price(),
             self.end_date
         )
+
+    def get_provider_absolute_url(self):
+        return reverse('auctions:provider-auction', args=(self.id,))
 
     def is_live(self):
         """
