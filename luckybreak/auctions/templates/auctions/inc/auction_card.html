@@ -1,0 +1,98 @@
+{% load thumbnail %}
+<div class="col s12 m6 l6 xl4 auction-card">
+  <div class="card">
+    <div class="card-image">
+      <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
+        <img
+          src="{{ auction.get_default_image.image|thumbnail_url:'auction_card' }}"
+          alt="{{ auction.title }}"
+        >
+      </a>
+      <a
+        class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+        data-position="top"
+        data-tooltip="Add to your favourites"
+      >
+        <i class="material-icons">favorite</i>
+      </a>
+    </div>
+    <div class="card-content">
+      <h5
+        class="truncate tooltipped"
+        data-position="top"
+        data-tooltip="{{ auction.title }}"
+      >
+        <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
+          {{ auction.title }}
+        </a>
+      </h5>
+      <div class="row">
+        <div class="col s12">
+          <p
+            class="truncate tooltipped"
+            data-position="top"
+            data-tooltip="{{ auction.location }}"
+          >
+            <i class="material-icons left loc">location_on</i>
+            {{ auction.location }}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 l6">
+          <p
+            class="truncate tooltipped"
+            data-position="top"
+            data-tooltip="{{ auction.check_in|date:"D, n N Y" }}"
+          >
+           <span>
+            <i class="material-icons left">date_range</i>
+            {{ auction.check_in|date:"D, n N" }}
+           </span>
+          </p>
+        </div>
+        <div class="col s12 l6">
+          <p
+            class="truncate tooltipped right-align"
+            data-position="top"
+            data-tooltip="{{ auction.pax_adults }} Adults{% if auction.pax_children %}, {{ auction.pax_children }} Children{% endif %}"
+          >
+            <span>
+              <i class="material-icons pax">group</i>
+              {{ auction.pax_adults|add:auction.pax_children }} People
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card-action">
+      <div class="row">
+        <div class="col s12 m6 l5">
+          <h4
+            class="tooltipped"
+            data-position="top"
+            data-tooltip="{% if auction.bids.count > 0 %}{{ auction.bids.count }} bids{% else %}No bids yet!{% endif %}"
+          >
+            <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
+              {{ auction.formatted_current_price }}
+            </a>
+          </h4>
+        </div>
+        <div class="col s12 m6 l7">
+          <p
+            class="tooltipped right-align truncate"
+            data-position="top"
+            data-tooltip="Ending {{ auction.end_date }}"
+          >
+            <a
+              href="{% url 'auctions:guest-auction' pk=auction.id %}"
+              {% if auction.is_ending %}class="text-ending-soon"{% endif %}
+            >
+              {{ auction.end_date|timeuntil }} left
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
