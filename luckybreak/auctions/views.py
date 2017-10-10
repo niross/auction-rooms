@@ -45,3 +45,9 @@ class ProviderAuctionView(UserIsProviderMixin, DetailView):
     model = models.Auction
     context_object_name = 'auction'
     template_name = 'auctions/provider_auction.html'
+
+
+class GuestAuctionView(UserIsProviderMixin, DetailView):
+    model = models.Auction
+    context_object_name = 'auction'
+    template_name = 'auctions/guest_auction.html'

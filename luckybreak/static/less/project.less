@@ -283,14 +283,6 @@ button {
   }
 }
 
-.text-ending-soon {
-  color: #ef5350;
-}
-
-.text-ending-soonish {
-  color: #ef6c00;
-}
-
 @media (max-width: 768px) {
   .orderable-cols {
     display: flex;
@@ -311,5 +303,91 @@ button {
       text-decoration: underline;
     }
   }
+}
+
+.auction-card {
+  .card-action {
+    padding: 10px;
+
+    a {
+      color: #424242 !important;
+      text-transform: none !important;
+      margin-right: 0 !important;
+
+      &.text-ending-soon {
+        color: #ef5350 !important;
+      }
+    }
+
+    .row {
+      margin-bottom: 0;
+    }
+
+    h4 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    p {
+      padding: 0;
+      margin: 2px 0 0 0;
+    }
+  }
+
+  .card-content {
+    padding: 10px;
+
+    a {
+      color: #424242;
+    }
+
+    h5 {
+      margin-top: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .row {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 5px;
+      }
+    }
+
+    p {
+      &>span {
+        display: inline-flex;
+        vertical-align: middle;
+      }
+    }
+
+    .material-icons {
+      font-size: 20px;
+
+      &.left {
+        margin-left: -2px;
+        margin-right: 3px;
+      }
+
+      &.loc {
+        margin-left: -4px;
+        margin-right: 2px;
+      }
+
+      &.pax {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+.text-ending-soon {
+  color: #ef5350 !important;
+}
+
+.text-ending-soonish {
+  color: #ef6c00;
 }
 
