@@ -18,4 +18,9 @@ urlpatterns = [
         view=views.ProviderAuctionView.as_view(),
         name='provider-auction'
     ),
+    url(
+        regex=r'^(?P<pk>[0-9]+)/$',
+        view=views.GuestAuctionView.as_view(),
+        name='guest-auction'
+    ),
 ]

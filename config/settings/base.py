@@ -378,6 +378,7 @@ DEFAULT_CURRENCY_ID = 1  # GBP
 THUMBNAIL_ALIASES = {
     '': {
         'gallery_thumb': {'size': (300, 200), 'crop': 'scale'},
+        'auction_card': {'size': (400, 250), 'crop': 'scale'},
     },
 }
 

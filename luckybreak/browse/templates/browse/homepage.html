@@ -27,15 +27,39 @@
   {% include 'inc/mobile_search.html' with colours="grey darken-4" %}
   <div class="container">
 
-    <div class="row homepage-section">
-      <div class="col s12">
-        <h5 class="section-header">Featured Experiences</h5>
+    {% if featured %}
+      <div class="row homepage-section">
+        <div class="col s12">
+          <h5 class="section-header">Featured Experiences</h5>
+          <div class="row">
+            {% for auction in featured %}
+              {% include 'auctions/inc/auction_card.html' %}
+            {% endfor %}
+          </div>
+        </div>
       </div>
-    </div>
+    {% endif %}
 
     <div class="row homepage-section">
+      <div class="valign-wrapper">
+        <div class="col s6">
+          <h5 class="section-header">Ending Soon</h5>
+        </div>
+        <div class="col s6">
+          <div class="right-align">
+            <a href="#" class="waves-effect waves-teal btn-flat">
+              <i class="material-icons right">arrow_forward</i>View More
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="col s12">
-        <h5 class="section-header">Ending Soon</h5>
+        <div class="row">
+          {% for auction in ending %}
+            {% include 'auctions/inc/auction_card.html' %}
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
