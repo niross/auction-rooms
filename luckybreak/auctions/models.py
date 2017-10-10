@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 import pytz
@@ -287,6 +287,10 @@ class Auction(DeletableTimeStampedModel):
             self.status = self.STATUS_FINISHED_SOLD
         self.save()
         auction_completed.send(sender=self.__class__, auction=self)
+
+    def is_ending(self):
+        now = datetime.utcnow().replace(tzinfo=pytz.utc)
+        return self.end_date < now + timedelta(hours=24)
 
 
 class AuctionImage(models.Model):

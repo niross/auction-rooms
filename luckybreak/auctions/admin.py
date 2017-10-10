@@ -17,8 +17,9 @@ class BidAdmin(admin.TabularInline):
 class AuctionAdmin(admin.ModelAdmin):
     list_display = (
         'formatted_name', 'bids', 'formatted_current_price',
-        'experience_link', 'end_date'
+        'experience_link', 'end_date', 'featured',
     )
+    list_editable = ('featured',)
     readonly_fields = (
         'experience', 'view_count', 'search_appearance_count'
     )
