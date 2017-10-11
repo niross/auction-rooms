@@ -8,8 +8,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import print_function
+from datetime import timedelta
+
+
 import environ
-from celery.schedules import crontab
 
 ROOT_DIR = environ.Path(__file__) - 3  # (luckybreak/config/settings/base.py - 3 = luckybreak/)
 APPS_DIR = ROOT_DIR.path('luckybreak')
@@ -57,6 +59,8 @@ THIRD_PARTY_APPS = [
     'rest_framework',  # api
     'easy_thumbnails',  # thumbnails
     'channels',  # realtime api
+    'django_celery_beat', # manage scheduled tasks
+    'django_celery_results', # use the db as a backend
 ]
 
 # Apps specific for this project go here.
@@ -318,10 +322,7 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 ########## CELERY
 INSTALLED_APPS += ['luckybreak.taskapp.celery.CeleryConfig']
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
-if CELERY_BROKER_URL == 'django://':
-    CELERY_RESULT_BACKEND = 'redis://'
-else:
-    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_RESULT_BACKEND = 'django-db'
 ########## END CELERY
 # django-compressor
 # ------------------------------------------------------------------------------
@@ -389,3 +390,11 @@ CHANNEL_LAYERS = {
         'ROUTING': 'luckybreak.auctions.routing.channel_routing',
     }
 }
+
+# CELERYBEAT_SCHEDULE = {
+#     'auction-completer': {
+#         'task': 'luckybreak.auctions.tasks.complete_auctions',
+#         'schedule': timedelta(seconds=10),
+#     },
+# }
+

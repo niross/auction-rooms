@@ -5,8 +5,6 @@ from django.apps import apps, AppConfig
 from django.conf import settings
 from celery import Celery
 
-from luckybreak.auctions.tasks import complete_auctions
-
 
 if not settings.configured:
     # set the default Django settings module for the 'celery' program.
@@ -62,13 +60,3 @@ class CeleryConfig(AppConfig):
 
             if 'opbeat.contrib.django' in settings.INSTALLED_APPS:
                 opbeat_register_handlers()
-
-
-@app.on_after_configure.connect
-def setup_periodic_tasks(sender, **kwargs):
-    # Call the auction completer every 15 seconds
-    sender.add_periodic_task(
-        15.0,
-        complete_auctions.s(),
-        name='Auction Completer'
-    )
