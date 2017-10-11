@@ -292,6 +292,10 @@ class Auction(DeletableTimeStampedModel):
         now = datetime.utcnow().replace(tzinfo=pytz.utc)
         return self.end_date < now + timedelta(hours=24)
 
+    def pretty_duration(self):
+        days = (self.check_out.date() - self.check_in.date()).days
+        return '{} Night{}'.format(days, 's' if days > 1 else ''
+        )
 
 class AuctionImage(models.Model):
     auction = models.ForeignKey(Auction, related_name='images')
