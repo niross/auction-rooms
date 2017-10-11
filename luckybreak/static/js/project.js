@@ -1,3 +1,4 @@
+/* eslint-disable */
 $(document).ready(function() {
   // Initialise all select inputs on the page
   $('select').material_select();
