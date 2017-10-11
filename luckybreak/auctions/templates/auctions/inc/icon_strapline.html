@@ -1,0 +1,48 @@
+<div class="icon-strapline">
+  <div class="divider"></div>
+  <div class="row">
+    <div class="col s6 m3 center-align">
+      <div
+        class="icon tooltipped"
+        data-position="top"
+        data-tooltip="Check in {{ auction.check_in|date:"r" }}"
+      >
+        <i class="material-icons">event_note</i><br />
+        {{ auction.check_in|date:"D, n N Y" }}
+      </div>
+    </div>
+    <div class="col s6 m3 center-align">
+      <div
+        class="icon tooltipped"
+        data-position="top"
+        data-tooltip="{{ auction.pax_adults }} Adult{% if auction.pax_adults > 1 %}s{% endif %}{% if auction.pax_children > 0 %}, {{ auction.pax_children }} Children{% endif %}"
+      >
+        {% with pax=auction.pax_adults|add:auction.pax_children %}
+        <i class="material-icons">people</i><br />
+          {{ pax }} {% if pax > 1 %}People{% else %}Person{% endif %}
+        {% endwith %}
+      </div>
+    </div>
+    <div class="col s6 m3 center-align">
+      <div
+        class="icon tooltipped"
+        data-position="top"
+        data-tooltip="{{ auction.pretty_duration }} Stay"
+      >
+        <i class="material-icons">hotel</i><br />
+        {{ auction.pretty_duration }}
+      </div>
+    </div>
+    <div class="col s6 m3 center-align">
+      <div
+        class="icon tooltipped"
+        data-position="top"
+        data-tooltip="<strong>Check in</strong><br />{{ auction.check_in|date:"H:i, D, n N Y" }}<br /><br /><strong>Check out</strong><br />{{ auction.check_out|date:"H:i, D, n N Y" }}"
+      >
+        <i class="material-icons">access_time</i><br />
+        Check in {{ auction.check_in|date:"H:i" }}
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+</div>
