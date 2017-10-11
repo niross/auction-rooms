@@ -45,7 +45,7 @@ django-redis==4.8.0
 redis>=2.10.5
 
 
-celery==3.1.25
+celery==4.1.0
 
 
 
@@ -66,3 +66,5 @@ djangorestframework==3.6.4
 easy-thumbnails==2.4.2
 channels==1.1.8
 asgi_redis==1.4.3
+django-celery-beat==1.0.1
+django-celery-results==1.0.1
