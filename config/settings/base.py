@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import print_function
 import environ
+from celery.schedules import crontab
 
 ROOT_DIR = environ.Path(__file__) - 3  # (luckybreak/config/settings/base.py - 3 = luckybreak/)
 APPS_DIR = ROOT_DIR.path('luckybreak')
