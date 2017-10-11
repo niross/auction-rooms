@@ -25,7 +25,7 @@ $(document).ready(function() {
   $('.collapsible').collapsible();
 
   // Initialise tooltips
-  $('.tooltipped').tooltip({ delay: 50 });
+  $('.tooltipped').tooltip({ delay: 50, html: true, position: 'top' });
 
   // Initialise time pickers
   $('.timepicker').pickatime({
