@@ -8,7 +8,7 @@
         data-tooltip="Check in {{ auction.check_in|date:"r" }}"
       >
         <i class="material-icons">event_note</i><br />
-        {{ auction.check_in|date:"D, n N Y" }}
+        {{ auction.check_in|date:"D, j N Y" }}
       </div>
     </div>
     <div class="col s6 m3 center-align">
@@ -37,7 +37,7 @@
       <div
         class="icon tooltipped"
         data-position="top"
-        data-tooltip="<strong>Check in</strong><br />{{ auction.check_in|date:"H:i, D, n N Y" }}<br /><br /><strong>Check out</strong><br />{{ auction.check_out|date:"H:i, D, n N Y" }}"
+        data-tooltip="<strong>Check in</strong><br />{{ auction.check_in|date:"H:i, D, j N Y" }}<br /><br /><strong>Check out</strong><br />{{ auction.check_out|date:"H:i, D, j N Y" }}"
       >
         <i class="material-icons">access_time</i><br />
         Check in {{ auction.check_in|date:"H:i" }}
