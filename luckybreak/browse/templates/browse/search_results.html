@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static compile_static %}
+{% block title %}TODO{% endblock title %}
+{% block description %}{% endblock description %}
+{% block body_class %}search-results{% endblock body_class %}
+{% block extra_css %}
+  <link href="{% static 'less/homepage.less'|compile %}" rel="stylesheet">
+  <link href="{% static 'less/search.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+{% endblock extra_js %}
+
+{% block content %}
+  {% include 'inc/desktop_search.html' with colours="white grey-text text-darken-3" %}
+  {% include 'inc/mobile_search.html' with colours="white grey-text text-darken-3" %}
+  <div class="container">
+    <nav class="crumbs">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'browse:search-results' %}" class="breadcrumb">Find Experiences</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row homepage-section">
+      <div class="valign-wrapper">
+        <div class="col s12">
+          <h5 class="section-header">Find Experiences</h5>
+        </div>
+      </div>
+      <div class="col s12">
+        <div class="row">
+          {% for auction in auctions %}
+            {% include 'auctions/inc/auction_card.html' %}
+            {% empty %}
+              {% include 'common/inc/alerts/warning.html' with grid="s12 l8 offset-l2" novalign=True message="<p>We couldn't find any matching auctions for your search terms</p><p>Try adjusting your dates or check our <a href='/'>homepage</a> for some inspiration</p>" %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% if auctions %}
+      {% include 'common/inc/pagination.html' %}
+    {% endif %}
+  </div>
+{% endblock content %}

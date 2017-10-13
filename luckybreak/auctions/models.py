@@ -44,7 +44,7 @@ class AuctionQuerySet(models.QuerySet):
         )
 
 
-class AuctionManager(DeletableTimeStampedManager):
+class AuctionManager(models.Manager):
     def get_queryset(self):
         return AuctionQuerySet(self.model, using=self._db)
 
@@ -351,3 +351,8 @@ class Bid(DeletableTimeStampedModel):
             self.auction.currency.symbol,
             self.price
         )
+
+
+class FavouriteAuction(DeletableTimeStampedModel):
+    auction = models.ForeignKey(Auction)
+    user = models.ForeignKey(User, related_name='favourites')

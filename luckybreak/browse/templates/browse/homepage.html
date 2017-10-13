@@ -6,6 +6,9 @@
 {% block extra_css %}
   <link href="{% static 'less/homepage.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+{% endblock extra_js %}
 {% block content %}
   <div class="hero-wrap">
     <div class="hero" style="background-image:url('{{ settings.HOMEPAGE_BACKGROUND_IMAGE }}')">

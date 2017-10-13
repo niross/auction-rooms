@@ -13,4 +13,9 @@ urlpatterns = (
         views.ProviderMarketingView.as_view(),
         name='provider-marketing'
     ),
+    url(
+        r'^search/$',
+        views.SearchResultsView.as_view(),
+        name='search-results'
+    ),
 )

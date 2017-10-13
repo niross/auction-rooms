@@ -1,34 +1,49 @@
-<nav class="{{ colours }} search-nav hide-on-small-only">
+<nav class="{{ colours }} search-nav hide-on-small-only ">
   <div class="nav-wrapper">
     <div class="container">
       <div class="center-align">
-        <form>
+        <form action="{% url 'browse:search-results' %}">
           <div class="row">
             <div class="col s12">
               <span class="form-text">Find me</span>
               <div class="input-field inline">
                 <select name="type" class="search-type">
-                  <option selected>Hotel Rooms</option>
+                  <option {% if request.GET.type == '1' %}selected{% endif %} value="1">Hotel Rooms</option>
                 </select>
               </div>
               <span class="form-text">in</span>
               <div class="input-field inline">
-                <select name="loc" class="search-loc">
-                  <option selected>London, UK</option>
-                </select>
+                <input
+                  type="text"
+                  class="search-loc location-autocomplete"
+                  name="loc"
+                  placeholder="Anywhere"
+                  value="{{ request.GET.loc }}"
+                />
+                 <input
+                  type="hidden"
+                  name="coords"
+                  class="location-autocomplete-coords"
+                  value="{{ request.GET.coords }}"
+                />
               </div>
               <span class="form-text">for</span>
               <div class="input-field inline">
                 <select name="pax" class="search-pax">
-                  <option>1 Person</option>
-                  <option>2 People</option>
-                  <option>3 People</option>
-                  <option>4 People</option>
+                  {% for pax in '0123456789' %}
+                    <option{% if request.GET.pax == forloop.counter|lower %} selected{% endif %} value="{{ forloop.counter }}">{{ forloop.counter }} {% if forloop.counter == 1 %}Person{% else %}People{% endif %}</option>
+                  {% endfor %}
                 </select>
               </div>
               <span class="form-text">on</span>
               <div class="input-field inline datepicker-wrap">
-                <input type="text" class="datepicker" value="Any Dates" name="date" class="search-date"/>
+                <input
+                  type="text"
+                  name="date"
+                  class="datepicker search-date"
+                  value="{{ request.GET.date }}"
+                  placeholder="Any Dates"
+                />
               </div>
               <button class="btn waves-effect waves-light green" type="submit">
                 <span class="hide-on-med-and-down">Search</span>

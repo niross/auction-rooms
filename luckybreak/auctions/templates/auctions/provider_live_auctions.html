@@ -71,6 +71,7 @@
                 <th>Bids</th>
                 <th>Current Price</th>
                 <th>Reserve Price</th>
+                <th>Check In</th>
               </tr>
             </thead>
             <tbody>
@@ -98,6 +99,7 @@
                   <td>{{ auction.bids.count }}</td>
                   <td>{{ auction.formatted_current_price }}</td>
                   <td>{{ auction.formatted_reserve_price }}</td>
+                  <td>{{ auction.check_in|date:"H:i, D, j N Y" }}</td>
                 </tr>
               {% empty %}
                 <tr>
@@ -110,29 +112,7 @@
             <tfoot>
               <tr>
                 <td colspan="5">
-                  <div class="row valign-wrapper">
-                    <div class="col m4 s6">
-                      <a
-                        class="waves-effect waves-light btn grey lighten-2 grey-text text-darken-3{% if not page_obj.has_previous %} disabled{% endif %}"
-                        href="{% url 'auctions:provider-live-auctions' %}?page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% endif %}"
-                      >
-                        <i class="material-icons left">arrow_back</i>Last Page
-                      </a>
-                    </div>
-                    <div class="col m4 s6 center-align hide-on-small-only">
-                      <span>
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                      </span>
-                    </div>
-                    <div class="col m4 s6 right-align">
-                      <a
-                        class="waves-effect waves-light btn grey lighten-2 grey-text text-darken-3{% if not page_obj.has_next %} disabled{% endif %}"
-                        href="{% url 'auctions:provider-live-auctions' %}?page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% endif %}"
-                      >
-                        <i class="material-icons right">arrow_forward</i>Next Page
-                      </a>
-                    </div>
-                  </div>
+                  {% include 'common/inc/pagination.html' %}
                 </td>
               </tr>
             </tfoot>
