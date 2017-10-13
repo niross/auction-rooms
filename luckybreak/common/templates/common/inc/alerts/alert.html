@@ -1,7 +1,7 @@
 <div class="row alert-row">
   <div class="col {{ grid }}">
     <div class="card-panel {{ colour }}">
-      <div class="white-text valign-wrapper">
+      <div class="white-text{% if not novalign %} valign-wrapper{% endif %}">
         <i class="material-icons left">{{ icon }}</i> {{ message|safe }}
       </div>
     </div>

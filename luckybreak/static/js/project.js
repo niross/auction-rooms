@@ -10,7 +10,7 @@ $(document).ready(function() {
     today: 'Today',
     clear: 'Clear',
     close: 'Ok',
-    closeOnSelect: false
+    closeOnSelect: true
   });
 
   // Initialise side nav for mobile
@@ -35,4 +35,21 @@ $(document).ready(function() {
 
   // Initialise feature discovery
   $('.tap-target').tapTarget('open');
+
+  // Initialise location autocompletes
+  var autocomplete = new google.maps.places.Autocomplete(
+    $('.location-autocomplete').get(0), {
+      types: ['geocode']
+    }
+  );
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    $('.location-autocomplete-coords').val(
+      place.geometry.location.lat()
+      + ',' +
+      place.geometry.location.lng()
+    );
+  });
+
+  $('.search-results .search-nav').fadeIn();
 });

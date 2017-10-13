@@ -1,0 +1,49 @@
+@font_colour: #424242;
+body.search-results {
+  .search-nav {
+    margin-bottom: 30px;
+
+    form {
+      .input-field input[type=text] {
+        background-color: #ffffff;
+        color: @font_colour;
+      }
+
+      .caret {
+        color: @font_colour;
+        z-index: 1;
+        font-weight: normal;
+        font-size: 1rem;
+      }
+
+      .search-loc {
+        border-bottom: 1px solid #9e9e9e;
+        box-sizing: content-box;
+        height: 2.31rem;
+      }
+    }
+
+    &.hide-on-med-and-up {
+      form {
+        padding-top: 20px;
+      }
+
+      .input-field {
+        i {
+          line-height: 43px;
+
+          &.standard {
+            line-height: 56px;
+          }
+        }
+      }
+      button[type="submit"] {
+        font-weight: bold;
+
+        i {
+          line-height: 36px;
+        }
+      }
+    }
+  }
+}
