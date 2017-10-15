@@ -68,7 +68,7 @@ $(document).ready(function() {
   }
 
   // Show the search nav after the page has loaded
-  // $('.search-nav').fadeIn();
+  $('.search-nav').fadeIn();
 
   // Favourite auctions add/remove
   $('.auction-favourite').click(function(e) {
