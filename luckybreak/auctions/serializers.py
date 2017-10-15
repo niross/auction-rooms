@@ -126,3 +126,9 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
         for _ in range(lots):
             auctions.append(models.Auction.objects.create_auction(**validated_data))
         return auctions
+
+
+class FavouriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Favourite
+        fields = ('auction', 'user')

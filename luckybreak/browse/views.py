@@ -15,12 +15,18 @@ class HomepageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomepageView, self).get_context_data(**kwargs)
+
         context['featured'] = Auction.objects.live().filter(
             featured=True
         ).order_by('created')[:6]
+
         context['ending'] = Auction.objects.live().filter().order_by(
             'end_date'
         )[:6]
+
+        if self.request.user.is_authenticated():
+            context['favourites'] = self.request.user.get_favourites()
+
         return context
 
 
@@ -82,5 +88,5 @@ class SearchResultsView(ListView):
     def get_context_data(self, **kwargs):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
-            context['favourites'] = self.request.user.favourites.all()
+            context['favourites'] = self.request.user.get_favourites()
         return context
