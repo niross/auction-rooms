@@ -13,6 +13,11 @@ router.register(
     api_views.ProviderAuctionViewSet,
     base_name='provider-auction'
 )
+router.register(
+    r'auctions/favourites',
+    api_views.FavouriteViewSet,
+    base_name='favourites'
+)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

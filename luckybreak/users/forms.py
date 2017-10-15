@@ -1,9 +1,11 @@
 from django import forms
+from django.forms.widgets import HiddenInput
 from django.utils.translation import ugettext_lazy as _
 
 from allauth.account.forms import LoginForm, SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignupForm
 
+from luckybreak.auctions.models import Auction, Favourite
 from luckybreak.users import models
 
 
@@ -22,6 +24,28 @@ class LBLoginForm(LoginForm):
             "We didn't recognise that email/password."
         )
     }
+
+    def __init__(self, *args, **kwargs):
+        super(LBLoginForm, self).__init__(*args, **kwargs)
+        self.fields['favourite'] = forms.CharField(
+            required=False,
+            widget=HiddenInput()
+        )
+
+    def login(self, request, redirect_url=None):
+        ret = super(LBLoginForm, self).login(request, redirect_url=redirect_url)
+        data = self.cleaned_data
+        if 'favourite' in data and data['favourite'] != '':
+            try:
+                Favourite.objects.create(
+                    user=self.user,
+                    auction=Auction.objects.get(
+                        pk=data['favourite']
+                    )
+                )
+            except Auction.DoesNotExist:
+                pass
+        return ret
 
 
 class LBSignupForm(SignupForm):
@@ -45,6 +69,22 @@ class LBSignupForm(SignupForm):
                     self.fields['phone'].widget = forms.widgets.HiddenInput(attrs={
                         'hidden': True
                     })
+        self.fields['favourite'] = forms.CharField(required=False, widget=HiddenInput())
+
+    def save(self, request):
+        user = super(LBSignupForm, self).save(request)
+        data = self.cleaned_data
+        if 'favourite' in data and data['favourite'] != '':
+            try:
+                Favourite.objects.create(
+                    user=user,
+                    auction=Auction.objects.get(
+                        pk=data['favourite']
+                    )
+                )
+            except Auction.DoesNotExist:
+                pass
+        return user
 
 
 class LBSocialSignupForm(SocialSignupForm):
@@ -56,8 +96,26 @@ class LBSocialSignupForm(SocialSignupForm):
     phone = forms.CharField(required=False)
     first_name = forms.CharField()
     last_name = forms.CharField()
+    favourite = forms.CharField(required=False, widget=HiddenInput())
 
     def __init__(self, *args, **kwargs):
         super(LBSocialSignupForm, self).__init__(*args, **kwargs)
         if 'data' in kwargs and kwargs['data']['user_type'] == models.User.USER_TYPE_PROVIDER:
             self.fields['phone'].required = True
+
+    def save(self, request):
+        state = request.session._session_cache[
+            'socialaccount_sociallogin'
+        ]['state']
+        user = super(LBSocialSignupForm, self).save(request)
+        if 'auth_params' in state and state['auth_params'] != '':
+            try:
+                Favourite.objects.create(
+                    user=user,
+                    auction=Auction.objects.get(
+                        pk=state['auth_params']
+                    )
+                )
+            except Auction.DoesNotExist:
+                pass
+        return user

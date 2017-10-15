@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from rest_framework import status
 
+from luckybreak.auctions.models import Favourite, Auction
 from luckybreak.common.tests import BaseAPITestCase
 from .. import models
 
@@ -109,3 +110,80 @@ class ProviderAuctionAPITestCase(BaseAPITestCase):
         self.assertEqual(len(json_response), 3)
         self.assertEqual(models.Auction.objects.all().count(), count + 3)
         self.assertEqual(self.provider.events.count(), events + 3)
+
+
+class AuctionFavouriteAPITestCase(BaseAPITestCase):
+    fixtures = [
+        'users.json', 'currencies.json', 'experiences.json',
+        'auctions.json',
+    ]
+
+    def test_unauthed_favourite(self):
+        """
+        Unauthenticated users cannot favourite auctions
+        """
+        response = self.client.post(
+            reverse('auction-api:favourites-detail', kwargs={'pk': 1}),
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_unauthed_unfavourite(self):
+        """
+        Unauthenticated users cannot unfavourite auctions
+        """
+        response = self.client.delete(
+            reverse('auction-api:favourites-detail', kwargs={'pk': 1}),
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_guest_favourite(self):
+        """
+        Guests can favourite auctions
+        """
+        self.client.force_authenticate(self.guest)
+        response = self.client.post(
+            reverse('auction-api:favourites-list'),
+            data={'auction': 1}
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_guest_unfavourite(self):
+        """
+        Guests can unfavourite auctions
+        """
+        self.client.force_authenticate(self.guest)
+        Favourite.objects.create(
+            auction=Auction.objects.get(pk=1),
+            user=self.guest
+        )
+        response = self.client.delete(
+            reverse('auction-api:favourites-detail', kwargs={'pk': 1}),
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(self.guest.favourites.count(), 0)
+
+    def test_provider_favourite(self):
+        """
+        providers can favourite auctions
+        """
+        self.client.force_authenticate(self.provider)
+        response = self.client.post(
+            reverse('auction-api:favourites-list'),
+            data={'auction': 1}
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_provider_unfavourite(self):
+        """
+        providers can unfavourite auctions
+        """
+        self.client.force_authenticate(self.provider)
+        Favourite.objects.create(
+            auction=Auction.objects.get(pk=1),
+            user=self.provider
+        )
+        response = self.client.delete(
+            reverse('auction-api:favourites-detail', kwargs={'pk': 1}),
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(self.provider.favourites.count(), 0)

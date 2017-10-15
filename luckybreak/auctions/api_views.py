@@ -4,6 +4,7 @@ import logging
 
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from luckybreak.common.permissions import IsProviderPerm
@@ -40,3 +41,31 @@ class ProviderAuctionViewSet(viewsets.ModelViewSet):
             status=status.HTTP_201_CREATED,
             headers=self.get_success_headers(serializer)
         )
+
+
+class FavouriteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for creating/deleting user favourites
+    """
+    queryset = models.Favourite.objects.live()
+    serializer_class = serializers.FavouriteSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['user'] = request.user.id
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=self.get_success_headers(serializer)
+        )
+
+    def destroy(self, request, *args, **kwargs):
+        self.get_queryset().filter(auction__id=kwargs['pk']).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

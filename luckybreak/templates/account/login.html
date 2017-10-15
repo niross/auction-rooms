@@ -28,14 +28,14 @@
           {% blocktrans %}If you have not created an account yet, please
           either sign up as a
           {% endblocktrans %}
-          <a href="{% url 'users:provider-signup' %}">{% trans 'Provider' %}</a>
+          <a class="provider-signup-link" href="{% url 'users:provider-signup' %}?{{ request.GET.urlencode }}">{% trans 'Provider' %}</a>
           {% trans 'or a' %}
-          <a href="{% url 'users:guest-signup' %}">{% trans 'Guest' %}</a>
+          <a class="guest-signup-link" href="{% url 'users:guest-signup' %}?{{ request.GET.urlencode }}">{% trans 'Guest' %}</a>
           {% blocktrans %}first.{% endblocktrans %}
         </p>
         <br />
 
-        <form class="login" method="POST" action="{% url 'account_login' %}">
+        <form class="login" method="POST" action="{% url 'account_login' %}?{{ request.GET.urlencode }}">
           <div class="row">
             {% include 'common/inc/form_field.html' with required=True placeholder="Enter your email address" field=form.login label="Email" %}
             {% include 'common/inc/form_field.html' with required=True placeholder="Enter your password" field=form.password label="Password" %}
@@ -44,7 +44,7 @@
               {% include 'common/inc/checkbox.html' with field=form.remember %}
             </div>
             <div class="col s6 right-align">
-              <a href="{% url 'account_reset_password' %}" id="forgot-link">
+              <a href="{% url 'account_reset_password' %}?{{ request.GET.urlencode }}" id="forgot-link">
                 {% trans "Forgot Password?" %}
               </a>
             </div>
@@ -61,6 +61,9 @@
           {% csrf_token %}
           {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          {% if request.GET.f %}
+            <input type="hidden" name="favourite" value="{{ request.GET.f }}" />
           {% endif %}
         </div>
       </form>
