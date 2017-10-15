@@ -5,10 +5,10 @@
 <div class="row">
   {% for provider in socialaccount_providers %}
     <div class="col l12 center-align m12 s12">
-      <a 
+      <a
         title="Sign in with {{ provider.name }}"
-        class="social-provider waves-effect waves-light btn btn-large {{ provider.id }}" 
-        href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
+        class="social-provider waves-effect waves-light btn btn-large {{ provider.id }}"
+        href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params next=request.GET.next auth_params=request.GET.f %}"
       >
         {{ action }} with {{ provider.name }}
       </a>

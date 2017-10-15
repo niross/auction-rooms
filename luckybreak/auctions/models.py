@@ -353,6 +353,6 @@ class Bid(DeletableTimeStampedModel):
         )
 
 
-class FavouriteAuction(DeletableTimeStampedModel):
+class Favourite(DeletableTimeStampedModel):
     auction = models.ForeignKey(Auction)
     user = models.ForeignKey(User, related_name='favourites')

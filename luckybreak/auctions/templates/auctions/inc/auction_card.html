@@ -1,5 +1,5 @@
 {% load thumbnail %}
-<div class="col s12 m6 l6 xl4 auction-card">
+<div class="col s12 m6 l6 xl4 auction-card" id="auction-{{ auction.id }}">
   <div class="card">
     <div class="card-image">
       <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
@@ -9,11 +9,28 @@
         >
       </a>
       <a
-        class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
-        data-position="top"
-        data-tooltip="Add to your favourites"
+        class="btn-floating halfway-fab waves-effect waves-light red tooltipped auction-favourite"
+        data-auction-id="{{ auction.id }}"
+        {% if user.is_authenticated %}
+          data-authenticated="true"
+        {% endif %}
+        {% if auction in favourites %}
+          data-tooltip="Remove from your favourites"
+          data-favourite="true"
+        {% else %}
+          data-tooltip="Add to your favourites"
+        {% endif %}
+        {% if not user.is_authenticated %}
+          href="{% url 'account_login' %}?next={{ request.path }}&f={{ auction.id }}"
+        {% endif %}
       >
-        <i class="material-icons">favorite</i>
+        <i class="material-icons fuck">
+          {% if auction in favourites %}
+            check
+          {% else %}
+            favorite
+          {% endif %}
+        </i>
       </a>
     </div>
     <div class="card-content">

@@ -6,54 +6,49 @@
 {% block head_title %}{% trans "Sign Up" %}{% endblock %}
 
 {% block inner %}
-  <nav class="crumbs">
-    <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
-        <a href="{% url 'account_signup' %}" class="breadcrumb">Sign Up</a>
+  <div class="container">
+    <nav class="crumbs">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'account_signup' %}" class="breadcrumb">Sign Up</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <h2>{% trans "Sign Up" %}</h2>
+        <p>
+          {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{ provider_name }} account to login to {{ site_name }}. As a final step, please complete the following form:{% endblocktrans %}
+        </p>
+        <br />
+
+        <form class="signup" id="signup_form" method="post">
+          <div class="row">
+
+            {% include 'common/inc/form_field.html' with required=True placeholder="Phileas" field=form.first_name sm=12 md=6 lg=6 %}
+
+            {% include 'common/inc/form_field.html' with required=True placeholder="Fogg" field=form.last_name sm=12 md=6 lg=6 %}
+
+            {% if form.user_type.value == 1 %}
+              {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=12 lg=12 %}
+            {% else %}
+              {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=6 lg=6 %}
+            {% endif %}
+
+            {% include 'common/inc/form_field.html' with required=True placeholder="0118 999 881 999 119 7253" field=form.phone label="Contact Number" sm=12 md=6 lg=6 %}
+
+            {% include 'common/inc/form_field.html' with required=True field=form.user_type label="Which best describes you?" sm=12 %}
+          </div>
+          {% csrf_token %}
+          <div class="row right-align">
+            <button class="btn btn-large waves-effect waves-light green" type="submit">
+              <i class="material-icons left">check_circle</i>{% trans "Sign Up" %}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  </nav>
-
-  <div class="row">
-    <div class="col s12 m6 offset-m3">
-      <h2>{% trans "Sign Up" %}</h2>
-      <p>
-        {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{ provider_name }} account to login to {{ site_name }}. As a final step, please complete the following form:{% endblocktrans %}
-      </p>
-      <br />
-
-      <form class="signup" id="signup_form" method="post">
-        <div class="row">
-
-          {% include 'common/inc/form_field.html' with required=True placeholder="Phileas" field=form.first_name sm=12 md=6 lg=6 %}
-
-          {% include 'common/inc/form_field.html' with required=True placeholder="Fogg" field=form.last_name sm=12 md=6 lg=6 %}
-
-          {% if form.user_type.value == 1 %}
-            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=12 lg=12 %}
-          {% else %}
-            {% include 'common/inc/form_field.html' with required=True placeholder="philleas.fogg@reformclub.co" field=form.email label="Email Address" sm=12 md=6 lg=6 %}
-          {% endif %}
-
-          {% include 'common/inc/form_field.html' with required=True placeholder="0118 999 881 999 119 7253" field=form.phone label="Contact Number" sm=12 md=6 lg=6 %}
-
-          {% include 'common/inc/form_field.html' with required=True field=form.user_type label="Which best describes you?" sm=12 %}
-        </div>
-
-
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        {% csrf_token %}
-        <div class="row right-align">
-          <button class="btn btn-large waves-effect waves-light green" type="submit">
-            <i class="material-icons left">check_circle</i>{% trans "Sign Up" %}
-          </button>
-        </div>
-      </form>
-    </div>
   </div>
-
 {% endblock %}
-

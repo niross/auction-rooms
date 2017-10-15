@@ -3,11 +3,13 @@
 {% load static compile_static %}
 {% block title %}{% trans "Your Dashboard" %}{% endblock %}
 {% block description %}{% endblock description %}
-{% block body_class %}guest-dashboard{% endblock body_class %} 
+{% block body_class %}guest-dashboard{% endblock body_class %}
 {% block extra_css %}
   <link href="{% static 'less/guest_dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
-
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+{% endblock extra_js %}
 {% block content %}
   {% include 'inc/desktop_search.html' with colours='white grey-text text-darken-3' %}
   {% include 'inc/collapsible_mobile_search.html' with colours='white grey-text text-darken-3' %}
