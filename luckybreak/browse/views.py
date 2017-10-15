@@ -39,7 +39,7 @@ class SearchResultsView(ListView):
     queryset = Auction.objects.live().filter(check_in__gte=datetime.today())
     context_object_name = 'auctions'
     paginate_by = 18
-    ordering = ['-end_date']
+    ordering = ['end_date']
 
     def get_queryset(self):
         qs = super(SearchResultsView, self).get_queryset()
@@ -54,7 +54,7 @@ class SearchResultsView(ListView):
                     coords__distance_lte=(pnt, D(mi=200))
                 ).annotate(
                     distance=Distance('coords', pnt)
-                ).order_by('distance', '-end_date')
+                ).order_by('distance', 'end_date')
             except TypeError:
                 pass
             except ValueError:
