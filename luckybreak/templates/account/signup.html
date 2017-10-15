@@ -19,9 +19,7 @@
       <div class="col s12 m6 offset-m3">
         <h2>{% trans "Sign Up" %}</h2>
         <p>
-          {% blocktrans %}
-            Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
-          {% endblocktrans %}
+          Already have an account? Then please <a href="{% url 'account_login' %}?{{ request.GET.urlencode }}">sign in</a>.
         </p>
         <br />
 
@@ -52,6 +50,13 @@
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
           {% csrf_token %}
+          {% if request.GET.f %}
+            <input type="hidden" name="favourite" value="{{ request.GET.f }}" />
+          {% else %}
+            {% if form.favourite.value %}
+              {{ form.favourite }}
+            {% endif %}
+          {% endif %}
           <div class="row right-align">
             <button
               id="signup-submit"

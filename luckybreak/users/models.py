@@ -48,3 +48,9 @@ class User(AbstractUser):
 
     def total_sold_auctions_by_experience(self):
         return self.sold_auctions().distinct('experience').count()
+
+    def get_favourites(self):
+        from luckybreak.auctions.models import Auction
+        return Auction.objects.filter(
+            id__in=[f.auction.id for f in self.favourites.all()]
+        )
