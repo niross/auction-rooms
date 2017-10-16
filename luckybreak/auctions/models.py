@@ -297,6 +297,7 @@ class Auction(DeletableTimeStampedModel):
         return '{} Night{}'.format(days, 's' if days > 1 else ''
         )
 
+
 class AuctionImage(models.Model):
     auction = models.ForeignKey(Auction, related_name='images')
     image = models.ImageField(upload_to='auctions/')
