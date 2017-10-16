@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 
 from luckybreak.common.mixins import UserIsProviderMixin
@@ -51,3 +52,13 @@ class GuestAuctionView(UserIsProviderMixin, DetailView):
     model = models.Auction
     context_object_name = 'auction'
     template_name = 'auctions/guest_auction.html'
+
+
+class FavouritesView(LoginRequiredMixin, ListView):
+    model = models.Auction
+    template_name = 'auctions/favourites.html'
+    paginate_by = 10
+    context_object_name = 'favourites'
+
+    def get_queryset(self):
+        return self.request.user.get_favourites()

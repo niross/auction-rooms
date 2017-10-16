@@ -1,8 +1,14 @@
 {% load common_tags %}
 {% if user.is_authenticated %}
-<ul id="{{ screen }}-signout-dd" class="dropdown-content" data-constrainWidth="false">
+  <ul id="{{ screen }}-signout-dd" class="dropdown-content" data-constrainWidth="false">
+    <li>
+      <a href="{% url 'auctions:favourites' %}">
+        <i class="material-icons left">favorite</i> Favourites
+      </a>
+    </li>
     <li>
       <a href="#!" class="logout-link">
+        <i class="material-icons left">directions_run</i>
         <form action="{% url 'account_logout' %}" method="post">
           {% csrf_token %}
           Sign Out
@@ -10,6 +16,10 @@
       </a>
     </li>
   </ul>
+  <li class="{% navactive request 'browse:homepage' %}">
+    <a href="{% url 'browse:homepage' %}">
+      <i class="material-icons left">search</i>Find Experiences</a>
+  </li>
   <li class="{% navactive request 'users:dashboard' %}">
     <a href="{% url 'users:dashboard' %}">
       <i class="material-icons left">dashboard</i>Your Dashboard</a>

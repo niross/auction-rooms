@@ -54,3 +54,4 @@ class User(AbstractUser):
         return Auction.objects.filter(
             id__in=[f.auction.id for f in self.favourites.all()]
         )
+
