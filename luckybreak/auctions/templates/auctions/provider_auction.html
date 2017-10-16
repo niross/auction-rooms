@@ -65,6 +65,38 @@
       {% include 'users/inc/provider_side_nav.html' with current_auction=auction %}
       <div class="row orderable-cols">
         <div class="col s12 m8 l8 detail-col">
+
+          <!-- Stats -->
+          <div class="row auction-stats">
+            <div class="col s6 m4 auction-stat center-align">
+              <div class="card">
+                <div class="card-content">
+                  <i class="material-icons">favorite</i>
+                  <br />
+                  Favourited {{ auction.favourites.count }} Time{{ auction.favourites.count|pluralize }}
+                </div>
+              </div>
+            </div>
+            <div class="col s6 m4 auction-stat center-align">
+              <div class="card">
+                <div class="card-content">
+                  <i class="material-icons">search</i>
+                  <br />
+                  {{ auction.search_appearance_count }} Search Appearance{{ auction.search_appearance_count|pluralize }}
+                </div>
+              </div>
+            </div>
+            <div class="col s6 m4 auction-stat center-align">
+              <div class="card">
+                <div class="card-content">
+                  <i class="material-icons">info</i>
+                  <br />
+                  {{ auction.view_count }} Auction Detail View{{ auction.view_count|pluralize }}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col s12">
               <h5>About this Experience</h5>
