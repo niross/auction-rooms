@@ -8,6 +8,7 @@ from django.db.models import Sum, F
 from django.views.generic import TemplateView, ListView
 
 from luckybreak.auctions.models import Auction
+from luckybreak.auctions.tasks import increment_search_appearance_count
 
 
 class HomepageView(TemplateView):
@@ -89,4 +90,8 @@ class SearchResultsView(ListView):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
             context['favourites'] = self.request.user.get_favourites()
+
+        increment_search_appearance_count(
+            [x.id for x in context['object_list']]
+        )
         return context
