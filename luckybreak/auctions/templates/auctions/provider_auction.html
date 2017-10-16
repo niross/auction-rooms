@@ -7,7 +7,7 @@
 {% block body_class %}provider-auction{% endblock body_class %}
 {% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
-  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+  <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 
 {% block extra_js %}
@@ -31,7 +31,6 @@
               <i class="material-icons">location_on</i>
               {{ auction.location }}
             </h5>
-
           </div>
         </div>
       </div>

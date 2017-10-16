@@ -2,30 +2,137 @@
 {% load i18n %}
 {% load static compile_static %}
 {% block title %}{% trans "Your Dashboard" %}{% endblock %}
-{% block description %}{% endblock description %}
+{% block description %}TODO{% endblock description %}
 {% block body_class %}guest-dashboard{% endblock body_class %}
+{% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
-  <link href="{% static 'less/guest_dashboard.less'|compile %}" rel="stylesheet">
+  <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 {% block extra_js %}
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
 {% endblock extra_js %}
 {% block content %}
-  {% include 'inc/desktop_search.html' with colours='white grey-text text-darken-3' %}
-  {% include 'inc/collapsible_mobile_search.html' with colours='white grey-text text-darken-3' %}
+  <div class="main">
 
-  <div class="container">
-    <nav class="crumbs">
-      <div class="nav-wrapper">
-        <div class="col s12">
-          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
-          <a href="{% url 'users:dashboard' %}" class="breadcrumb">Your Dashboard</a>
+    <div class="container">
+      <nav class="crumbs">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Your Dashboard</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      {% include 'users/inc/guest_side_nav.html' %}
+
+      <div class="row">
+        <!-- Welcome Message -->
+        {% if show_dashboard_welcome %}
+          <div class="card blue lighten-1 white-text">
+            <div class="card-content white-text">
+              <span class="card-title">Welcome to {{ site.name }}!</span>
+              <p>You are now ready to start find amazing experiences at rock bottom prices. Head to the <a href="{%  url 'browse:search-results' %}">search page</a> to get started.</p>
+              <br />
+              <p>This is your dashboard page, which contains some basic stats and a log of your activity. From here you can also <a href="{% url 'auctions:favourites' %}">manage your favourites</a> and <a href="{% url 'users:settings' %}">update your profile</a>.</p>
+              <br />
+              <p>If you have any questions don't hesitate to <a href="{% url 'contact:contact' %}">contact us</a>.</p>
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Profile -->
+        <div class="col l4 m6 s12">
+          <div class="card profile-card">
+            <div class="card-image">
+              <img src="{% static 'images/user-bg.jpg' %}">
+              <span class="card-title valign-wrapper">
+                <i class="material-icons left">face</i> {{ user.get_full_name }}
+              </span>
+              <a
+                href="{% url 'users:settings' %}"
+                class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                data-position="top"
+                data-delay="50"
+                data-tooltip="Edit your settings"
+              >
+                <i class="material-icons">build</i>
+              </a>
+            </div>
+            <div class="card-content">
+              <p class="valign-wrapper">
+                <i class="material-icons left">mail</i>
+                {{ user.email }}
+              </p>
+              <br/>
+              <p class="valign-wrapper">
+                <i class="material-icons left">phone</i>
+                {% if user.phone %}{{ user.phone }}{% else %}Not Provided{% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auctions -->
+        <div class="col l4 m6 s12">
+          <div class="card auctions-card">
+            <div class="card-image">
+              <img src="{% static 'images/auctions-bg.png' %}">
+              <span class="card-title valign-wrapper">
+                <i class="material-icons left">shopping_cart</i> Auctions
+              </span>
+            </div>
+            <div class="card-content">
+              <p class="valign-wrapper">
+                <i class="material-icons left">add_shopping_cart</i>
+                {{ user.bids.count }} Bid{{ user.bids.count|pluralize }} Placed
+              </p>
+              <br/>
+              <p class="valign-wrapper">
+                <i class="material-icons left">remove_shopping_cart</i>
+                TODO Auctions Won
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </nav>
 
-    <div class="row">
-      <div class="col s12 m6 offset-m3">
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content recent-activity">
+              <span class="card-title">
+                <i class="material-icons left">access_time</i> Recent Activity
+              </span>
+              <table class="bordered striped">
+                <thead>
+                  <tr>
+                    <th>Event Date</th>
+                    <th>Event Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for event in user.events.all|slice:":50" %}
+                    <tr>
+                      <td>{{ event.created|date:"H:i, D, j N Y" }}</td>
+                      <td>{{ event.get_log_message|safe }}</td>
+                    </tr>
+                  {% empty %}
+                    <tr>
+                      <td class="center-align" colspan="2">
+                        You don't have any recent events right now.
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
