@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 
+from luckybreak.auctions.tasks import increment_view_count
 from luckybreak.common.mixins import UserIsProviderMixin
 from . import models
 
@@ -48,11 +49,15 @@ class ProviderAuctionView(UserIsProviderMixin, DetailView):
     template_name = 'auctions/provider_auction.html'
 
 
-class GuestAuctionView(UserIsProviderMixin, DetailView):
+class AuctionView(DetailView):
     model = models.Auction
     context_object_name = 'auction'
-    template_name = 'auctions/guest_auction.html'
+    template_name = 'auctions/auction.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(AuctionView, self).get_context_data(**kwargs)
+        increment_view_count(context['auction'].id)
+        return context
 
 class FavouritesView(LoginRequiredMixin, ListView):
     model = models.Auction
