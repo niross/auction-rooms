@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static compile_static common_tags thumbnail %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Your Favourites{% endblock %}
+{% block description %}Add or delete your favourite auctions{% endblock description %}
+{% block body_class %}favourites{% endblock body_class %}
+{% block header_class %}navbar-fixed{% endblock header_class %}
+{% block extra_css %}
+  <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block content %}
+  <div class="main">
+    <div class="container">
+      <nav class="crumbs truncate">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
+            <a href="{% url 'auctions:favourites' %}" class="breadcrumb">Favourites</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container">
+      {% if user.is_provider %}
+        {% include 'users/inc/provider_side_nav.html' %}
+      {% else %}
+        {% include 'users/inc/guest_side_nav.html' %}
+      {% endif %}
+
+      <div class="row homepage-section">
+        <div class="valign-wrapper">
+          <div class="col s12">
+            <h5 class="section-header">Your Favourites</h5>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="row">
+            {% for auction in favourites %}
+              {% include 'auctions/inc/auction_card.html' %}
+              {% empty %}
+                {% include 'common/inc/alerts/info.html' with grid="s12 l8 offset-l2" message="You don't have any favourites just yet.&nbsp;<a href='/'>Add some now!</a>" %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% if favourites %}
+        {% include 'common/inc/pagination.html' %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+
