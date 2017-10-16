@@ -56,8 +56,10 @@ class AuctionView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AuctionView, self).get_context_data(**kwargs)
-        increment_view_count(context['auction'].id)
+        if not self.request.user.is_staff:
+            increment_view_count(context['auction'].id)
         return context
+
 
 class FavouritesView(LoginRequiredMixin, ListView):
     model = models.Auction
