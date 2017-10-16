@@ -91,7 +91,8 @@ class SearchResultsView(ListView):
         if self.request.user.is_authenticated():
             context['favourites'] = self.request.user.get_favourites()
 
-        increment_search_appearance_count(
-            [x.id for x in context['object_list']]
-        )
+        if not self.request.user.is_staff:
+            increment_search_appearance_count.delay(
+                [x.id for x in context['object_list']]
+            )
         return context
