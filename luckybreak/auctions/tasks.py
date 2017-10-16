@@ -32,7 +32,7 @@ def complete_auctions():
 @task
 def increment_search_appearance_count(auction_ids):
     """
-    Add 1 to search the search_appearance_count field for
+    Add 1 to the search_appearance_count field for
     all auction ids provided
 
     :param auction_ids:
@@ -40,4 +40,17 @@ def increment_search_appearance_count(auction_ids):
     """
     Auction.objects.filter(id__in=auction_ids).update(
         search_appearance_count=F('search_appearance_count') + 1
+    )
+
+
+@task
+def increment_view_count(auction_id):
+    """
+    Add 1 to the view_count field for the provided auction id
+
+    :param auction_id:
+    :return:
+    """
+    Auction.objects.filter(id=auction_id).update(
+        view_count=F('view_count') + 1
     )

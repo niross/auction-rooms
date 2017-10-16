@@ -20,7 +20,7 @@ urlpatterns = [
     ),
     url(
         regex=r'^(?P<pk>[0-9]+)/$',
-        view=views.GuestAuctionView.as_view(),
+        view=views.AuctionView.as_view(),
         name='guest-auction'
     ),
     url(
