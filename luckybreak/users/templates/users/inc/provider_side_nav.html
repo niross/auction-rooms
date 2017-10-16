@@ -33,6 +33,11 @@
       </li>
     </ul>
   </li>
+  <li class="{% navactive request 'auctions:favourites' %}">
+    <a href="{% url 'auctions:favourites' %}">
+      <i class="material-icons">favorite</i> Favourites
+    </a>
+  </li>
   <li class="{% navactive request 'users:settings' %}">
     <a href="{% url 'users:settings' %}">
       <i class="material-icons">settings</i> Settings

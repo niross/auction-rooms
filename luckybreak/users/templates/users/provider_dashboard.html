@@ -3,11 +3,11 @@
 {% load static compile_static %}
 {% load render_bundle from webpack_loader %}
 {% block title %}{% trans "Your Dashboard" %}{% endblock %}
-{% block description %}{% endblock description %}
+{% block description %}TODO{% endblock description %}
 {% block body_class %}provider-dashboard{% endblock body_class %}
 {% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
-  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+  <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 {% block extra_js %}
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
@@ -15,7 +15,6 @@
 {% endblock extra_js %}
 
 {% block content %}
-
   <div class="main">
 
     <div class="container">

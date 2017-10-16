@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% load i18n static compile_static %}
-{% load render_bundle from webpack_loader %}
 {% block title %}{% trans "Your Settings" %}{% endblock %}
 {% block description %}{% endblock description %}
 {% block body_class %}user-settings{% endblock body_class %}
 {% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
-  <link href="{% static 'less/provider_dashboard.less'|compile %}" rel="stylesheet">
+  <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 {% block content %}
   <div class="main">
@@ -25,6 +24,8 @@
     <div class="container">
       {% if user.is_provider %}
         {% include 'users/inc/provider_side_nav.html' %}
+      {% else %}
+        {% include 'users/inc/guest_side_nav.html' %}
       {% endif %}
 
       <div class="row">
