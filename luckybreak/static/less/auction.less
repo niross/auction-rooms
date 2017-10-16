@@ -1,0 +1,62 @@
+.auction {
+  .hero-wrap {
+    margin-top: 0px;
+    min-height: 550px;
+    position: relative;
+
+    .search-nav {
+      background-color: rgba(0, 0, 0, 0.1) !important;
+      color: white !important;
+      margin-bottom: 0;
+
+      .search-loc {
+        border-bottom: 1px solid #9e9e9e;
+        box-sizing: content-box;
+        height: 2.31rem;
+      }
+    }
+    .hero {
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      background-size: cover !important;
+      min-height: 550px;
+      text-align: center;
+      position: absolute;
+      padding: 0 0 0 0;
+      width: 100%;
+      overflow: hidden;
+      top: 0;
+      z-index: 0;
+
+      & > div {
+        display: table;
+        width: 100%;
+        height: 550px;
+        background-color: rgba(0, 0, 0, .25);
+
+        & > div {
+          text-align: center;
+          display: table-cell;
+          vertical-align: middle;
+          color: #ffffff;
+
+          h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .detail-col {
+    h4, h5 {
+      font-weight: 500;
+    }
+    .title {
+      h5 {
+        font-size: 18px;
+      }
+    }
+  }
+}
