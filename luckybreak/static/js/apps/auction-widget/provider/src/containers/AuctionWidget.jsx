@@ -1,40 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, Collection, ProgressBar, Icon } from 'react-materialize';
 import moment from 'moment';
-import WebSocket from 'reconnectingwebsocket';
 
 import CardTitle from '../../../shared/containers/CardTitle';
+import Bid from '../components/Bid';
+import SocketErrorMask from '../../../shared/components/SocketErrorMask';
 import { makeApiCall } from '../../../../libs/utils/request';
 import { apiEndpoints } from '../../../../Config';
-import Bid from '../components/Bid';
-import SocketErrorMask from '../components/SocketErrorMask';
 
-const propTypes = {
-  auctionId: PropTypes.number.isRequired,
-  currentPrice: PropTypes.string.isRequired,
-  bidCount: PropTypes.number.isRequired,
-  endDate: PropTypes.string.isRequired
-};
-const defaultProps = {};
+import BaseWidget from '../../../shared/containers/BaseWidget';
 
-const AuctionWidget = class extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      currentPrice: props.currentPrice,
-      bidCount: props.bidCount,
-      bids: [],
-      endDate: moment(props.endDate),
-      isLive: moment(props.endDate).isAfter(moment())
-    };
-
-    if (this.state.isLive) {
-      this.initSocket();
-    }
-  }
-
+const AuctionWidget = class extends BaseWidget {
   componentDidMount() {
     makeApiCall(`${apiEndpoints.providerAuctions}${this.props.auctionId}/`, 'GET')
       .then((resp) => {
@@ -49,17 +25,8 @@ const AuctionWidget = class extends React.Component {
       });
   }
 
-  componentWillUnmount() {
-    if (this.socket) this.socket.close();
-  }
-
-  initSocket() {
-    this.socket = new WebSocket(
-      `ws://${window.location.host}/provider/auctions/${this.props.auctionId}/stream/`
-    );
-    this.socket.onmessage = message => this.handleData(message.data);
-    this.socket.onopen = () => this.setState({ socketOpen: true });
-    this.socket.onclose = () => this.setState({ socketOpen: false });
+  getSocketUrl() {
+    return `ws://${window.location.host}/provider/auctions/${this.props.auctionId}/stream/`;
   }
 
   handleData(data) {
@@ -114,8 +81,5 @@ const AuctionWidget = class extends React.Component {
     );
   }
 };
-
-AuctionWidget.propTypes = propTypes;
-AuctionWidget.defaultProps = defaultProps;
 
 export default AuctionWidget;

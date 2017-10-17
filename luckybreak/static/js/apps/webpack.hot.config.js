@@ -29,6 +29,11 @@ module.exports = {
       'webpack/hot/only-dev-server',
       './auction-widget/provider/src/index.jsx'
     ],
+    'guest-auction-widget': [
+      `webpack-dev-server/client?${PUBLIC_PATH}`,
+      'webpack/hot/only-dev-server',
+      './auction-widget/guest/src/index.jsx'
+    ],
     vendors: ['react', 'react-materialize']
   },
   output: {

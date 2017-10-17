@@ -2,12 +2,14 @@
 from __future__ import absolute_import, unicode_literals
 import logging
 
-from rest_framework import status
+from rest_framework import status, mixins
 from rest_framework import viewsets
+from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from luckybreak.common.permissions import IsProviderPerm
+from luckybreak.users.models import User
 from . import models
 from . import serializers
 
@@ -69,3 +71,26 @@ class FavouriteViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         self.get_queryset().filter(auction__id=kwargs['pk']).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PublicAuctionViewSet(viewsets.GenericViewSet):
+    """
+    API endpoint for creating auctions
+    """
+    queryset = models.Auction.objects.filter(deleted=False)
+    serializer_class = serializers.BidCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    @detail_route(methods=['POST'])
+    def bid(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['user'] = self.request.user.id
+        data['auction'] = self.get_object().id
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+
