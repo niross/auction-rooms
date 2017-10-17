@@ -25,7 +25,10 @@ class AddAuctionTestCase(BaseFunctionalTestCase):
         auction_count = self.provider.auctions().count()
 
         # Open the modal
-        self.selenium.find_element_by_id('provider-add-auction-button').click()
+        # self.selenium.find_element_by_id('provider-add-auction-button').click()
+        self.selenium.execute_script(
+            'document.getElementById("provider-add-auction-button").click()'
+        )
 
         # Select an experience
         WebDriverWait(self.selenium, 10).until(

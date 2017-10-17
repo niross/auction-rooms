@@ -21,7 +21,7 @@ urlpatterns = [
     url(
         regex=r'^(?P<pk>[0-9]+)/$',
         view=views.AuctionView.as_view(),
-        name='guest-auction'
+        name='public-auction'
     ),
     url(
         regex=r'^favourites/$',
