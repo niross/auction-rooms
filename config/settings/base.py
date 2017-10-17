@@ -187,6 +187,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django_settings_export.settings_export',
                 'luckybreak.common.context_processors.site',
+                'luckybreak.users.context_processors.favourites',
             ],
         },
     },

@@ -141,6 +141,9 @@ class EventLog(TimeStampedModel):
             )
 
         if self.type == self.EVENT_TYPE_PLACED_BID:
+            if self.content_object is None:
+                print('*'*80)
+                print(self.id)
             return 'You placed a bid for {} on auction ' \
                '<a href="{}">{}</a>.'.format(
                     self.content_object.formatted_price(),

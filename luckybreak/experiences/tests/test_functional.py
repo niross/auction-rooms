@@ -38,7 +38,7 @@ class AddExperienceTestCase(BaseExperienceTestCase):
     def test_add_experience(self):
         self.client.force_login(self.provider)
         self.selenium.get(self.live_url('experiences:experiences'))
-        self.selenium.find_element_by_id('add-experience-button').click()
+        self.selenium.execute_script('document.getElementById("add-experience-button").click()')
 
         # Basic
         self.selenium.find_element_by_id('experience-title').send_keys('Test Experience')
@@ -99,7 +99,9 @@ class AddExperienceTestCase(BaseExperienceTestCase):
         self.client.force_login(self.provider)
         auction_count = self.provider.auctions().count()
         self.selenium.get(self.live_url('experiences:experiences'))
-        self.selenium.find_element_by_id('add-experience-button').click()
+        self.selenium.execute_script(
+            'document.getElementById("add-experience-button").click()'
+        )
 
         # Basic
         self.selenium.find_element_by_id('experience-title').send_keys('Test Experience')
@@ -337,6 +339,12 @@ class UpdateExperienceTestCase(BaseExperienceTestCase):
         self.selenium.find_element_by_id(
             'edit-experience-button-{}'.format(experience.id)
         ).click()
+        self.selenium.execute_script(
+            'document.getElementById("edit-experience-button-{}")'
+            '.click()'.format(
+                experience.id
+            )
+        )
 
         modal = self.selenium.find_element_by_id('experience-modal-{}'.format(experience.id))
 

@@ -12,6 +12,8 @@
 
 {% block extra_js %}
   {% render_bundle 'vendors' 'js' %}
+  {% render_bundle 'gallery' 'js' %}
+  {% render_bundle 'guest-auction-widget' 'js' %}
 {% endblock extra_js %}
 
 {% block content %}
@@ -39,16 +41,7 @@
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
-            <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
-            {% if auction.is_live %}
-              <a href="{% url 'auctions:provider-live-auctions' %}" class="breadcrumb">
-                Live Auctions
-              </a>
-            {% else %}
-              <a href="{% url 'auctions:provider-finished-auctions' %}" class="breadcrumb">
-                Finished Auctions
-              </a>
-            {% endif %}
+            <a href="{% url 'browse:search-results' %}" class="breadcrumb">Find Experiences</a>
             <a href="{% url 'auctions:provider-auction' pk=auction.id %}" class="breadcrumb">
               {{ auction.id }}: {{ auction.title }}
             </a>
@@ -58,11 +51,19 @@
     </div>
 
     <div class="container">
-      <div class="row orderable-cols">
-        <div class="col s12 m8 l8 detail-col">
 
+      <div class="row orderable-cols">
+
+        <div class="col s12 m8 l8 detail-col">
           <div class="row">
             <div class="col s12 title">
+
+              {% if user == auction.experience.user %}
+                {% with id=auction.id|slugify %}
+                  {% include 'common/inc/alerts/info.html' with grid="s12" message='To view more details about your auction visit your&nbsp;<a href="/auctions/auction/'|add:id|add:'/">auction detail page</a>.' %}
+                {% endwith %}
+              {% endif %}
+
               <h4>{{ auction.title }}</h4>
               <h5>
                 <i class="material-icons left">location_on</i>
@@ -115,6 +116,40 @@
               </div>
             </div>
           {% endif %}
+        </div>
+        <div class="col s12 m4 l4 widget-col">
+          <div
+            id="guest-auction-widget-app"
+            data-auction-id="{{ auction.id }}"
+            data-title="{{ auction.title }}"
+            data-currency-symbol="{{ auction.experience.currency.symbol }}"
+            data-current-price="{{ auction.formatted_current_price }}"
+            data-actual-price="{{ auction.current_price }}"
+            data-bid-count="{{ auction.bids.count }}"
+            data-end-date="{{ auction.end_date|date:"c" }}"
+            data-user-id="{{ user.id }}"
+            data-highest-bidder-id="{{ auction.highest_bid.user.id }}"
+            {% if user.is_authenticated %}
+              data-authenticated="true"
+            {% endif %}
+            {% if auction in favourites %}
+              data-favourited="true"
+            {% endif %}
+          ></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <h5>Images</h5>
+          <div class="gallery-app">
+            {% for image in auction.images.all %}
+              <span
+                class="hide img-src"
+                data-src="{{ image.image.url }}"
+                data-thumb="{{ image.image|thumbnail_url:'gallery_thumb' }}"
+              />
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

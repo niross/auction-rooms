@@ -1,10 +1,12 @@
 .auction-widget {
   overflow: hidden;
 
-  .card-content {
+  &> .card-content {
     padding: 0;
 
     .card-title {
+      margin-bottom: 0 !important;
+
       &>div {
         padding: 5px;
 
@@ -34,6 +36,10 @@
       padding: 24px;
     }
 
+    .progress {
+      margin: 0;
+
+    }
     .socket-error-mask {
       position: absolute;
       color: white;
@@ -42,6 +48,7 @@
       height: 100%;
       z-index: 1;
       text-align: center;
+      z-index: 2;
 
       >div {
         margin-top: 50px;

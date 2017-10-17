@@ -4,7 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver, Signal
 
 from luckybreak.auctions.models import Bid, Auction
-from luckybreak.auctions.serializers import BidSerializer
+from luckybreak.auctions.serializers import BidSerializer, \
+    PublicAuctionSerializer
 from luckybreak.event_log.models import EventLog
 
 auction_completed = Signal(providing_args=['auction'])
@@ -35,8 +36,14 @@ def bid_save(sender, instance, created, **kwargs):
     :return:
     """
     if created:
+        # Send the auction owner a copy of the new bid via channels
         instance.auction.send_provider_message({
             'text': json.dumps(BidSerializer(instance).data)
+        })
+
+        # Send any public watchers the updated auction data
+        instance.auction.send_public_message({
+            'text': json.dumps(PublicAuctionSerializer(instance.auction).data)
         })
 
         EventLog.objects.log_bid_placed(instance)
