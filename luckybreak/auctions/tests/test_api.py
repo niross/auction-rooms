@@ -4,11 +4,12 @@ from __future__ import unicode_literals
 import json
 from datetime import datetime, timedelta
 
+import pytz
 from django.urls import reverse
 
 from rest_framework import status
 
-from luckybreak.auctions.models import Favourite, Auction
+from luckybreak.auctions.models import Favourite, Auction, Bid
 from luckybreak.common.tests import BaseAPITestCase
 from .. import models
 
@@ -187,3 +188,85 @@ class AuctionFavouriteAPITestCase(BaseAPITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(self.provider.favourites.count(), 0)
+
+
+class PublicAuctionAPITestCase(BaseAPITestCase):
+    fixtures = [
+        'users.json', 'currencies.json', 'experiences.json',
+        'auctions.json'
+    ]
+
+    def test_unauthed_bid(self):
+        response = self.client.post(
+            reverse('auction-api:public-auction-bid', kwargs={'pk': 1}),
+            data={'price': 22}
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_bid_on_own_auction(self):
+        self.client.force_authenticate(self.provider)
+        response = self.client.post(
+            reverse('auction-api:public-auction-bid', kwargs={'pk': 1}),
+            data={'price': 35}
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json(),
+            {'price': ['You cannot bid on your own auctions']}
+        )
+
+    def test_bid_too_low(self):
+        self.client.force_authenticate(self.guest)
+        response = self.client.post(
+            reverse('auction-api:public-auction-bid', kwargs={'pk': 1}),
+            data={'price': 33}
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json(),
+            {'price': ['Please enter a bid of 34.00 or over']}
+        )
+
+    def test_already_highest_bidder(self):
+        self.client.force_authenticate(self.guest)
+        Bid.objects.create(
+            user=self.guest,
+            auction=Auction.objects.get(pk=1),
+            price=99
+        )
+        response = self.client.post(
+            reverse('auction-api:public-auction-bid', kwargs={'pk': 1}),
+            data={'price': 100}
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json(),
+            {'price': ['You are already the highest bidder!']}
+        )
+
+    def test_bid_on_finished_auction(self):
+        self.client.force_authenticate(self.guest)
+        auction = Auction.objects.get(pk=1)
+        auction.end_date = datetime.now(pytz.UTC) - timedelta(minutes=1)
+        auction.save()
+        response = self.client.post(
+            reverse('auction-api:public-auction-bid', kwargs={'pk': 1}),
+            data={'price': 100}
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json(),
+            {'price': ['This auction has finished']}
+        )
+
+    def test_bid(self):
+        self.client.force_authenticate(self.guest)
+        bids = Auction.objects.get(pk=1).bids.count()
+        response = self.client.post(
+            reverse('auction-api:public-auction-bid', kwargs={'pk': 1}),
+            data={'price': 34}
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        auction = Auction.objects.get(pk=1)
+        self.assertEqual(auction.bids.count(), bids + 1)
+        self.assertEqual(auction.current_price(), 34.0)

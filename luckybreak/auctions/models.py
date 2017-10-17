@@ -215,8 +215,7 @@ class Auction(DeletableTimeStampedModel):
         return reverse('auctions:provider-auction', args=(self.id,))
 
     def get_guest_absolute_url(self):
-        return '#TODO'
-        # return reverse('auctions:provider-auction', args=(self.id,))
+        return reverse('auctions:public-auction', args=(self.id,))
 
     def is_live(self):
         """
@@ -275,6 +274,18 @@ class Auction(DeletableTimeStampedModel):
 
     def send_provider_message(self, message):
         self.provider_websocket_group.send(message)
+
+    @property
+    def public_websocket_group(self):
+        """
+        Return the channel name that a provider should subscribe to
+        when viewing a live public auction.
+        :return:
+        """
+        return Group('public-auction-{}'.format(self.id))
+
+    def send_public_message(self, message):
+        self.public_websocket_group.send(message)
 
     def mark_complete(self):
         from luckybreak.auctions.signals import auction_completed

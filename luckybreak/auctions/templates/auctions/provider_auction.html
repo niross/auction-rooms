@@ -144,9 +144,16 @@
           <div
             id="provider-auction-widget-app"
             data-auction-id="{{ auction.id }}"
+            data-title="{{ auction.title }}"
+            data-currency-symbol="{{ auction.experience.currency.symbol }}"
             data-current-price="{{ auction.formatted_current_price }}"
+            data-actual-price="{{ auction.current_price }}"
             data-bid-count="{{ auction.bids.count }}"
             data-end-date="{{ auction.end_date|date:"c" }}"
+            data-user-id="{{ user.id }}"
+            {% if user.is_authenticated %}
+              data-authenticated="true"
+            {% endif %}
           ></div>
         </div>
       </div>

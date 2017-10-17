@@ -28,12 +28,14 @@ class ProviderAuctionConsumer(JsonWebsocketConsumer):
 
         message.reply_channel.send({'accept': True})
 
-    # Called when a message is received
-    def receive(self, content, **kwargs):
-        print("*"*89)
-        print("Received a message")
 
-    # Perform actions on connection close
-    def disconnect(self, message, **kwargs):
-        print("*"*89)
-        print("Ive disconected")
+class PublicAuctionConsumer(JsonWebsocketConsumer):
+    http_user = True
+
+    # Automatically add/remove this connection from these groups
+    def connection_groups(self, **kwargs):
+        return ['public-auction-{}'.format(kwargs['pk'])]
+
+    # Perform actions on connection start
+    def connect(self, message, **kwargs):
+        message.reply_channel.send({'accept': True})

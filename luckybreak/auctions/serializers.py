@@ -44,6 +44,79 @@ class BidSerializer(serializers.ModelSerializer):
         return obj.formatted_price()
 
 
+class BidCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Bid
+        fields = ('auction', 'user', 'price')
+
+    def validate(self, attrs):
+        # Ensure bidder is not auction owner
+        if attrs['auction'].experience.user == attrs['user']:
+            raise ValidationError({
+                'price': 'You cannot bid on your own auctions'
+            })
+
+        # Ensure the auction is still live
+        if attrs['auction'].end_date < datetime.now(pytz.UTC):
+            raise ValidationError({
+                'price': 'This auction has finished'
+            })
+
+        # Ensure bid price is more than the current price
+        if attrs['price'] < attrs['auction'].current_price() + 1:
+            raise ValidationError({
+                'price': 'Please enter a bid of {} or over'.format(
+                    attrs['auction'].current_price() + 1
+                )
+            })
+
+        # Ensure the user is not already the highest bidder
+        highest_bid = attrs['auction'].highest_bid()
+        if highest_bid is not None and highest_bid.user == attrs['user']:
+            raise ValidationError({
+                'price': 'You are already the highest bidder!'
+            })
+        return attrs
+
+
+class PublicAuctionSerializer(serializers.ModelSerializer):
+    formatted_current_price = serializers.SerializerMethodField()
+    current_price = serializers.SerializerMethodField()
+    formatted_starting_price = serializers.SerializerMethodField()
+    bids = serializers.SerializerMethodField()
+    highest_bidder = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Auction
+        fields = (
+            'formatted_current_price', 'formatted_starting_price',
+            'bids', 'current_price', 'highest_bidder',
+        )
+
+    @staticmethod
+    def get_current_price(obj):
+        return float(obj.current_price())
+
+    @staticmethod
+    def get_formatted_current_price(obj):
+        return obj.formatted_current_price()
+
+    @staticmethod
+    def get_formatted_starting_price(obj):
+        return obj.formatted_starting_price()
+
+    @staticmethod
+    def get_bids(obj):
+        return obj.bids.count()
+
+    @staticmethod
+    def get_highest_bidder(obj):
+        bid = obj.highest_bid()
+        if bid is not None:
+            return bid.user.id
+        return None
+
+
 class AuctionReadSerializer(serializers.ModelSerializer):
     latitude = serializers.SerializerMethodField()
     longitude = serializers.SerializerMethodField()

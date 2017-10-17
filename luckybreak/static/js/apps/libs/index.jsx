@@ -7,6 +7,7 @@ import ErrorAlert from './components/alerts/ErrorAlert';
 import { makeApiCall } from './utils/request';
 import SuccessCheck from './components/SuccessCheck';
 import Subheader from './components/Subheader';
+import { successToast, warningToast, errorToast, infoToast } from './utils/toast';
 
 export {
   LocationAutocomplete,
@@ -17,5 +18,9 @@ export {
   ErrorAlert,
   makeApiCall,
   SuccessCheck,
-  Subheader
+  Subheader,
+  successToast,
+  warningToast,
+  errorToast,
+  infoToast
 };

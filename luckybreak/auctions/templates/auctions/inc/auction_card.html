@@ -2,7 +2,7 @@
 <div class="col s12 m6 l6 xl4 auction-card" id="auction-{{ auction.id }}">
   <div class="card">
     <div class="card-image">
-      <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
+      <a href="{% url 'auctions:public-auction' pk=auction.id %}">
         <img
           src="{{ auction.get_default_image.image|thumbnail_url:'auction_card' }}"
           alt="{{ auction.title }}"
@@ -39,7 +39,7 @@
         data-position="top"
         data-tooltip="{{ auction.title }}"
       >
-        <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
+        <a href="{% url 'auctions:public-auction' pk=auction.id %}">
           {{ auction.title }}
         </a>
       </h5>
@@ -90,7 +90,7 @@
             data-position="top"
             data-tooltip="{% if auction.bids.count > 0 %}{{ auction.bids.count }} bids{% else %}No bids yet!{% endif %}"
           >
-            <a href="{% url 'auctions:guest-auction' pk=auction.id %}">
+            <a href="{% url 'auctions:public-auction' pk=auction.id %}">
               {{ auction.formatted_current_price }}
             </a>
           </h4>
@@ -102,7 +102,7 @@
             data-tooltip="Ending {{ auction.end_date }}"
           >
             <a
-              href="{% url 'auctions:guest-auction' pk=auction.id %}"
+              href="{% url 'auctions:public-auction' pk=auction.id %}"
               {% if auction.is_ending %}class="text-ending-soon"{% endif %}
             >
               {{ auction.end_date|timeuntil }} left

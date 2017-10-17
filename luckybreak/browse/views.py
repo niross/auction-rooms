@@ -25,9 +25,6 @@ class HomepageView(TemplateView):
             'end_date'
         )[:6]
 
-        if self.request.user.is_authenticated():
-            context['favourites'] = self.request.user.get_favourites()
-
         return context
 
 
@@ -88,9 +85,6 @@ class SearchResultsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
-            context['favourites'] = self.request.user.get_favourites()
-
         if not self.request.user.is_staff:
             increment_search_appearance_count.delay(
                 [x.id for x in context['object_list']]
