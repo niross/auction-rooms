@@ -387,8 +387,14 @@ THUMBNAIL_ALIASES = {
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'asgiref.inmemory.ChannelLayer',
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
         'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+        'CONFIG': {
+            'hosts': [('redis', 6379)]
+        },
+        'TEST_CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
     }
 }
 

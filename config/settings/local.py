@@ -99,10 +99,7 @@ CHANNEL_LAYERS = {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
         'ROUTING': 'luckybreak.auctions.routing.channel_routing',
         'CONFIG': {
-            'hosts': [(
-                'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'
-                'Qc7PnDGf3zLKmav3GpvzrAEzbwcCxzFrXPzeCxBB2q@redis:6379/0'
-            )]
+            'hosts': [('redis', 6379)]
         }
     }
 }
