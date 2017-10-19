@@ -1,4 +1,6 @@
 import time
+
+from django.core import mail
 from django.test.utils import override_settings
 from selenium.webdriver import ActionChains
 
@@ -7,7 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 from luckybreak.auctions.models import Favourite, Auction
-from luckybreak.common.tests import BaseFunctionalTestCase
+from luckybreak.common.tests import BaseFunctionalTestCase, \
+    BaseChannelLiveServerTestCase
 from luckybreak.users.models import User
 
 
@@ -25,9 +28,9 @@ class AddAuctionTestCase(BaseFunctionalTestCase):
         auction_count = self.provider.auctions().count()
 
         # Open the modal
-        # self.selenium.find_element_by_id('provider-add-auction-button').click()
+        self.selenium.find_element_by_id('provider-add-auction-button').click()
         self.selenium.execute_script(
-            'document.getElementById("provider-add-auction-button").click()'
+            'document.getElementById("add-experience-button").click()'
         )
 
         # Select an experience
@@ -281,3 +284,57 @@ class AuctionFavouriteTestCase(BaseFunctionalTestCase):
             lambda driver: driver.execute_script('return jQuery.active == 0')
         )
         self.assertEqual(self.provider.favourites.count(), 0)
+
+
+# FIXME: ChannelLiveServerTestCase is too unreliable so there is no
+# nice way to test bidding currently
+# class PublicAuctionBidTestCase(BaseChannelLiveServerTestCase):
+#     fixtures = [
+#         'users.json', 'currencies.json', 'experiences.json', 'auctions.json'
+#     ]
+#
+#     def test_favourite_auction_unauthed(self):
+#         self.selenium.get(
+#             self.live_url('auctions:public-auction', kwargs={'pk': 1})
+#         )
+#         fav = self.selenium.find_element_by_class_name('favourite')
+#         self.scroll_to(fav)
+#         fav.click()
+#         self.selenium.find_element_by_id('signin-submit')
+#
+#     def test_favourite_auction(self):
+#         pass
+#
+#     def test_unfavourite_auction(self):
+#         pass
+#
+#     def test_bid_unauthed(self):
+#         self.selenium.get(
+#             self.live_url('auctions:public-auction', kwargs={'pk': 1})
+#         )
+#         WebDriverWait(self.selenium, 10).until(
+#             EC.element_to_be_clickable((By.CLASS_NAME, 'bid'))
+#         )
+#         self.selenium.find_element_by_class_name('bid').click()
+#         self.selenium.find_element_by_id('signin-submit')
+#
+#     def test_bid(self):
+#         self.guest_login()
+#         cur_price = Auction.objects.get(pk=1).current_price()
+#         self.selenium.get(
+#             self.live_url('auctions:public-auction', kwargs={'pk': 1})
+#         )
+#         WebDriverWait(self.selenium, 10).until(
+#             EC.element_to_be_clickable((By.CLASS_NAME, 'bid'))
+#         )
+#         self.selenium.find_element_by_class_name('bid').click()
+#         WebDriverWait(self.selenium, 10).until(
+#             EC.presence_of_element_located((By.ID, 'accept'))
+#         )
+#         self.selenium.find_element_by_id('accept').click()
+#         WebDriverWait(self.selenium, 10).until(
+#             EC.invisibility_of_element_located((By.ID, 'accept'))
+#         )
+#         self.assertEqual(
+#             Auction.objects.get(pk=1).current_price(), cur_price + 1
+#         )

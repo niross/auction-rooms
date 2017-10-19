@@ -61,3 +61,5 @@ def auction_post_complete(sender, auction, **kwargs):
     :return:
     """
     EventLog.objects.log_auction_ended(auction)
+    if auction.was_won():
+        EventLog.objects.log_won_auction(auction)
