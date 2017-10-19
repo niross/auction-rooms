@@ -50,7 +50,7 @@ class ProviderAuctionView(UserIsProviderMixin, DetailView):
 
 
 class AuctionView(DetailView):
-    model = models.Auction
+    queryset = models.Auction.objects.filter(deleted=False)
     context_object_name = 'auction'
     template_name = 'auctions/auction.html'
 

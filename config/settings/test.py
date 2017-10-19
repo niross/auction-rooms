@@ -75,3 +75,17 @@ WEBPACK_LOADER = {
 COMPRESS_ENABLED = False
 SKIP_FUNCTIONAL_TESTS = env.bool('SKIP_FUNCTIONAL_TESTS', default=False)
 DEBUG = True
+#ALLOWED_HOSTS = ['localhost',]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)]
+        },
+        'TEST_CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+    }
+}

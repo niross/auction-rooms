@@ -24,7 +24,7 @@ def complete_auctions():
         status=Auction.STATUS_LIVE
     )
     for auction in to_complete:
-        print('Marking auction \'%s\' as complete', auction.id)
+        print('Marking auction {} as complete'.format(auction.id))
         log.debug('Marking auction \'%s\' as complete', auction.id)
         auction.mark_complete()
 

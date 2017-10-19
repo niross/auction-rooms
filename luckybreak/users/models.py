@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
 
-
 @python_2_unicode_compatible
 class User(AbstractUser):
     USER_TYPE_GUEST = 1
@@ -51,7 +50,46 @@ class User(AbstractUser):
 
     def get_favourites(self):
         from luckybreak.auctions.models import Auction
-        return Auction.objects.filter(
+        return Auction.objects.live().filter(
             id__in=[f.auction.id for f in self.favourites.all()]
         )
+
+    def won_auctions(self):
+        """
+        List any auctions this user has won
+        :return:
+        """
+        from luckybreak.auctions.models import Auction
+
+        # Find all auctions i've bid on
+        auctions = Auction.objects.filter(
+            status=Auction.STATUS_FINISHED_SOLD,
+            bids__user=self
+        )
+        # Filter them for any i am the highest bidder on
+        return Auction.objects.filter(
+            pk__in=[a.id for a in auctions if a.highest_bid().user == self]
+        )
+
+    def lost_auctions(self):
+        """
+        List any auctions this user has bid on but not won
+        :return:
+        """
+        from luckybreak.auctions.models import Auction
+
+        # Find all auctions i've bid on
+        auctions = Auction.objects.filter(
+            status__in=[
+                Auction.STATUS_FINISHED_SOLD,
+                Auction.STATUS_FINISHED_UNSOLD
+            ],
+            bids__user=self
+        )
+        # Filter them for any i am the highest bidder on
+        return Auction.objects.filter(
+            pk__in=[a.id for a in auctions if a.highest_bid().user != self]
+        )
+
+
 

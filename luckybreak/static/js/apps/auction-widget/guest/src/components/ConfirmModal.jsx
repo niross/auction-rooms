@@ -29,6 +29,7 @@ const ConfirmModal = props => (
       <Row className="modal-actions">
         <Col s={12} m={6}>
           <Button
+            id="close"
             large
             waves="light"
             className="red white-text modal-close"
@@ -38,6 +39,7 @@ const ConfirmModal = props => (
         </Col>
         <Col s={12} m={6}>
           <Button
+            id="accept"
             large
             waves="light"
             className="green white-text modal-close"

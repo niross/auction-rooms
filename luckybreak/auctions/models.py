@@ -229,6 +229,9 @@ class Auction(DeletableTimeStampedModel):
         """
         return self.end_date <= datetime.utcnow().replace(tzinfo=pytz.utc)
 
+    def was_won(self):
+        self.is_finished() and self.current_price() > self.reserve_price
+
     def highest_bid(self):
         if self.bids.count() > 0:
             return self.bids.order_by('-price').first()
@@ -305,8 +308,7 @@ class Auction(DeletableTimeStampedModel):
 
     def pretty_duration(self):
         days = (self.check_out.date() - self.check_in.date()).days
-        return '{} Night{}'.format(days, 's' if days > 1 else ''
-        )
+        return '{} Night{}'.format(days, 's' if days > 1 else '')
 
 
 class AuctionImage(models.Model):
@@ -349,6 +351,7 @@ class Bid(DeletableTimeStampedModel):
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
+        unique_together = ('auction', 'price')
         ordering = ('-price',)
 
     def __unicode__(self):
