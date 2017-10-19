@@ -226,5 +226,15 @@ RAVEN_CONFIG = {
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL')
 
-# Your production stuff: Below this line define 3rd party library settings
-# ------------------------------------------------------------------------------
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+        'CONFIG': {
+            'hosts': [(
+                'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'
+                'Qc7PnDGf3zLKmav3GpvzrAEzbwcCxzFrXPzeCxBB2q@redis:6379/0'
+            )]
+        }
+    }
+}

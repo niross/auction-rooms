@@ -69,6 +69,18 @@ class EventLogManager(models.Manager):
             content_object=bid
         )
 
+    def log_won_auction(self, auction):
+        """
+        User placed the winning bid on an auction
+        :param bid:
+        :return:
+        """
+        return self.create(
+            user=auction.highest_bid().user,
+            type=EventLog.EVENT_TYPE_WON_AUCTION,
+            content_object=auction
+        )
+
 
 class EventLog(TimeStampedModel):
     EVENT_TYPE_CREATE_EXPERIENCE = 1
@@ -76,6 +88,7 @@ class EventLog(TimeStampedModel):
     EVENT_TYPE_BID_PLACED = 3
     EVENT_TYPE_AUCTION_ENDED = 4
     EVENT_TYPE_PLACED_BID = 5
+    EVENT_TYPE_WON_AUCTION = 6
 
     _EVENT_TYPE_CHOICES = (
         (EVENT_TYPE_CREATE_EXPERIENCE, 'A new experience was created'),
@@ -83,6 +96,8 @@ class EventLog(TimeStampedModel):
         (EVENT_TYPE_BID_PLACED, 'A bid was placed on an auction'),
         (EVENT_TYPE_AUCTION_ENDED, 'Auction finished'),
         (EVENT_TYPE_PLACED_BID, 'User placed a bid on an auction'),
+        (EVENT_TYPE_WON_AUCTION,
+         'User submitted the winning bid on an auction'),
     )
     user = models.ForeignKey('users.User', related_name='events')
     type = models.IntegerField(choices=_EVENT_TYPE_CHOICES)
@@ -141,12 +156,17 @@ class EventLog(TimeStampedModel):
             )
 
         if self.type == self.EVENT_TYPE_PLACED_BID:
-            if self.content_object is None:
-                print('*'*80)
-                print(self.id)
             return 'You placed a bid for {} on auction ' \
                '<a href="{}">{}</a>.'.format(
                     self.content_object.formatted_price(),
                     self.content_object.auction.get_guest_absolute_url(),
                     self.content_object.auction.title
                 )
+
+        if self.type == self.EVENT_TYPE_WON_AUCTION:
+            return 'Congrats! You won the auction for ' \
+                '<a href="{}">{}</a> for {}.'.format(
+                '#',
+                self.content_object.title,
+                self.content_object.formatted_current_price()
+            )
