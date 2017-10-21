@@ -1,0 +1,129 @@
+{% load thumbnail %}
+{% with bid=auction.highest_bid %}
+  <div id="confirm-{{ auction.id }}" class="modal modal-fixed-footer provider-confirmation-modal">
+    <div class="modal-content">
+      <div
+        class="confirmation-hero"
+        style="background-image:url('{{ auction.get_default_image.image|thumbnail_url:'confirmation_dialog' }}')"
+      >
+        <div>
+          <div>
+
+            <h4>{{ auction.title|title }}</h4>
+            <h5>
+              <i class="material-icons">location_on</i>
+              {{ auction.location }}
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="confirmation-body">
+        <h4>We have a Winner!</h4>
+        <div class="row">
+          <div class="col s12 m6">
+            <p>
+              <strong>Winning Bidder</strong><br />
+              {{ bid.user.get_full_name }} -
+              <a href="mailto:{{ bid.user.email }}">
+                {{ bid.user.email }}
+              </a>
+            </p>
+          </div>
+          <div class="col s12 m6">
+            <p>
+              <strong>Winning Bid</strong><br />
+              {{ auction.formatted_current_price }}
+            </p>
+          </div>
+          <div class="col s12 m6">
+            <p>
+              <strong>Booking Reference</strong><br />
+              #{{ auction.uuid }}
+            </p>
+          </div>
+
+          <div class="col s12 m6">
+            <p>
+              <strong>Check In</strong><br />
+              {{ auction.check_in|date:"H:i, D, j N Y" }}<br />
+            </p>
+          </div>
+          <div class="col s12">
+            <p>
+              <strong>What's Next?</strong><br />
+              Get in contact with {{ bid.user.first_name }} to confirm their stay.<br />
+              You will need to collect the remaining balance of {{ auction.formatted_current_price }} when they check in.
+            </p>
+            <p>
+              If you have any queries regarding your auction don't hesitate to
+              <a href="{% url 'contact:contact' %}" target="_blank">contact us</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="row valign-wrapper">
+        <div class="col s12 m6 left-align">
+          <h5>
+            Outstanding Balance: <strong>{{ auction.formatted_current_price }}</strong>
+          </h5>
+        </div>
+        <div class="col s12 m6 right-align">
+          <a href="#!" class="modal-action print waves-effect waves-green btn-flat">
+            <i class="material-icons left">print</i> Print
+          </a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">
+            <i class="material-icons left">close</i> Close
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="printme">
+      <img
+        style="max-height:200px; width: 100%;"
+        src="{{ auction.get_default_image.image|thumbnail_url:'confirmation_print' }}"
+      />
+      <h4>We have a Winner!</h4>
+      <p>
+        <strong>Auction</strong><br />
+        {{ auction.title }}
+      </p>
+      <p>
+        <strong>Winning Bidder</strong><br />
+        {{ bid.user.get_full_name }} -
+        <a href="mailto:{{ bid.user.email }}">
+          {{ bid.user.email }}
+        </a>
+      </p>
+      <p>
+        <strong>Winning Bid</strong><br />
+        {{ auction.formatted_current_price }}
+      </p>
+      <p>
+        <strong>Booking Reference</strong><br />
+        #{{ auction.uuid }}
+      </p>
+      <p>
+        <strong>Check In</strong><br />
+        {{ auction.check_in|date:"H:i, D, j N Y" }}<br />
+      </p>
+      <hr />
+      <div class="to-pay">
+        <h5>
+          Outstanding Balance: <strong>{{ auction.formatted_current_price }}</strong>
+        </h5>
+      </div>
+      <hr />
+      <p>
+        <strong>What's Next?</strong><br />
+        Get in contact with Ill to confirm their stay.<br />
+        You will need to collect the remaining balance of £334.00 when they check in.
+      </p>
+      <p>
+        If you have any queries regarding your auction don't hesitate to
+        <a href="{% url 'contact:contact' %}" target="_blank">contact us</a>.
+      </p>
+    </div>
+  </div>
+{% endwith %}
