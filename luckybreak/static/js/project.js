@@ -50,6 +50,9 @@ $(document).ready(function() {
   // Initialise feature discovery
   $('.tap-target').tapTarget('open');
 
+  // Initialise modals
+  $('.modal').modal();
+
   // Initialise location autocompletes
   if ($('.location-autocomplete').length > 0) {
     var autocomplete = new google.maps.places.Autocomplete(

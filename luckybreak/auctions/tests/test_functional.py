@@ -1,16 +1,15 @@
 import time
+from datetime import datetime, timedelta
 
-from django.core import mail
+import pytz
 from django.test.utils import override_settings
-from selenium.webdriver import ActionChains
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from luckybreak.auctions.models import Favourite, Auction
-from luckybreak.common.tests import BaseFunctionalTestCase, \
-    BaseChannelLiveServerTestCase
+from luckybreak.auctions.models import Favourite, Auction, Bid
+from luckybreak.common.tests import BaseFunctionalTestCase
 from luckybreak.users.models import User
 
 
@@ -28,9 +27,8 @@ class AddAuctionTestCase(BaseFunctionalTestCase):
         auction_count = self.provider.auctions().count()
 
         # Open the modal
-        self.selenium.find_element_by_id('provider-add-auction-button').click()
         self.selenium.execute_script(
-            'document.getElementById("add-experience-button").click()'
+            'document.getElementById("provider-add-auction-button").click()'
         )
 
         # Select an experience
@@ -162,6 +160,34 @@ class ProviderAuctionDetailTestCase(BaseFunctionalTestCase):
             self.live_url('auctions:provider-auction', {'pk': 1})
         )
         self.selenium.find_element_by_class_name('provider-auction').click()
+
+
+class WonAuctionsTestCase(BaseFunctionalTestCase):
+    fixtures = [
+        'users.json', 'currencies.json', 'experiences.json', 'auctions.json'
+    ]
+
+    def test_view_confirm_modal(self):
+        self.guest_login()
+
+        auction = Auction.objects.get(pk=1)
+        Bid.objects.create(
+            user=self.guest,
+            auction=auction,
+            price=auction.reserve_price + 1
+        )
+        auction.end_date = datetime.now(pytz.UTC) - timedelta(hours=1)
+        auction.mark_complete()
+
+        self.selenium.get(
+            self.live_url('auctions:won-auctions')
+        )
+        self.selenium.find_element_by_class_name('modal-trigger').click()
+        WebDriverWait(self.selenium, 10).until(
+            EC.visibility_of_element_located(
+                (By.CLASS_NAME, 'guest-confirmation-modal')
+            )
+        )
 
 
 class AuctionFavouriteTestCase(BaseFunctionalTestCase):

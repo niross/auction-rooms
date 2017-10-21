@@ -69,3 +69,13 @@ class FavouritesView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.request.user.get_favourites()
+
+
+class WonAuctionsView(LoginRequiredMixin, ListView):
+    model = models.Auction
+    template_name = 'auctions/won_auctions.html'
+    paginate_by = 10
+    context_object_name = 'auctions'
+
+    def get_queryset(self):
+        return self.request.user.won_auctions()
