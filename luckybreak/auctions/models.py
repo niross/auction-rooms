@@ -236,7 +236,7 @@ class Auction(DeletableTimeStampedModel):
         return self.end_date <= datetime.utcnow().replace(tzinfo=pytz.utc)
 
     def was_won(self):
-        self.is_finished() and self.current_price() > self.reserve_price
+        return self.is_finished() and self.current_price() > self.reserve_price
 
     def highest_bid(self):
         if self.bids.count() > 0:

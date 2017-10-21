@@ -161,6 +161,26 @@ class ProviderAuctionDetailTestCase(BaseFunctionalTestCase):
         )
         self.selenium.find_element_by_class_name('provider-auction').click()
 
+    def test_view_confirm_modal(self):
+        auction = Auction.objects.get(pk=1)
+        Bid.objects.create(
+            user=self.guest,
+            auction=auction,
+            price=auction.reserve_price + 1
+        )
+        auction.end_date = datetime.now(pytz.UTC) - timedelta(hours=1)
+        auction.mark_complete()
+
+        self.selenium.get(
+            self.live_url('auctions:provider-auction', {'pk': 1})
+        )
+        self.selenium.find_element_by_class_name('modal-trigger').click()
+        WebDriverWait(self.selenium, 10).until(
+            EC.visibility_of_element_located(
+                (By.CLASS_NAME, 'provider-confirmation-modal')
+            )
+        )
+
 
 class WonAuctionsTestCase(BaseFunctionalTestCase):
     fixtures = [
