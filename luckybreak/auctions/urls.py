@@ -28,4 +28,9 @@ urlpatterns = [
         view=views.FavouritesView.as_view(),
         name='favourites'
     ),
+    url(
+        regex=r'^winning/$',
+        view=views.WonAuctionsView.as_view(),
+        name='won-auctions'
+    ),
 ]

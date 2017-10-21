@@ -9,10 +9,9 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.urls import reverse
+from django_extensions.db.fields import ShortUUIDField
 
-from luckybreak.common.models import (
-    DeletableTimeStampedModel, DeletableTimeStampedManager
-)
+from luckybreak.common.models import DeletableTimeStampedModel
 from luckybreak.experiences.models import Experience
 from luckybreak.users.models import User
 from luckybreak.currencies.models import Currency
@@ -201,6 +200,7 @@ class Auction(DeletableTimeStampedModel):
         help_text='Set to true to show this auction in ' \
                   'the featured section on the homepage'
     )
+    uuid = ShortUUIDField()
 
     objects = AuctionManager()
 
@@ -216,6 +216,12 @@ class Auction(DeletableTimeStampedModel):
 
     def get_guest_absolute_url(self):
         return reverse('auctions:public-auction', args=(self.id,))
+
+    def get_guest_confirmation_url(self):
+        return '{}#confirm-{}'.format(
+            reverse('auctions:won-auctions'),
+            self.id
+        )
 
     def is_live(self):
         """

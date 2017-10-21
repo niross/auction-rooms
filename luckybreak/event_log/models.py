@@ -166,7 +166,7 @@ class EventLog(TimeStampedModel):
         if self.type == self.EVENT_TYPE_WON_AUCTION:
             return 'Congrats! You won the auction for ' \
                 '<a href="{}">{}</a> for {}.'.format(
-                '#',
+                self.content_object.get_guest_confirmation_url(),
                 self.content_object.title,
                 self.content_object.formatted_current_price()
             )

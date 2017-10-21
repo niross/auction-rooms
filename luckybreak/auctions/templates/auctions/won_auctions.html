@@ -9,13 +9,24 @@
 {% block extra_css %}
   <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
-
 {% block extra_js %}
-  {% render_bundle 'provider-auction' 'js' %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"></script>
+  <script>
+    $(function() {
+      $('.guest-confirmation-modal .print').click(function() {
+        $(this).parents('.modal').find('.printme').print();
+      });
+      // Open a modal if provider
+      if (window.location.hash && $(window.location.hash)) {
+        var el = $(window.location.hash);
+        if ($(el).hasClass('modal')) {
+          $(el).modal('open');
+        }
+      }
+    })
+  </script>
 {% endblock extra_js %}
-
 {% block content %}
-
   <div class="main">
     <div class="container">
       <nav class="crumbs">
@@ -23,8 +34,8 @@
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
             <a href="{% url 'users:dashboard' %}" class="breadcrumb">Dashboard</a>
-            <a href="{% url 'auctions:provider-finished-auctions' %}" class="breadcrumb">
-              Finished Auctions
+            <a href="{% url 'auctions:won-auctions' %}" class="breadcrumb">
+              Won Auctions
             </a>
           </div>
         </div>
@@ -32,39 +43,29 @@
     </div>
 
     <div class="container">
-      {% include 'users/inc/provider_side_nav.html' %}
+      {% if user.is_provider %}
+        {% include 'users/inc/provider_side_nav.html' %}
+      {% else %}
+        {% include 'users/inc/guest_side_nav.html' %}
+      {% endif %}
+
       <div class="row">
         <div class="s12">
-          <h4>Your Finished Auctions</h4>
+          <h4>Your Won Auctions</h4>
           <p class="valign-wrapper">
             <i class="material-icons left ">info</i>
-            View your completed auctions
+            View any auctions you have won
           </p>
         </div>
-        <div class="s12">
-          <div
-            class="provider-auction-app fixed-action-btn"
-            data-modal-id="provider-auction-modal"
-            data-button-id="provider-auction-button"
-            data-button-icon="add_shopping_cart"
-            data-button-text="Add Auction"
-            data-button-floating="true"
-            data-button-colour="red"
-            data-button-fixed="true"
-            data-button-large="true"
-          ></div>
-        </div>
-
         <div class="s12">
           <table class="responsive-table striped bordered">
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Ended At</th>
-                <th>Bids</th>
-                <th>Reserve Price</th>
-                <th>Final Price</th>
+                <th>Location</th>
                 <th>Check In</th>
+                <th>Winning Bid</th>
+                <th>Ended At</th>
               </tr>
             </thead>
             <tbody>
@@ -72,24 +73,23 @@
                 <tr>
                   <td>
                     <a
-                      href="{% url 'auctions:provider-auction' pk=auction.id %}"
-                      class="tooltipped"
+                      href="#confirm-{{ auction.id }}"
+                      class="tooltipped modal-trigger"
                       data-position="top"
-                      data-tooltip="View auction details"
+                      data-tooltip="View details"
                     >
                       {{ auction.title|title }}
                     </a>
                   </td>
-                  <td>{{ auction.end_date|date:"H:i, D, j N Y" }}</td>
-                  <td>{{ auction.bids.count }}</td>
-                  <td>{{ auction.formatted_reserve_price }}</td>
-                  <td>{{ auction.formatted_current_price }}</td>
+                  <td>{{ auction.location }}</td>
                   <td>{{ auction.check_in|date:"H:i, D, j N Y" }}</td>
+                  <td>{{ auction.formatted_current_price }}</td>
+                  <td>{{ auction.end_date|date:"H:i, D, j N Y" }}</td>
                 </tr>
               {% empty %}
                 <tr>
                   <td class="center-align" colspan="5">
-                    You don't have any finished auctions yet...
+                    You haven't won any auctions yet...
                   </td>
                 </tr>
               {% endfor %}
@@ -103,9 +103,11 @@
             </tfoot>
           </table>
         </div>
-
       </div>
     </div>
   </div>
+  {% for auction in auctions %}
+                    {% include 'auctions/inc/guest_confirmation_modal.html' %}
+  {% endfor %}
 {% endblock content %}
 

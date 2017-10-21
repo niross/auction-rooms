@@ -83,6 +83,16 @@
               <span class="card-title valign-wrapper">
                 <i class="material-icons left">shopping_cart</i> Auctions
               </span>
+              <a
+                href="{% url 'auctions:won-auctions' %}"
+                class="btn-floating halfway-fab waves-effect waves-light red tooltipped"
+                data-position="top"
+                data-delay="50"
+                data-tooltip="View your won auctions"
+              >
+                <i class="material-icons">add_shopping_cart</i>
+              </a>
+
             </div>
             <div class="card-content">
               <p class="valign-wrapper">

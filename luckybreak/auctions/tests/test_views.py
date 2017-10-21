@@ -51,3 +51,23 @@ class ProviderAuctionDetailTestCase(BaseTestCase):
         self.client.force_login(self.provider)
         self.get('auctions:provider-auction', pk=1)
         self.response_200()
+
+
+class FavouritesTestCase(BaseTestCase):
+    fixtures = [
+        'users.json', 'currencies.json', 'experiences.json', 'auctions.json'
+    ]
+
+    def test_unauthenticated_get(self):
+        self.get('auctions:favourites')
+        self.response_302()
+
+    def test_guest_get(self):
+        self.client.force_login(self.guest)
+        self.get('auctions:favourites')
+        self.response_200()
+
+    def test_provider_get(self):
+        self.client.force_login(self.provider)
+        self.get('auctions:favourites')
+        self.response_200()
