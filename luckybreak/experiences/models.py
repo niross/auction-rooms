@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.urls import reverse
 
 from luckybreak.users.models import User
 from luckybreak.common.models import DeletableTimeStampedModel
@@ -28,6 +27,14 @@ class Experience(DeletableTimeStampedModel):
 
     def __str__(self):
         return self.__unicode__()
+
+    def sold_auctions(self):
+        from luckybreak.auctions.models import Auction
+        return self.auctions.filter(status=Auction.STATUS_FINISHED_SOLD)
+
+    def live_auctions(self):
+        from luckybreak.auctions.models import Auction
+        return self.auctions.filter(status=Auction.STATUS_LIVE)
 
 
 class ExperienceImage(models.Model):
