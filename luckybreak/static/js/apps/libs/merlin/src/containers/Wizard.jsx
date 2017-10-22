@@ -152,6 +152,7 @@ class Wizard extends React.Component {
         showCancel={step.props.showCancel}
         cancelButtonText={step.props.cancelButtonText}
         disabled={this.getVisibleChild(this.state.step).props.showLoader}
+        loading={this.state.loading}
       />
     );
   }
