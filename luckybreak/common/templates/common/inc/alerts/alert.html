@@ -2,7 +2,9 @@
   <div class="col {{ grid }}">
     <div class="card-panel {{ colour }}">
       <div class="white-text{% if not novalign %} valign-wrapper{% endif %}">
-        <i class="material-icons left">{{ icon }}</i> {{ message|safe }}
+       <p>
+          <i class="material-icons left">{{ icon }}</i> {{ message|safe }}
+       </p>
       </div>
     </div>
   </div>
