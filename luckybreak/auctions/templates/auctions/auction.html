@@ -60,7 +60,13 @@
 
               {% if user == auction.experience.user %}
                 {% with id=auction.id|slugify %}
-                  {% include 'common/inc/alerts/info.html' with grid="s12" message='To view more details about your auction visit your&nbsp;<a href="/auctions/auction/'|add:id|add:'/">auction detail page</a>.' %}
+                  {% include 'common/inc/alerts/info.html' with grid="s12" message='To view more details about your auction visit your&nbsp;<a href="'|add:auction.get_provider_absolute_url|add:'">auction detail page</a>.' %}
+                {% endwith %}
+              {% endif %}
+
+              {% if auction.was_won and user == auction.highest_bid.user %}
+                {% with id=auction.id|slugify %}
+                  {% include 'common/inc/alerts/info.html' with grid="s12" message='<strong>You won this auction!</strong> To view more details visit your&nbsp;<a href="'|add:auction.get_guest_confirmation_url|add:'">won auctions page</a>.' %}
                 {% endwith %}
               {% endif %}
 
