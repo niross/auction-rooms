@@ -1,13 +1,30 @@
 {% extends "base.html" %}
-
+{% load static compile_static %}
 {% block title %}Server Error{% endblock %}
-
+{% block body_class %}homepage{% endblock body_class %}
+{% block extra_css %}
+  <link href="{% static 'less/homepage.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+{% block extra_js %}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+{% endblock extra_js %}
 {% block content %}
-<h1>Ooops!!! 500</h1>
-
-<h3>Looks like something went wrong!</h3>
-
-<p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</p>
+  <div class="hero-wrap">
+    <div class="hero red lighten-1">
+      <div>
+        <div>
+          <h1>It's Borked!</h1>
+          <h2>Something seems to have gone wrong.</h2>
+          <div class="row">
+            <div class="col s12 m8 offset-m2 l8 offset-l2">
+              <p>If you are seeing this page something has gone horribly wrong. Our engineers are currently bashing things with hammers and should resolve the issue asap.</p>
+              <p>If you keep having issues you better <a href="{% url 'contact:contact' %}">get in touch</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'inc/desktop_search.html' with colours="grey darken-4" %}
+  {% include 'inc/mobile_search.html' with colours="grey darken-4" %}
 {% endblock content %}
-
-
