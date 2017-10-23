@@ -1,0 +1,41 @@
+{% extends 'emailer/email_base.html' %}
+{% load staticfiles %}
+{% block title %}You're a Winner!{% endblock title %}
+{% block content %}
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Good News! You placed the winning bid of {{ auction.formatted_current_price }} on the auction <a href="https://{{ site.domain }}{{ auction.get_guest_absolute_url }}">{{ auction.title|title }}</a> on <a href="https://{{ site.domain }}{% url 'browse:homepage' %}">{{ site.name|title }}</a>.
+    </td>
+  </tr>
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Below are some details of what you have won. For full info including your next steps visit your <a href="https://{{ site.domain }}{{ auction.get_guest_confirmation_url }}">won auctions page</a>.
+    </td>
+  </tr>
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      <table>
+        <tr>
+          <td>Booking Ref:</td>
+          <td><a href="https://{{ site.domain }}{{ auction.get_guest_confirmation_url }}">{{ auction.uuid }}</a></td>
+        </tr>
+        <tr>
+          <td>Auction:</td>
+          <td>{{ auction.title }}</td>
+        </tr>
+        <tr>
+          <td>Location:</td>
+          <td>{{ auction.location }}</td>
+        </tr>
+        <tr>
+          <td>Check In:</td>
+          <td>{{ auction.check_in|date:"H:i, D, j N Y" }}</td>
+        </tr>
+        <tr>
+          <td>Check Out:</td>
+          <td>{{ auction.check_out|date:"H:i, D, j N Y" }}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+{% endblock content %}
