@@ -3,7 +3,7 @@
 {% load static compile_static common_tags %}
 {% load render_bundle from webpack_loader %}
 {% block title %}{% trans "Your Finished Auctions" %}{% endblock %}
-{% block description %}{% endblock description %}
+{% block description %}View any auctions you have won, you lucky devil.{% endblock description %}
 {% block body_class %}provider-auctions{% endblock body_class %}
 {% block header_class %}navbar-fixed{% endblock header_class %}
 {% block extra_css %}
@@ -16,7 +16,7 @@
       $('.guest-confirmation-modal .print').click(function() {
         $(this).parents('.modal').find('.printme').print();
       });
-      // Open a modal if provider
+      // Open a modal if id provided
       if (window.location.hash && $(window.location.hash)) {
         var el = $(window.location.hash);
         if ($(el).hasClass('modal')) {
