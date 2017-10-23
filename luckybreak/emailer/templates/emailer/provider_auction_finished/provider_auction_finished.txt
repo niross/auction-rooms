@@ -1,0 +1,18 @@
+{% extends 'emailer/email_base.txt' %}
+{% block content %}
+Your auction for '{{ auction.title }}' finished at {{ auction.end_date|date:"H:i, D, j N Y" }}.
+{% if auction.was_won %}
+Good News! The auction was a success.
+
+The winning bid was from user {{ auction.highest_bid.user.first_name }} for {{ auction.formatted_current_price }}.
+
+You can view more details at https://{{ site.domain }}{{ auction.get_provider_absolute_url }}
+{% else %}
+Unfortunately there was not a winning bid this time.
+
+You can view any stats about the auction at https://{{ site.domain }}{{ auction.get_provider_absolute_url }}.
+
+Better luck next time!
+{% endif %}
+{% endblock content %}
+
