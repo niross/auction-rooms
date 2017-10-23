@@ -41,7 +41,9 @@
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
-            <a href="{% url 'browse:search-results' %}" class="breadcrumb">Find Experiences</a>
+            <a href="{% url 'browse:search-results' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="breadcrumb">
+              Find Experiences
+            </a>
             <a href="{% url 'auctions:provider-auction' pk=auction.id %}" class="breadcrumb">
               {{ auction.id }}: {{ auction.title }}
             </a>
