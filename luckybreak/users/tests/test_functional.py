@@ -69,7 +69,6 @@ class AuthTestCase(BaseFunctionalTestCase):
 
 class SettingsTestCase(BaseFunctionalTestCase):
     fixtures = ['users.json']
-    # TODO: Need to write tests for guests
 
     def test_edit_settings(self):
         self.provider_login()
