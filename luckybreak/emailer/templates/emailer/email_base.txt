@@ -1,0 +1,5 @@
+Hi {{ recipient.first_name|title }},
+{% block content %}
+{% endblock content %}
+The {{ site.name }} Team
+https://{{ site.domain }}
