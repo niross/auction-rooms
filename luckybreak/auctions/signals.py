@@ -6,6 +6,7 @@ from django.dispatch import receiver, Signal
 from luckybreak.auctions.models import Bid, Auction
 from luckybreak.auctions.serializers import BidSerializer, \
     PublicAuctionSerializer
+from luckybreak.emailer import tasks
 from luckybreak.event_log.models import EventLog
 
 auction_completed = Signal(providing_args=['auction'])
@@ -63,3 +64,12 @@ def auction_post_complete(sender, auction, **kwargs):
     EventLog.objects.log_auction_ended(auction)
     if auction.was_won():
         EventLog.objects.log_won_auction(auction)
+        tasks.guest_auction_won(
+            recipient_id=auction.highest_bid().user.id,
+            auction_id=auction.id
+        )
+
+    tasks.provider_auction_finished(
+        recipient_id=auction.experience.user.id,
+        auction_id=auction.id
+    )

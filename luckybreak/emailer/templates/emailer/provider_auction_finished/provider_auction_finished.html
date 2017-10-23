@@ -1,0 +1,38 @@
+{% extends 'emailer/email_base.html' %}
+{% load staticfiles %}
+{% block title %}Auction Finished{% endblock title %}
+{% block content %}
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Your auction for '{{ auction.title }}' finished at {{ auction.end_date|date:"H:i, D, j N Y" }}.
+    </td>
+  </tr>
+  {% if auction.was_won %}
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+      <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+        Good News! The auction was a success. The winning bid was from user {{ auction.highest_bid.user.first_name }} for {{ auction.formatted_current_price }}.
+      </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+      <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+        You can view more details on <a href="https://{{ site.domain }}{{ auction.get_provider_absolute_url }}">your dashboard</a>.
+      </td>
+    </tr>
+  {% else %}
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+      <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+        Unfortunately there was not a winning bid this time.
+      </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+      <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+        You can view any stats about the auction on <a href="https://{{ site.domain }}{{ auction.get_provider_absolute_url }}">your dashboard</a>.
+      </td>
+    </tr>
+    <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+      <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+        Better luck next time!
+      </td>
+    </tr>
+  {% endif %}
+{% endblock content %}
