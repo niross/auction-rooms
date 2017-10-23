@@ -1,8 +1,21 @@
-{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Hello from {{ site_name }}!
+{% load account %}
+{% user_display user as user_display %}
+{% load i18n %}
+Hi {{ user.first_name|title }},
 
-You're receiving this email because user {{ user_display }} has given this address as an email address to connect their account.
+Welcome and thanks for signing up to {{ current_site.name }}.
+{% if user.user_type == '1' %}
+We really hope you enjoy finding and bidding on bargain experiences as much as we do!
 
-To confirm this is correct, go to {{ activate_url }}
-{% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
-{{ site_domain }}{% endblocktrans %}
+When you get a chance please do us a favour and confirm this email address by visiting {{ activate_url }}
+
+Thanks and happy bidding,
+{% else %}
+We really hope we can help you boost your occupancy rates and therefore your revenue!
+
+When you get a chance please do us a favour and confirm this email address by visiting {{ activate_url }}
+
+Thanks and happy auctioning,
+{% endif %}
+The {{ current_site.name }} Team!
+https://{{ current_site.domain }}

@@ -1,0 +1,14 @@
+{% extends 'emailer/email_base.txt' %}
+{% block content %}
+Good News! You placed the winning bid of {{ auction.formatted_current_price }} on the auction {{ auction.title|title }} on {{ site.name|title }}. Details below:
+
+Reference: {{ auction.uuid }}
+Name: {{ auction.title }}
+Location: {{ auction.location }}
+Price: {{ auction.formatted_current_price }}
+Check In: {{ auction.check_in|date:"H:i, D, j N Y" }}
+Check Out: {{ auction.check_out|date:"H:i, D, j N Y" }}
+
+Visit https://{{ site.domain }}{{ auction.get_guest_confirmation_url }} to view full details.
+{% endblock content %}
+
