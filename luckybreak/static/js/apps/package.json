@@ -64,6 +64,7 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.2",
     "less-plugin-autoprefix": "^1.5.1",
+    "mdi-react": "^2.0.46",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "react": "^15.1.0",

@@ -5,6 +5,20 @@
 {% block title %}Auction: #{{ auction.id }} - {{ auction.title }}{% endblock %}
 {% block description %}TODO{% endblock description %}
 {% block body_class %}auction{% endblock body_class %}
+{% block extra_meta %}
+  <meta name="twitter:card" content="photo" />
+  <meta name="twitter:site" content="{{ settings.TWITTER_USERNAME }}" />
+  <meta name="twitter:title" content="{{ auction.title }}" />
+  <meta name="twitter:description" content="" />
+  <meta name="twitter:image" content="https://{{ site.domain }}{{ auction.get_default_image.image.url }}" />
+  <meta name="twitter:url" content="https://{{ site.domain }}{{ request.page }}" />
+
+  <meta property="og:url" content="https://{{ site.domain }}{{ request.page }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ auction.title }}" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://{{ site.domain }}{{ auction.get_default_image.image.url }}" />
+{% endblock extra_meta %}
 {% block extra_css %}
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
   <link href="{% static 'less/auction.less'|compile %}" rel="stylesheet">

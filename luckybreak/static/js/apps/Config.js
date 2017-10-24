@@ -8,4 +8,5 @@ export const apiEndpoints = {
 // Max image size is 7mb
 export const maxImageSizeName = '7mb';
 export const maxImageSize = 7 * 1024 * 1024;
-
+export const twitterUsername = 'twitter';
+export const siteName = 'Luckybreak';
