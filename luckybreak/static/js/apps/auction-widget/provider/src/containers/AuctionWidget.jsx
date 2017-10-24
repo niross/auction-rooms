@@ -9,6 +9,7 @@ import { makeApiCall } from '../../../../libs/utils/request';
 import { apiEndpoints } from '../../../../Config';
 
 import BaseWidget from '../../../shared/containers/BaseWidget';
+import SocialButtons from '../../../shared/components/SocialButtons';
 
 const AuctionWidget = class extends BaseWidget {
   componentDidMount() {
@@ -42,42 +43,45 @@ const AuctionWidget = class extends BaseWidget {
 
   render() {
     return (
-      <Card
-        className="auction-widget"
-        title={
-          <CardTitle
-            {...this.state}
-          />
-        }
-      >
-        {this.state.isLive && !this.state.socketOpen ?
-          <SocketErrorMask /> : null}
-        <div className="card-body">
-          {this.state.loading ?
-            <ProgressBar />
-            :
-            <div>
-              <Collection>
-                {this.state.bids.map(bid => (
-                  <Bid
-                    key={`bid-${bid.id}`}
-                    title={`${bid.user.first_name} ${bid.user.last_name}`}
-                    avatar={bid.user.first_name[0].toUpperCase()}
-                    price={bid.formatted_price}
-                    date={moment(bid.created)}
-                  />
-                ))}
-                <Bid
-                  title="Auction Started"
-                  avatar={<Icon>timer</Icon>}
-                  price={this.state.auction.formatted_starting_price}
-                  date={moment(this.state.auction.created)}
-                />
-              </Collection>
-            </div>
+      <div>
+        <Card
+          className="auction-widget"
+          title={
+            <CardTitle
+              {...this.state}
+            />
           }
-        </div>
-      </Card>
+        >
+          {this.state.isLive && !this.state.socketOpen ?
+            <SocketErrorMask /> : null}
+          <div className="card-body">
+            {this.state.loading ?
+              <ProgressBar />
+              :
+              <div>
+                <Collection>
+                  {this.state.bids.map(bid => (
+                    <Bid
+                      key={`bid-${bid.id}`}
+                      title={`${bid.user.first_name} ${bid.user.last_name}`}
+                      avatar={bid.user.first_name[0].toUpperCase()}
+                      price={bid.formatted_price}
+                      date={moment(bid.created)}
+                    />
+                  ))}
+                  <Bid
+                    title="Auction Started"
+                    avatar={<Icon>timer</Icon>}
+                    price={this.state.auction.formatted_starting_price}
+                    date={moment(this.state.auction.created)}
+                  />
+                </Collection>
+              </div>
+            }
+          </div>
+        </Card>
+        <SocialButtons shareUrl={`${window.location.origin}/auctions/${this.props.auctionId}/`} />
+      </div>
     );
   }
 };
