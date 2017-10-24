@@ -101,7 +101,7 @@ class EventLog(TimeStampedModel):
     )
     user = models.ForeignKey('users.User', related_name='events')
     type = models.IntegerField(choices=_EVENT_TYPE_CHOICES)
-    data = JSONField(null=True)
+    data = models.TextField(null=True)
 
     content_type = models.ForeignKey(
         ContentType,
