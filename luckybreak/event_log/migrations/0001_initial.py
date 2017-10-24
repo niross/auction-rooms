@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('created', django_extensions.db.fields.CreationDateTimeField(auto_now_add=True, verbose_name='created')),
                 ('modified', django_extensions.db.fields.ModificationDateTimeField(auto_now=True, verbose_name='modified')),
                 ('type', models.IntegerField(choices=[(1, 'Created a new experience'), (2, 'Created a new auction'), (3, 'A bid was placed on an auction'), (4, 'An auction finished')])),
-                ('data', django.contrib.postgres.fields.jsonb.JSONField(null=True)),
+                ('data', models.TextField(null=True)),
                 ('object_id', models.PositiveIntegerField(null=True)),
                 ('content_type', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events', to=settings.AUTH_USER_MODEL)),
