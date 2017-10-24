@@ -5,6 +5,7 @@ import moment from 'moment';
 import CardTitle from '../../../shared/containers/CardTitle';
 import SocketErrorMask from '../../../shared/components/SocketErrorMask';
 import BaseWidget from '../../../shared/containers/BaseWidget';
+import SocialButtons from '../../../shared/components/SocialButtons';
 import { apiEndpoints } from '../../../../Config';
 import { makeApiCall, successToast, warningToast, InfoAlert } from '../../../../libs';
 import ConfirmModal from '../components/ConfirmModal';
@@ -191,6 +192,7 @@ const GuestAuctionWidget = class extends BaseWidget {
                 </Button>
               </Col>
             </Row>
+            <SocialButtons shareUrl={window.location.href} />
           </div>
           : null}
       </Card>
