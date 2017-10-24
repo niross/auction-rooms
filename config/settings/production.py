@@ -221,3 +221,19 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 STATIC_PRECOMPILER_COMPILERS = (
     ('static_precompiler.compilers.LESS', {"executable": "/usr/local/bin/lessc"}),
 )
+
+########## WEBPACK
+# See: https://github.com/owais/django-webpack-loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'js/apps/dist/js/',
+        'STATS_FILE': str(
+            str(ROOT_DIR('staticfiles', 'js', 'apps', 'webpack-stats-prod.json'))
+        ),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
+########## END WEBPACK
