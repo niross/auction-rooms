@@ -53,7 +53,6 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    'raven.contrib.django.raven_compat',  # sentry
     'static_precompiler',  # less compiler
     'webpack_loader',  # js hotloader
     'rest_framework',  # api
@@ -392,18 +391,18 @@ THUMBNAIL_ALIASES = {
     },
 }
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'asgi_redis.RedisChannelLayer',
-        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
-        'CONFIG': {
-            'hosts': [('redis', 6379)]
-        },
-        'TEST_CONFIG': {
-            'hosts': [('localhost', 6379)],
-        },
-    }
-}
+#CHANNEL_LAYERS = {
+#    'default': {
+#        'BACKEND': 'asgi_redis.RedisChannelLayer',
+#        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+#        'CONFIG': {
+#            'hosts': [('redis', 6379)]
+#        },
+#        'TEST_CONFIG': {
+#            'hosts': [('localhost', 6379)],
+#        },
+#    }
+#}
 
 # CELERYBEAT_SCHEDULE = {
 #     'auction-completer': {
