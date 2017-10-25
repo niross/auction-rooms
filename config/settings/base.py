@@ -324,6 +324,10 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 INSTALLED_APPS += ['luckybreak.taskapp.celery.CeleryConfig']
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
 CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_RESULT_EXPIRES = None
+CELERY_AMQP_TASK_RESULT_EXPIRES = 300
 ########## END CELERY
 # django-compressor
 # ------------------------------------------------------------------------------
