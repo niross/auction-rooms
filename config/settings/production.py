@@ -205,18 +205,18 @@ RAVEN_CONFIG = {
 # Custom Admin URL, use {% url 'admin:index' %}
 ADMIN_URL = env('DJANGO_ADMIN_URL')
 
-#CHANNEL_LAYERS = {
-#    'default': {
-#        'BACKEND': 'asgi_redis.RedisChannelLayer',
-#        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
-#        'CONFIG': {
-#            'hosts': [(
-#                'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'
-#                'Qc7PnDGf3zLKmav3GpvzrAEzbwcCxzFrXPzeCxBB2q@redis:6379/0'
-#            )]
-#        }
-#    }
-#}
+CHANNEL_LAYERS = {
+   'default': {
+       'BACKEND': 'asgi_redis.RedisChannelLayer',
+       'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+       'CONFIG': {
+           'hosts': [(
+               'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'
+               'Qc7PnDGf3zLKmav3GpvzrAEzbwcCxzFrXPzeCxBB2q@redis:6379/0'
+           )]
+       }
+   }
+}
 
 STATIC_PRECOMPILER_COMPILERS = (
     ('static_precompiler.compilers.LESS', {"executable": "/usr/local/bin/lessc"}),
