@@ -12,6 +12,7 @@
 
 {% block extra_js %}
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.GOOGLE_MAPS_KEY }}&libraries=places"></script>
+  {% render_bundle 'vendors' 'js' %}
   {% render_bundle 'experience' 'js' %}
   {% render_bundle 'provider-auction' 'js' %}
 {% endblock extra_js %}
