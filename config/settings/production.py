@@ -25,29 +25,30 @@ from .base import *  # noqa
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
+SITE_ID = 1
 
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # raven sentry client
 # See https://docs.sentry.io/clients/python/integrations/django/
-INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
+#INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 
 # Use Whitenoise to serve static files
 # See: https://whitenoise.readthedocs.io/
 WHITENOISE_MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware', ]
 MIDDLEWARE = WHITENOISE_MIDDLEWARE + MIDDLEWARE
-RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
-MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
+#RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
+#MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 # opbeat integration
 # See https://opbeat.com/languages/django/
-INSTALLED_APPS += ['opbeat.contrib.django', ]
+#INSTALLED_APPS += ['opbeat.contrib.django', ]
 OPBEAT = {
     'ORGANIZATION_ID': env('DJANGO_OPBEAT_ORGANIZATION_ID'),
     'APP_ID': env('DJANGO_OPBEAT_APP_ID'),
     'SECRET_TOKEN': env('DJANGO_OPBEAT_SECRET_TOKEN')
 }
-MIDDLEWARE = ['opbeat.contrib.django.middleware.OpbeatAPMMiddleware', ] + MIDDLEWARE
+#MIDDLEWARE = ['opbeat.contrib.django.middleware.OpbeatAPMMiddleware', ] + MIDDLEWARE
 
 
 # SECURITY CONFIGURATION
