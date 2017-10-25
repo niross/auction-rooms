@@ -22,3 +22,5 @@ pylint-common==0.2.5
 pylint-celery==0.3
 pylint-django==0.7.2
 selenium==3.5.0
+
+fabric==1.14.0
