@@ -11,6 +11,7 @@
 {% endblock extra_css %}
 
 {% block extra_js %}
+  {% render_bundle 'vendors' 'js' %}
   {% render_bundle 'provider-auction' 'js' %}
 {% endblock extra_js %}
 
