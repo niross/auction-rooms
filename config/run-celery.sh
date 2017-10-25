@@ -14,6 +14,10 @@ export DJANGO_OPBEAT_ORGANIZATION_ID= 'a8c27beba6ef4c09aa8340432aa690ff'
 export DJANGO_OPBEAT_APP_ID='9a18256ec2'
 export DJANGO_OPBEAT_SECRET_TOKEN='1df6a84d68212cc7500ac7fbc4ceac641295e2e7'
 export DJANGO_SENTRY_DSN='https://5ecd0ab0491240ca8a656da55e1af0d8:09f32809c8a446b29985c531df51bfff@sentry.io/234917'
+export CELERY_AMQP_TASK_RESULT_EXPIRES=300
 
-/home/nick/.virtualenvs/luckybreak/bin/celery --workdir=/var/www/sites/luckybreak -A luckybreak.taskapp worker -B -s /var/log/luckybreak/luckybreak-celerybeat-schedule -l INFO --concurrency=1
+/home/nick/.virtualenvs/luckybreak/bin/celery --workdir=/var/www/sites/luckybreak -A luckybreak.taskapp worker --beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler --schedule=/tmp/luckybreak-celerybeat-schedule --pidfile /tmp/luckybreak-celerybeat-pid --hostname=lb1@%h
+
+#/home/nick/.virtualenvs/luckybreak/bin/celery -A luckybreak.taskapp beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --workdir=/var/www/sites/luckybreak --schedule=/tmp/luckybreak-celerybeat-schedule --pidfile /tmp/luckybreak-celerybeat-pid
+
 
