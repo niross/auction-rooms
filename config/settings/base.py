@@ -220,6 +220,8 @@ STATICFILES_FINDERS = [
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(APPS_DIR('media'))
+print("*"*80)
+print(MEDIA_ROOT)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
@@ -328,6 +330,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_RESULT_EXPIRES = None
 CELERY_AMQP_TASK_RESULT_EXPIRES = 300
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASKS_SERIALIZER = 'json'
+from kombu import serialization
+serialization.registry._decoders.pop("application/x-python-serialize")
 ########## END CELERY
 # django-compressor
 # ------------------------------------------------------------------------------
