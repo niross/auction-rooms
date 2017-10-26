@@ -32,23 +32,23 @@ SITE_ID = 1
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # raven sentry client
 # See https://docs.sentry.io/clients/python/integrations/django/
-#INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
+INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 
 # Use Whitenoise to serve static files
 # See: https://whitenoise.readthedocs.io/
 WHITENOISE_MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware', ]
 MIDDLEWARE = WHITENOISE_MIDDLEWARE + MIDDLEWARE
-#RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
-#MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
+RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
+MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 # opbeat integration
 # See https://opbeat.com/languages/django/
-#INSTALLED_APPS += ['opbeat.contrib.django', ]
+INSTALLED_APPS += ['opbeat.contrib.django', ]
 OPBEAT = {
     'ORGANIZATION_ID': env('DJANGO_OPBEAT_ORGANIZATION_ID'),
     'APP_ID': env('DJANGO_OPBEAT_APP_ID'),
     'SECRET_TOKEN': env('DJANGO_OPBEAT_SECRET_TOKEN')
 }
-#MIDDLEWARE = ['opbeat.contrib.django.middleware.OpbeatAPMMiddleware', ] + MIDDLEWARE
+MIDDLEWARE = ['opbeat.contrib.django.middleware.OpbeatAPMMiddleware', ] + MIDDLEWARE
 
 
 # SECURITY CONFIGURATION
@@ -65,7 +65,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 SECURE_BROWSER_XSS_FILTER = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=False)
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = False
 X_FRAME_OPTIONS = 'DENY'
@@ -74,7 +74,7 @@ X_FRAME_OPTIONS = 'DENY'
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['luckybreak.io', 'luckybreak.sonick.co.uk'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['0.0.0.0', '.sonick.co.uk'])
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', ]
@@ -85,12 +85,12 @@ INSTALLED_APPS += ['gunicorn', ]
 # Uploaded Media Files
 # ------------------------
 # See: http://django-storages.readthedocs.io/en/latest/index.html
-INSTALLED_APPS += ['storages', ]
+#INSTALLED_APPS += ['storages', ]
 
 
 # Static Assets
 # ------------------------
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # COMPRESSOR
 # ------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ CHANNEL_LAYERS = {
        'CONFIG': {
            'hosts': [(
                'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'
-               'Qc7PnDGf3zLKmav3GpvzrAEzbwcCxzFrXPzeCxBB2q@redis:6379/0'
+               'Qc7PnDGf3zLKmav3GpvzrAEzbwcCxzFrXPzeCxBB2q@localhost:6379/0'
            )]
        }
    }
