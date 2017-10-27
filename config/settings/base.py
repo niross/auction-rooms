@@ -393,29 +393,21 @@ DEFAULT_CURRENCY_ID = 1  # GBP
 THUMBNAIL_ALIASES = {
     '': {
         'gallery_thumb': {'size': (300, 200), 'crop': 'scale'},
-        'auction_card': {'size': (400, 250), 'crop': 'scale'},
+        'auction_card': {'size': (400, 250), 'crop': True},
         'confirmation_dialog': {'size': (700, 200), 'crop': 'scale'},
         'confirmation_print': {'size': (700, 200), 'crop': True},
     },
 }
 
-#CHANNEL_LAYERS = {
-#    'default': {
-#        'BACKEND': 'asgi_redis.RedisChannelLayer',
-#        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
-#        'CONFIG': {
-#            'hosts': [('redis', 6379)]
-#        },
-#        'TEST_CONFIG': {
-#            'hosts': [('localhost', 6379)],
-#        },
-#    }
-#}
-
-# CELERYBEAT_SCHEDULE = {
-#     'auction-completer': {
-#         'task': 'luckybreak.auctions.tasks.complete_auctions',
-#         'schedule': timedelta(seconds=10),
-#     },
-# }
-
+CHANNEL_LAYERS = {
+   'default': {
+       'BACKEND': 'asgi_redis.RedisChannelLayer',
+       'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+       'CONFIG': {
+           'hosts': [('redis', 6379)]
+       },
+       'TEST_CONFIG': {
+           'hosts': [('localhost', 6379)],
+       },
+   }
+}
