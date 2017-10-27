@@ -22,6 +22,7 @@ ReactDOM.render(
     highestBidderId={
       target.dataset.highestBidderId ? parseInt(target.dataset.highestBidderId, 10) : null
     }
+    debug={target.dataset.debug != null}
   />,
   target
 );
