@@ -38,7 +38,9 @@ const GuestAuctionWidget = class extends BaseWidget {
   }
 
   getSocketUrl() {
-    return `ws://${window.location.host}/public/auctions/${this.props.auctionId}/stream/`;
+    const protocol = this.props.debug ? 'ws' : 'wss';
+    const host = window.location.host;
+    return `${protocol}://${host}/public/auctions/${this.props.auctionId}/stream/`;
   }
 
   validateBid() {
