@@ -9,12 +9,14 @@ const propTypes = {
   endDate: PropTypes.string.isRequired,
   actualPrice: PropTypes.number.isRequired,
   favourited: PropTypes.bool,
-  highestBidderId: PropTypes.number
+  highestBidderId: PropTypes.number,
+  debug: PropTypes.bool // eslint-disable-line react/no-unused-prop-types
 };
 const defaultProps = {
   authenticated: false,
   favourited: false,
-  highestBidderId: null
+  highestBidderId: null,
+  debug: false
 };
 
 const AuctionWidget = class extends React.Component {

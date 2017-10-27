@@ -157,6 +157,9 @@
             {% if auction in favourites %}
               data-favourited="true"
             {% endif %}
+            {% if settings.DEBUG %}
+              data-debug="true"
+            {% endif %}
           ></div>
         </div>
       </div>
