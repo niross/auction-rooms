@@ -175,6 +175,9 @@
             {% if user.is_authenticated %}
               data-authenticated="true"
             {% endif %}
+            {% if settings.DEBUG %}
+              data-debug="true"
+            {% endif %}
           ></div>
         </div>
       </div>
