@@ -17,6 +17,7 @@ ReactDOM.render(
     title={target.dataset.title}
     currencySymbol={target.dataset.currencySymbol}
     userId={target.dataset.userId ? parseInt(target.dataset.userId, 10) : null}
+    debug={target.dataset.debug != null}
   />,
   target
 );
