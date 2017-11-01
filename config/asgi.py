@@ -8,7 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.production')
 os.environ['DJANGO_SECRET_KEY'] = '%qh^s8^(oz&zcti*bta77i!k0t+jk4)!2_@yqy4@b_##_z#0b3'
 os.environ['DJANGO_EMAIL_BACKEND'] = 'anymail.backends.mailgun.MailgunBackend'
 os.environ['DJANGO_MAILGUN_API_KEY'] = 'key-dd4c05abcd4edf43011db1bc4aecd8bf'
-os.environ['MAILGUN_SENDER_DOMAIN'] = 'mg.sonick.co.uk'
+os.environ['MAILGUN_SENDER_DOMAIN'] = 'mg.luckybreak.sonick.co.uk'
 os.environ['DATABASE_URL'] = 'postgis://luckybreak:7YFzZ4dZ4pR&zM@localhost:5432/luckybreak'
 os.environ['DJANGO_ADMIN_URL'] = 'admin/'
 os.environ['DJANGO_OPBEAT_ORGANIZATION_ID'] = 'a8c27beba6ef4c09aa8340432aa690ff'
