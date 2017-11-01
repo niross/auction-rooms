@@ -213,7 +213,7 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'static_precompiler.finders.StaticPrecompilerFinder',
+#    'static_precompiler.finders.StaticPrecompilerFinder',
 ]
 
 # MEDIA CONFIGURATION
