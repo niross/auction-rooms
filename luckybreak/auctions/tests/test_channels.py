@@ -19,7 +19,7 @@ class ProviderAuctionStreamTestCase(BaseChannelTestCase):
 
     def test_unauthenticated(self):
         self.client.send_and_consume(
-            'websocket.connect', path='/provider/auctions/1/stream/',
+            'websocket.connect', path='/ws/provider/auctions/1/stream/',
             check_accept=False
         )
         self.assertEqual(self.client.receive(), {'accept': False})
@@ -27,7 +27,7 @@ class ProviderAuctionStreamTestCase(BaseChannelTestCase):
     def test_guest(self):
         self.client.force_login(self.guest)
         self.client.send_and_consume(
-            'websocket.connect', path='/provider/auctions/1/stream/',
+            'websocket.connect', path='/ws/provider/auctions/1/stream/',
             check_accept=False
         )
         self.assertEqual(self.client.receive(), {'accept': False})
@@ -35,7 +35,7 @@ class ProviderAuctionStreamTestCase(BaseChannelTestCase):
     def test_provider(self):
         self.client.force_login(self.provider)
         self.client.send_and_consume(
-            'websocket.connect', path='/provider/auctions/1/stream/',
+            'websocket.connect', path='/ws/provider/auctions/1/stream/',
         )
 
         bid = Bid.objects.create(
@@ -59,7 +59,7 @@ class PublicAuctionStreamTestCase(BaseChannelTestCase):
 
     def test_unauthenticated(self):
         self.client.send_and_consume(
-            'websocket.connect', path='/public/auctions/1/stream/',
+            'websocket.connect', path='/ws/public/auctions/1/stream/',
             check_accept=False
         )
         self.assertEqual(self.client.receive(), {'accept': True})
@@ -67,7 +67,7 @@ class PublicAuctionStreamTestCase(BaseChannelTestCase):
     def test_guest(self):
         self.client.force_login(self.guest)
         self.client.send_and_consume(
-            'websocket.connect', path='/public/auctions/1/stream/',
+            'websocket.connect', path='/ws/public/auctions/1/stream/',
             check_accept=False
         )
         self.assertEqual(self.client.receive(), {'accept': True})
@@ -75,7 +75,7 @@ class PublicAuctionStreamTestCase(BaseChannelTestCase):
     def test_provider(self):
         self.client.force_login(self.provider)
         self.client.send_and_consume(
-            'websocket.connect', path='/public/auctions/1/stream/',
+            'websocket.connect', path='/ws/public/auctions/1/stream/',
         )
 
         bid = Bid.objects.create(
