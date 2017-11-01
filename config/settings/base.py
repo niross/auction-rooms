@@ -44,6 +44,7 @@ DJANGO_APPS = [
     'django.contrib.gis',
     'django.contrib.humanize',
     'django.contrib.admin',
+    'django.contrib.sitemaps',
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
