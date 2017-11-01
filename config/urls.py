@@ -2,7 +2,17 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.views import defaults as default_views
+from django.views.generic import TemplateView
+
+from luckybreak.auctions.sitemaps import AuctionStaticSitemap
+from luckybreak.browse.sitemaps import BrowseStaticSitemap
+
+sitemaps = {
+    'browse': BrowseStaticSitemap,
+    'auctions': AuctionStaticSitemap,
+}
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
@@ -22,6 +32,17 @@ urlpatterns = [
     url(r'^api/', include('luckybreak.experiences.api_urls', namespace='experience-api')),
     url(r'^api/', include('luckybreak.auctions.api_urls', namespace='auction-api')),
 
+    url(r'^robots.txt$', TemplateView.as_view(
+        template_name="robots.txt",
+        content_type="text/plain"
+    ), name="robots"),
+
+    url(
+        r'^sitemap\.xml$',
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='sitemap'
+    ),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

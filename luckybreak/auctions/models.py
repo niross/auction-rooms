@@ -211,6 +211,9 @@ class Auction(DeletableTimeStampedModel):
             self.end_date
         )
 
+    def get_absolute_url(self):
+        return self.get_guest_absolute_url()
+
     def get_provider_absolute_url(self):
         return reverse('auctions:provider-auction', args=(self.id,))
 
