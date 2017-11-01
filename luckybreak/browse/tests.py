@@ -2,6 +2,10 @@ from test_plus.test import TestCase
 
 
 class BrowseTestCase(TestCase):
+    fixtures = [
+        'currencies.json', 'users.json', 'experiences.json', 'auctions.json'
+    ]
+
     def test_homepage_get(self):
         self.get('browse:homepage')
         self.response_200()

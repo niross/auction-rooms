@@ -29,7 +29,7 @@ const AuctionWidget = class extends BaseWidget {
   getSocketUrl() {
     const protocol = this.props.debug ? 'ws' : 'wss';
     const host = window.location.host;
-    return `${protocol}://${host}/provider/auctions/${this.props.auctionId}/stream/`;
+    return `${protocol}://${host}/ws/provider/auctions/${this.props.auctionId}/stream/`;
   }
 
   handleData(data) {
