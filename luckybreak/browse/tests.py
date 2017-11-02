@@ -1,4 +1,3 @@
-from django.urls import reverse
 from test_plus.test import TestCase
 
 
