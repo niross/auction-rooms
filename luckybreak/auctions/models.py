@@ -79,7 +79,10 @@ class AuctionManager(models.Manager):
             )
             auction_image = AuctionImage(auction=auction)
             auction_image.image.save(new_path, image_copy, True)
-            auction_image.image.name = os.path.join(AuctionImage.image.field.upload_to, os.path.basename(experience_image.image.name))
+            auction_image.image.name = os.path.join(
+                AuctionImage.image.field.upload_to,
+                os.path.basename(experience_image.image.name)
+            )
             auction_image.save()
 
         # Copy the inclusions over
