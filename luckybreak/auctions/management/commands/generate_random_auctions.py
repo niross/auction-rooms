@@ -31,7 +31,10 @@ class Command(BaseCommand):
                 checkin + timedelta(days=1),
                 float(random.randint(12, 99)),
                 99999,
-                datetime.now() + timedelta(days=random.randint(2, 7))
+                datetime.now() + timedelta(
+                    days=random.randint(2, 7),
+                    hours=random.randint(0, 24)
+                )
             )
             if random.randint(0, 2) == 0:
                 auction.featured = True
