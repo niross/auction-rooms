@@ -43,28 +43,54 @@
       </div>
     {% endif %}
 
-    <div class="row homepage-section">
-      <div class="valign-wrapper">
-        <div class="col s6">
-          <h5 class="section-header">Ending Soon</h5>
+    {% if ending %}
+      <div class="row homepage-section">
+        <div class="valign-wrapper">
+          <div class="col s6">
+            <h5 class="section-header">Ending Soon</h5>
+          </div>
+          <div class="col s6">
+            <div class="right-align">
+              <a href="{% url 'browse:search-results' %}" class="waves-effect waves-teal btn-flat">
+                <i class="material-icons right">arrow_forward</i>View More
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="col s6">
-          <div class="right-align">
-            <a href="{% url 'browse:search-results' %}" class="waves-effect waves-teal btn-flat">
-              <i class="material-icons right">arrow_forward</i>View More
-            </a>
+        <div class="col s12">
+          <div class="row">
+            {% for auction in ending %}
+              {% include 'auctions/inc/auction_card.html' %}
+            {% endfor %}
           </div>
         </div>
       </div>
+    {% endif %}
 
-      <div class="col s12">
-        <div class="row">
-          {% for auction in ending %}
-            {% include 'auctions/inc/auction_card.html' %}
-          {% endfor %}
+    {% if latest %}
+      <div class="row homepage-section">
+        <div class="valign-wrapper">
+          <div class="col s6">
+            <h5 class="section-header">Latest Auctions</h5>
+          </div>
+          <div class="col s6">
+            <div class="right-align">
+              <a href="{% url 'browse:search-results' %}" class="waves-effect waves-teal btn-flat">
+                <i class="material-icons right">arrow_forward</i>View More
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="row">
+            {% for auction in latest %}
+              {% include 'auctions/inc/auction_card.html' %}
+            {% endfor %}
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
+
   </div>
 
 {% endblock content %}
