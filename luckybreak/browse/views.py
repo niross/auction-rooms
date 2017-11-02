@@ -21,9 +21,11 @@ class HomepageView(TemplateView):
             featured=True
         ).order_by('created')[:6]
 
-        context['ending'] = Auction.objects.live().filter().order_by(
-            'end_date'
-        )[:6]
+        context['ending'] = Auction.objects.live().filter(
+            end_date__lt=datetime.now() + timedelta(days=1)
+        ).order_by('end_date')[:6]
+
+        context['latest'] = Auction.objects.live().order_by('-created')[:6]
 
         return context
 
