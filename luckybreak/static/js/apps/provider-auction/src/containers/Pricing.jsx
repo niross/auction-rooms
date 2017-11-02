@@ -41,7 +41,6 @@ class Schedule extends React.Component {
   }
 
   handleSubmit(successCallback, errorCallback) {
-    errorCallback();
     makeApiCall(apiEndpoints.providerAuctions, 'POST', this.props.formData, true)
       .then((resp) => {
         this.props.onFieldChange('auctions', resp);
