@@ -75,7 +75,6 @@ WEBPACK_LOADER = {
 COMPRESS_ENABLED = False
 SKIP_FUNCTIONAL_TESTS = env.bool('SKIP_FUNCTIONAL_TESTS', default=False)
 DEBUG = True
-#ALLOWED_HOSTS = ['localhost',]
 
 CHANNEL_LAYERS = {
     'default': {
@@ -89,3 +88,5 @@ CHANNEL_LAYERS = {
         },
     }
 }
+
+CELERY_ALWAYS_EAGER = True
