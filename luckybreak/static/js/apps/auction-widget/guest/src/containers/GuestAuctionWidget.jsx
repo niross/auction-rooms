@@ -14,7 +14,7 @@ const GuestAuctionWidget = class extends BaseWidget {
   componentWillMount() {
     this.setState({
       loading: false,
-      nextBid: this.state.actualPrice + 1,
+      nextBid: (parseFloat(this.state.actualPrice) + 1).toFixed(2),
       bidding: false,
       favouriting: false
     });
@@ -32,8 +32,8 @@ const GuestAuctionWidget = class extends BaseWidget {
       currentPrice: data.formatted_current_price,
       actualPrice: data.current_price,
       highestBidderId: data.highest_bidder,
-      nextBid: data.current_price >= this.state.nextBid ?
-        data.current_price + 1 : this.state.nextBid
+      nextBid: data.current_price >= parseFloat(this.state.nextBid) ?
+        data.current_price + 1 : parseFloat(this.state.nextBid).toFixed(2)
     });
   }
 
@@ -44,7 +44,7 @@ const GuestAuctionWidget = class extends BaseWidget {
   }
 
   validateBid() {
-    if (this.state.nextBid < this.state.currentPrice + 1) {
+    if (parseFloat(this.state.nextBid) < this.state.currentPrice + 1) {
       this.setState({
         bidError: `Minimum bid is ${(this.state.actualPrice + 1).toFixed(2)}`
       });
@@ -64,7 +64,7 @@ const GuestAuctionWidget = class extends BaseWidget {
         .then(() => {
           this.setState({
             bidding: false,
-            nextBid: this.state.nextBid + 1
+            nextBid: parseFloat(this.state.nextBid) + 1
           });
           successToast('Your bid was placed successfully!');
         })
@@ -128,20 +128,19 @@ const GuestAuctionWidget = class extends BaseWidget {
                   s={12}
                   label="Enter your next bid"
                   validate
-                  value={this.state.nextBid.toFixed(2)}
-                  type="number"
-                  min={this.state.actualPrice + 1}
-                  step={0.5}
-                  onChange={e =>
-                    this.setState({ nextBid: parseFloat(e.target.value) })
-                  }
+                  value={this.state.nextBid}
+                  onChange={e => {
+                    if (!isNaN(parseFloat(e.target.value)) && isFinite(e.target.value)) {
+                      this.setState({ nextBid: e.target.value });
+                    }
+                  }}
                   error={this.state.bidError}
                 >
                   <span>£</span>
                 </Input>
                 {this.props.authenticated ?
                   <ConfirmModal
-                    bid={this.state.nextBid}
+                    bid={parseFloat(this.state.nextBid)}
                     disabled={
                       this.state.bidding || this.state.highestBidderId === this.props.userId
                     }
