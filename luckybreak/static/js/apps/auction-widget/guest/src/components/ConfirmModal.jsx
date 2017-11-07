@@ -13,6 +13,7 @@ const defaultProps = {};
 
 const ConfirmModal = props => (
   <Modal
+    id="confirm-modal"
     className="confirm-modal"
     header="Place Bid"
     trigger={
