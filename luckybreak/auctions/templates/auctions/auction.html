@@ -3,7 +3,7 @@
 {% load static compile_static common_tags thumbnail %}
 {% load render_bundle from webpack_loader %}
 {% block title %}Auction: #{{ auction.id }} - {{ auction.title }}{% endblock %}
-{% block description %}TODO{% endblock description %}
+{% block description %}{{ auction.description|truncatechars:"160" }}{% endblock description %}
 {% block body_class %}auction{% endblock body_class %}
 {% block extra_meta %}
   <meta name="twitter:card" content="photo" />
