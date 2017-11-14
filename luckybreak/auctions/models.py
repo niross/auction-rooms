@@ -24,7 +24,8 @@ class AuctionQuerySet(models.QuerySet):
         """
         return self.filter(
             deleted=False,
-            end_date__gt=datetime.utcnow()
+            end_date__gt=datetime.utcnow(),
+            status=Auction.STATUS_LIVE
         )
 
     def finished(self):
