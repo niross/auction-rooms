@@ -386,7 +386,7 @@ GOOGLE_MAPS_KEY = 'AIzaSyCqKfIMgSU5OILdIsuu7dq9qD82HJa5ot4'
 
 HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-118523.jpg'
 PROVIDER_BACKGROUND_IMAGE = '/static/images/backgrounds/markus-spiske-37931.jpg'
-TWITTER_USERNAME = '@twitter'
+TWITTER_USERNAME = '@luckybreak'
 FACEBOOK_APP_ID = '162315807659925'
 
 DEFAULT_CURRENCY_ID = 1  # GBP
