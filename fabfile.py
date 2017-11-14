@@ -64,10 +64,7 @@ def deploy():
             sudo('service apache2 reload')
             sudo('supervisorctl restart luckybreak_celery')
             sudo('supervisorctl restart luckybreak_asgi_daphne')
-            sudo('supervisorctl restart luckybreak_asgi_workers:asgi_worker0')
-            sudo('supervisorctl restart luckybreak_asgi_workers:asgi_worker1')
-            sudo('supervisorctl restart luckybreak_asgi_workers:asgi_worker2')
-            sudo('supervisorctl restart luckybreak_asgi_workers:asgi_worker3')
+            sudo('supervisorctl restart luckybreak_asgi_workers:*')
 
     register_deployment(os.path.dirname(os.path.realpath(__file__)))
 
