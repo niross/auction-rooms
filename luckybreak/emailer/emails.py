@@ -83,3 +83,14 @@ class GuestAuctionWon(BaseEmail):
         super(GuestAuctionWon, self).__init__(**kwargs)
         from luckybreak.auctions.models import Auction
         self.params['auction'] = Auction.objects.get(pk=kwargs['auction_id'])
+
+
+class GuestAuctionLost(BaseEmail):
+    name = 'Guest Auction Lost'
+    template_name = 'guest_auction_lost'
+    subject = 'You didn\'t win this time'
+
+    def __init__(self, **kwargs):
+        super(GuestAuctionLost, self).__init__(**kwargs)
+        from luckybreak.auctions.models import Auction
+        self.params['auction'] = Auction.objects.get(pk=kwargs['auction_id'])
