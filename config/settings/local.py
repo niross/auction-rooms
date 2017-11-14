@@ -11,6 +11,8 @@ Local settings
 
 from .base import *  # noqa
 
+SITE_ID = 2
+
 # DEBUG
 # ------------------------------------------------------------------------------
 DEBUG = env.bool('DJANGO_DEBUG', default=True)
