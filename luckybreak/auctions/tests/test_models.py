@@ -36,3 +36,19 @@ class AuctionModelTestCase(BaseTestCase):
         auction.mark_complete()
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(self.provider.events.count(), events + 1)
+
+    def test_complete_auction_unsold_with_loser(self):
+        auction = Auction.objects.get(pk=1)
+        auction.end_date = datetime.now(pytz.UTC) - timedelta(hours=1)
+        auction.save()
+
+        Bid.objects.create(
+            user=self.guest,
+            auction=auction,
+            price=auction.reserve_price - 1
+        )
+
+        events = self.guest.events.count()
+        auction.mark_complete()
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(self.guest.events.count(), events + 1)
