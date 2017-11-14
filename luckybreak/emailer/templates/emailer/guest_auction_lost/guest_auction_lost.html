@@ -1,0 +1,20 @@
+{% extends 'emailer/email_base.html' %}
+{% load staticfiles %}
+{% block title %}You didn\'t win this time...{% endblock title %}
+{% block content %}
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Sadly your bid of {{ auction.formatted_current_price }} on the auction <a href="https://{{ site.domain }}{{ auction.get_guest_absolute_url }}">{{ auction.title|title }}</a> on <a href="https://{{ site.domain }}{% url 'browse:homepage' %}">{{ site.name|title }}</a> did not meet the reserve price.
+    </td>
+  </tr>
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      We will let you know if any more auctions for {{ auction.title|title }} crop up in the near future.
+    </td>
+  </tr>
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Better luck next time!
+    </td>
+  </tr>
+{% endblock content %}
