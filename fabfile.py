@@ -72,6 +72,7 @@ def deploy():
     register_deployment(os.path.dirname(os.path.realpath(__file__)))
 
 
+@task
 def import_prod_db():
     """
     Get a copy of the production database and import it locally
@@ -91,11 +92,11 @@ def import_prod_db():
     run('rm {} {}'.format(sqlpath, tarpath))
 
     local('tar -xzf {} -C {}'.format(local_tar, backup_dir))
-    local('docker-compose -f /home/nick/projects/luckybreak/dev.yml stop')
-    local('docker-compose -f /home/nick/projects/luckybreak/dev.yml up -d postgres')
+    local('docker-compose -f /home/nick/projects/luckybreak/local.yml stop')
+    local('docker-compose -f /home/nick/projects/luckybreak/local.yml up -d postgres')
     local('psql -p 5432 -h 127.0.0.1 -U postgres -c \'drop database luckybreak\'')
     local('psql -p 5432 -h 127.0.0.1 -U postgres -c \'create database luckybreak\'')
     local('psql -p 5432 -h 127.0.0.1 -U postgres -d luckybreak < {}'.format(local_sql))
     local('rm {}'.format(local_sql))
-    local('docker-compose -f /home/nick/projects/luckybreak/dev.yml up -d')
+    local('docker-compose -f /home/nick/projects/luckybreak/local.yml up -d')
     local('python /home/nick/projects/luckybreak/manage.py scramble_user_emails')
