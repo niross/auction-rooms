@@ -75,4 +75,4 @@ luckybreak/media/
 staticfiles/
 
 .cache/
-
+db-backups
