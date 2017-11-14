@@ -63,13 +63,23 @@ def auction_post_complete(sender, auction, **kwargs):
     """
     EventLog.objects.log_auction_ended(auction)
     if auction.was_won():
+        # Send the winner an email
         EventLog.objects.log_won_auction(auction)
-        tasks.guest_auction_won(
+        tasks.guest_auction_won.delay(
             recipient_id=auction.highest_bid().user.id,
             auction_id=auction.id
         )
+    else:
+        # Send the loser (if any) an email
+        highest_bid = auction.highest_bid()
+        if highest_bid is not None:
+            EventLog.objects.log_lost_auction(auction)
+            tasks.guest_auction_lost.delay(
+                recipient_id=auction.highest_bid().user.id,
+                auction_id=auction.id
+            )
 
-    tasks.provider_auction_finished(
+    tasks.provider_auction_finished.delay(
         recipient_id=auction.experience.user.id,
         auction_id=auction.id
     )
