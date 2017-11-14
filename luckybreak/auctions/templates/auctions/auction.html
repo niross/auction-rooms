@@ -25,6 +25,7 @@
 {% endblock extra_css %}
 
 {% block extra_js %}
+  <script src="{% static 'js/public-auction.js' %}"></script>
   {% render_bundle 'vendors' 'js' %}
   {% render_bundle 'gallery' 'js' %}
   {% render_bundle 'guest-auction-widget' 'js' %}
@@ -163,6 +164,18 @@
           ></div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col s12">
+          <h5>Location</h5>
+          <div
+            id="map"
+            data-latitude="{{ auction.coords.x }}"
+            data-longitude="{{ auction.coords.y }}"
+          ></div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col s12">
           <h5>Images</h5>
