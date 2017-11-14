@@ -1,0 +1,9 @@
+{% extends 'emailer/email_base.txt' %}
+{% block content %}
+Sadly your bid of {{ auction.formatted_current_price }} on the auction {{ auction.title|title }} on {{ site.name|title }} did not meet the reserve price.
+
+We will let you know if any more auctions for {{ auction.title|title }} crop up in the near future.
+
+Better luck next time!
+{% endblock content %}
+
