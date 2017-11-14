@@ -59,8 +59,9 @@ THIRD_PARTY_APPS = [
     'rest_framework',  # api
     'easy_thumbnails',  # thumbnails
     'channels',  # realtime api
-    'django_celery_beat', # manage scheduled tasks
-    'django_celery_results', # use the db as a backend
+    'django_celery_beat',  # manage scheduled tasks
+    'django_celery_results',  #  use the db as a backend
+    'waffle',  # feature flipper
 ]
 
 # Apps specific for this project go here.
@@ -89,6 +90,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'waffle.middleware.WaffleMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
