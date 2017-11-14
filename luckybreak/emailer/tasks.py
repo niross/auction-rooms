@@ -11,3 +11,8 @@ def provider_auction_finished(**kwargs):
 @task
 def guest_auction_won(**kwargs):
     emails.GuestAuctionWon(**kwargs).send()
+
+
+@task
+def guest_auction_lost(**kwargs):
+    emails.GuestAuctionLost(**kwargs).send()
