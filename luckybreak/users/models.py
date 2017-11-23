@@ -54,6 +54,14 @@ class User(AbstractUser):
             id__in=[f.auction.id for f in self.favourites.all()]
         )
 
+    def bid_on_auctions(self):
+        from luckybreak.auctions.models import Auction
+
+        # Find all auctions i've bid on
+        return Auction.objects.filter(
+            bids__user=self
+        ).distinct().order_by('status')
+
     def won_auctions(self):
         """
         List any auctions this user has won
