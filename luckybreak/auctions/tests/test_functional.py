@@ -332,6 +332,40 @@ class AuctionFavouriteTestCase(BaseFunctionalTestCase):
         self.assertEqual(self.provider.favourites.count(), 0)
 
 
+class GuestBidsTestCase(BaseFunctionalTestCase):
+    fixtures = [
+        'users.json', 'currencies.json', 'experiences.json', 'auctions.json'
+    ]
+
+    def test_guest_quick_bid(self):
+        self.guest_login()
+        auction = Auction.objects.get(pk=1)
+        Bid.objects.create(
+            user=self.guest,
+            auction=auction,
+            price=auction.current_price() + 1
+        )
+        Bid.objects.create(
+            user=self.provider,
+            auction=auction,
+            price=auction.current_price() + 2
+        )
+
+        self.selenium.get(self.live_url('auctions:bids'))
+        self.selenium.find_element_by_class_name(
+            'quickbid-app'
+        ).find_element_by_tag_name('button').click()
+
+        WebDriverWait(self.selenium, 10).until(
+            EC.visibility_of_element_located((By.ID, 'accept'))
+        )
+        self.selenium.find_element_by_id('accept').click()
+        self.wait_for_page_load()
+        time.sleep(1)
+        auction = Auction.objects.get(pk=1)
+        self.assertEqual(auction.highest_bid().user, self.guest)
+
+
 # FIXME: ChannelLiveServerTestCase is too unreliable so there is no
 # nice way to test bidding currently
 # class PublicAuctionBidTestCase(BaseChannelLiveServerTestCase):

@@ -10,6 +10,11 @@
       <i class="material-icons">favorite</i> Favourites
     </a>
   </li>
+  <li class="{% navactive request 'auctions:bids' %} {%  if current_auction.is_live %}active{% endif %} %}">
+    <a href="{% url 'auctions:bids' %}">
+      <i class="material-icons">local_mall</i> Your Bids
+    </a>
+  </li>
   <li class="{% navactive request 'auctions:won-auctions' %} {%  if current_auction.is_live %}active{% endif %} %}">
     <a href="{% url 'auctions:won-auctions' %}">
       <i class="material-icons">add_shopping_cart</i> Won Auctions

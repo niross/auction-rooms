@@ -11,6 +11,7 @@ module.exports = {
     gallery: './gallery/src/index.jsx',
     'provider-auction-widget': './auction-widget/provider/src/index.jsx',
     'guest-auction-widget': './auction-widget/guest/src/index.jsx',
+    quickbid: './quickbid/src/index.jsx',
     vendors: [
       'react', 'react-dom', 'react-materialize', 'redux', 'redux-thunk',
       'react-redux', 'immutable', 'whatwg-fetch', 'isomorphic-fetch',
