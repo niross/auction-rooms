@@ -24,7 +24,7 @@ const GuestAuctionWidget = class extends BaseWidget {
     const data = JSON.parse(jsonData);
     if (this.state.highestBidderId === this.props.userId &&
         data.highest_bidder !== this.props.userId) {
-      warningToast('Oops, You have been out bid!');
+      warningToast('Oops, You have been outbid!');
     }
     this.setState({
       bidError: null,
@@ -129,7 +129,7 @@ const GuestAuctionWidget = class extends BaseWidget {
                   label="Enter your next bid"
                   validate
                   value={this.state.nextBid}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (!isNaN(parseFloat(e.target.value)) && isFinite(e.target.value)) {
                       this.setState({ nextBid: e.target.value });
                     }
