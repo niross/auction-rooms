@@ -317,11 +317,18 @@ class Auction(DeletableTimeStampedModel):
 
     def is_ending(self):
         now = datetime.utcnow().replace(tzinfo=pytz.utc)
-        return self.end_date < now + timedelta(hours=24)
+        return self.is_live() and self.end_date < now + timedelta(hours=24)
 
     def pretty_duration(self):
         days = (self.check_out.date() - self.check_in.date()).days
         return '{} Night{}'.format(days, 's' if days > 1 else '')
+
+    def is_selling(self):
+        """
+        Return true if the auction has met the reserve price
+        :return:
+        """
+        return self.current_price() >= self.reserve_price
 
 
 class AuctionImage(models.Model):
