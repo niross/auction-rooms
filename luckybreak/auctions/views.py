@@ -79,3 +79,13 @@ class WonAuctionsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.request.user.won_auctions()
+
+
+class BidsView(LoginRequiredMixin, ListView):
+    model = models.Auction
+    template_name = 'auctions/bids.html'
+    paginate_by = 10
+    context_object_name = 'auctions'
+
+    def get_queryset(self):
+        return self.request.user.bid_on_auctions()
