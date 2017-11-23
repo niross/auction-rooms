@@ -33,4 +33,9 @@ urlpatterns = [
         view=views.WonAuctionsView.as_view(),
         name='won-auctions'
     ),
+    url(
+        regex=r'^bids/$',
+        view=views.BidsView.as_view(),
+        name='bids'
+    ),
 ]
