@@ -34,6 +34,11 @@ module.exports = {
       'webpack/hot/only-dev-server',
       './auction-widget/guest/src/index.jsx'
     ],
+    quickbid: [
+      `webpack-dev-server/client?${PUBLIC_PATH}`,
+      'webpack/hot/only-dev-server',
+      './quickbid/src/index.jsx'
+    ],
     vendors: ['react', 'react-materialize']
   },
   output: {

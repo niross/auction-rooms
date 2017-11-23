@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load static compile_static common_tags %}
+{% load static compile_static common_tags compress staticfiles %}
 {% block title %}{% trans "Your Finished Auctions" %}{% endblock %}
 {% block description %}View any auctions you have won, you lucky devil.{% endblock description %}
 {% block body_class %}provider-auctions{% endblock body_class %}
@@ -9,21 +9,10 @@
   <link href="{% static 'less/dashboard.less'|compile %}" rel="stylesheet">
 {% endblock extra_css %}
 {% block extra_js %}
+  {% compress js %}
+    <script src="{% static 'js/guest-confirmation.js' %}"></script>
+  {% endcompress %}
   <script src="//cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"></script>
-  <script>
-    $(function() {
-      $('.guest-confirmation-modal .print').click(function() {
-        $(this).parents('.modal').find('.printme').print();
-      });
-      // Open a modal if id provided
-      if (window.location.hash && $(window.location.hash)) {
-        var el = $(window.location.hash);
-        if ($(el).hasClass('modal')) {
-          $(el).modal('open');
-        }
-      }
-    })
-  </script>
 {% endblock extra_js %}
 {% block content %}
   <div class="main">
