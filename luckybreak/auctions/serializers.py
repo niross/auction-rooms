@@ -135,7 +135,7 @@ class AuctionReadSerializer(serializers.ModelSerializer):
             'terms', 'pax_adults', 'pax_children', 'images', 'inclusions',
             'exclusions', 'check_in', 'check_out', 'starting_price',
             'reserve_price', 'experience', 'bids', 'formatted_current_price',
-            'formatted_starting_price', 'created',
+            'formatted_starting_price', 'created', 'url',
         )
 
     @staticmethod
