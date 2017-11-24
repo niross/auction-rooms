@@ -121,6 +121,18 @@
           <div class="row">
             <div class="col s12">
               <h5>About this Experience</h5>
+              {% if auction.url %}
+                <i class="material-icons left">home</i>
+                <a
+                  className="tooltipped"
+                  href="{{ auction.url }}"
+                  target="_blank"
+                  data-tooltip="View the homepage for this experience"
+                >
+                  {{ auction.url }}
+                </a>
+              {% endif %}
+
               {{ auction.description|linebreaks }}
             </div>
           </div>

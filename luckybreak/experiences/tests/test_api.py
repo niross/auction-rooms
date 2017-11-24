@@ -115,6 +115,7 @@ class ExperienceAPITestCase(BaseAPITestCase):
                 'pax_adults': 10,
                 'pax_children': 0,
                 'default_image': 'image1.jpg',
+                'url': 'http://www.google.com',
             }
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
