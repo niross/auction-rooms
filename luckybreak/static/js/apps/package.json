@@ -80,6 +80,7 @@
     "reconnectingwebsocket": "^1.0.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
+    "valid-url": "^1.0.9",
     "webpack": "^1.13.2",
     "webpack-bundle-tracker": "0.0.93",
     "whatwg-fetch": "^1.0.0"

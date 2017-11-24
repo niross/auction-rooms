@@ -92,6 +92,19 @@
                 <i class="material-icons left">location_on</i>
                 {{ auction.location }}
               </h5>
+              {% if auction.url %}
+                <h6 class="valign-wrapper">
+                  <i class="material-icons left">home</i>
+                  <a
+                    className="tooltipped"
+                    href="{{ auction.url }}"
+                    target="_blank"
+                    data-tooltip="View the homepage for this experience"
+                  >
+                    {{ auction.url }}
+                  </a>
+                </h6>
+              {% endif %}
             </div>
           </div>
 
