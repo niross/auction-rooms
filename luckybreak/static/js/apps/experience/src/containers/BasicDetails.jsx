@@ -4,6 +4,7 @@ import { Row, Col, Input } from 'react-materialize';
 import { geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
 import { LocationAutocomplete, HelpText, Subheader } from '../../../libs';
+import validUrl from 'valid-url';
 
 const propTypes = {
   formData: PropTypes.object,
@@ -33,6 +34,9 @@ class BasicDetails extends React.Component {
     if (form.pax_adults === 0 && form.pax_children === 0) {
       errors.pax_adults = 'An adult or child is required';
       errors.pax_children = 'An adult or child is required';
+    }
+    if (form.url && !validUrl.isUri(form.url)) {
+      errors.url = 'Please enter a valid url (e.g. http://google.com)';
     }
     this.setState({ errors });
     return Object.keys(errors).length === 0;
@@ -123,6 +127,21 @@ class BasicDetails extends React.Component {
               id="experience-pax-children"
             />
             <HelpText s={12}>How many children can the experience accommodate</HelpText>
+          </Col>
+          <Col s={6}>
+            <Input
+              s={12}
+              className="with-help"
+              label="Experience URL"
+              placeholder="http://www.your-website.com/experience"
+              value={this.props.formData.url}
+              onChange={e => this.props.onFieldChange('url', e.target.value)}
+              labelClassName="active"
+              error={this.state.errors.url}
+              type="url"
+              id="experience-url"
+            />
+            <HelpText s={12}>An optional link to the web page for the experience</HelpText>
           </Col>
           <Col s={12}>
             <Input
