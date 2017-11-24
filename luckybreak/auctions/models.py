@@ -4,6 +4,8 @@ import os
 
 import pytz
 from channels import Group
+from django.contrib.gis.measure import D
+from django.contrib.gis.db.models.functions import Distance
 
 from django.core.files.base import ContentFile
 from django.conf import settings
@@ -336,6 +338,30 @@ class Auction(DeletableTimeStampedModel):
         """
         return self.current_price() >= self.reserve_price
 
+    def related_auctions(self):
+        """
+        Returns any other live auctions for the same experience
+        :return:
+        """
+        return Auction.objects.live().filter(
+            experience=self.experience
+        ).exclude(
+            pk=self.id
+        ).order_by('end_date')
+
+    def local_auctions(self):
+        """
+        Returns any any local auctions in a 50 mile radius
+        :return:
+        """
+        return Auction.objects.live().filter(
+            coords__distance_lte=(self.coords, D(mi=50))
+        ).exclude(
+            experience=self.experience
+        ).annotate(
+            distance=Distance('coords', self.coords)
+        ).order_by('distance', 'end_date')
+
 
 class AuctionImage(models.Model):
     auction = models.ForeignKey(Auction, related_name='images')
@@ -397,3 +423,4 @@ class Bid(DeletableTimeStampedModel):
 class Favourite(DeletableTimeStampedModel):
     auction = models.ForeignKey(Auction, related_name='favourites')
     user = models.ForeignKey(User, related_name='favourites')
+    reminder_sent = models.BooleanField(default=False)
