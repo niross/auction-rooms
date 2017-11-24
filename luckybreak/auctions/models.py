@@ -287,6 +287,9 @@ class Auction(DeletableTimeStampedModel):
             return self.images.filter(default=True).first()
         return self.images.first()
 
+    def total_pax(self):
+        return self.pax_adults + self.pax_children
+
     @property
     def provider_websocket_group(self):
         """
