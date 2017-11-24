@@ -46,6 +46,15 @@ const initialData = {
   inclusions: [],
   exclusions: [],
   terms: '',
+  url: '',
+  check_in: '',
+  check_in_date: '',
+  check_in_time: '14:00',
+  check_out: '',
+  check_out_date: '',
+  check_out_time: '11:00',
+  starting_price: '',
+  reserve_price: '',
   duration_days: '7',
   lots: '1'
 };
