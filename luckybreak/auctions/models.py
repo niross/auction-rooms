@@ -67,7 +67,8 @@ class AuctionManager(models.Manager):
             check_out=check_out,
             starting_price=starting_price,
             reserve_price=reserve_price,
-            end_date=end_date
+            end_date=end_date,
+            url=experience.url,
         )
 
         # Copy the experience images over
@@ -170,6 +171,11 @@ class Auction(DeletableTimeStampedModel):
         Currency,
         default=settings.DEFAULT_CURRENCY_ID,
         help_text='The date and time the experience starts'
+    )
+    url = models.URLField(
+        null=True,
+        blank=True,
+        help_text='View the experience on the providers website'
     )
     check_in = models.DateTimeField(
         help_text='The date and time the experience starts'
