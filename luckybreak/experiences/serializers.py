@@ -52,13 +52,14 @@ class ExperienceReadSerializer(serializers.ModelSerializer):
     images = ExperienceImageSerializer(many=True)
     inclusions = ExperienceInclusionSerializer(many=True)
     exclusions = ExperienceExclusionSerializer(many=True)
+    url = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Experience
         fields = (
             'id', 'title', 'description', 'location', 'latitude', 'longitude',
             'terms', 'pax_adults', 'pax_children', 'images', 'inclusions',
-            'exclusions', 'user',
+            'exclusions', 'user', 'url',
         )
 
     @staticmethod
@@ -69,6 +70,14 @@ class ExperienceReadSerializer(serializers.ModelSerializer):
     def get_longitude(obj):
         return obj.coords.y
 
+    @staticmethod
+    def get_url(obj):
+        # FIXME: DRF has issues with null urls when editing an experience.
+        # The easiest workaround is to serve a url as a blank string if
+        # the experience doesn't have one set
+        if obj.url is not None:
+            return obj.url
+        return ''
 
 class ExperienceCreateSerializer(serializers.ModelSerializer):
     latitude = serializers.FloatField()
@@ -83,7 +92,7 @@ class ExperienceCreateSerializer(serializers.ModelSerializer):
         fields = (
             'user', 'title', 'description', 'location', 'latitude',
             'longitude', 'terms', 'pax_adults', 'pax_children', 'images',
-            'inclusions', 'exclusions', 'default_image'
+            'inclusions', 'exclusions', 'default_image', 'url',
         )
 
     def validate_images(self, images):
@@ -140,13 +149,15 @@ class ExperienceUpdateSerializer(serializers.ModelSerializer):
     inclusions = serializers.ListField(child=serializers.CharField(required=True))
     exclusions = serializers.ListField(child=serializers.CharField(required=True))
     default_image = serializers.CharField()
+    url = serializers.URLField(allow_blank=True, allow_null=True)
 
     class Meta:
         model = models.Experience
         fields = (
             'user', 'title', 'description', 'location', 'latitude',
             'longitude', 'terms', 'pax_adults', 'pax_children', 'images',
-            'deleted_images', 'inclusions', 'exclusions', 'default_image'
+            'deleted_images', 'inclusions', 'exclusions', 'default_image',
+            'url',
         )
 
     def validate(self, attrs):
