@@ -76,7 +76,7 @@
           >
             <span>
               <i class="material-icons pax">group</i>
-              {{ auction.pax_adults|add:auction.pax_children }} People
+              {{ auction.total_pax }} {% if auction.total_pax == 1 %}Person{% else %}People{% endif %}
             </span>
           </p>
         </div>
