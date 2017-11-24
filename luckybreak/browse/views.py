@@ -83,7 +83,9 @@ class SearchResultsView(ListView):
             except ValueError:
                 pass
 
-        return qs
+        # Experience
+        if 'experience' in self.request.GET:
+            return qs.filter(experience__id=self.request.GET['experience'])
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
