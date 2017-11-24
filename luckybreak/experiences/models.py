@@ -18,6 +18,7 @@ class Experience(DeletableTimeStampedModel):
     pax_adults = models.PositiveSmallIntegerField(default=2)
     pax_children = models.PositiveSmallIntegerField(default=0)
     currency = models.ForeignKey(Currency, default=settings.DEFAULT_CURRENCY_ID)
+    url = models.URLField(null=True, blank=True)
 
     class Meta:
         ordering = ('-created',)
