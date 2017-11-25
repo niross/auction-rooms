@@ -6,6 +6,7 @@ from django.dispatch import receiver, Signal
 from luckybreak.auctions.models import Bid, Auction
 from luckybreak.auctions.serializers import BidSerializer, \
     PublicAuctionSerializer
+from luckybreak.auctions.tasks import send_new_listing_notifications
 from luckybreak.emailer import tasks
 from luckybreak.event_log.models import EventLog
 
@@ -22,8 +23,9 @@ def auction_save(sender, instance, created, **kwargs):
     :param kwargs:
     :return:
     """
-    if created:
+    if created and not kwargs['raw']:
         EventLog.objects.log_auction_created(instance)
+        send_new_listing_notifications(instance.id)
 
 
 @receiver(post_save, sender=Bid)
@@ -36,7 +38,7 @@ def bid_save(sender, instance, created, **kwargs):
     :param kwargs:
     :return:
     """
-    if created:
+    if created and not kwargs['raw']:
         # Send the auction owner a copy of the new bid via channels
         instance.auction.send_provider_message({
             'text': json.dumps(BidSerializer(instance).data)

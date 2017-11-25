@@ -85,7 +85,9 @@ class SearchResultsView(ListView):
 
         # Experience
         if 'experience' in self.request.GET:
-            return qs.filter(experience__id=self.request.GET['experience'])
+            qs = qs.filter(experience__id=self.request.GET['experience'])
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
