@@ -25,7 +25,7 @@ def auction_save(sender, instance, created, **kwargs):
     """
     if created and not kwargs['raw']:
         EventLog.objects.log_auction_created(instance)
-        send_new_listing_notifications(instance.id)
+        send_new_listing_notifications.delay(instance.id)
 
 
 @receiver(post_save, sender=Bid)
