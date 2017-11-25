@@ -1,0 +1,11 @@
+{% extends 'emailer/email_base.txt' %}
+{% block content %}
+Good News! An experience you favourited on {{ site.name }}> has been relisted. Details below.
+
+{{ auction.title }}
+{{ auction.pretty_duration }} from {{ auction.pretty_checkin_date }}
+Current Price: {{ auction.formatted_current_price }}
+{{ settings.PROTOCOL }}{{ site.domain }}{{ auction.get_absolute_url }}
+
+Best of luck!
+{% endblock content %}

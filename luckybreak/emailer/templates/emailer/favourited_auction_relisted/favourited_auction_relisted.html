@@ -1,0 +1,23 @@
+{% extends 'emailer/email_base.html' %}
+{% load staticfiles %}
+{% block title %}One of your favourites is back on the market!{% endblock title %}
+{% block content %}
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Good News! An experience you favourited on <a href="{{ settings.PROTOCOL }}{{ site.domain }}">{{ site.name }}</a> has been relisted. Details below.
+    </td>
+  </tr>
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      <strong>{{ auction.title }}</strong><br />
+      {{ auction.pretty_duration }} from {{ auction.pretty_checkin_date }}<br />
+      Current Price: {{ auction.formatted_current_price }}<br />
+      <a href="{{ settings.PROTOCOL }}{{ site.domain }}{{ auction.get_absolute_url }}">{{ settings.PROTOCOL }}{{ site.domain }}{{ auction.get_absolute_url }}</a><br />
+    </td>
+  </tr>
+  <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+    <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+      Best of luck!
+    </td>
+  </tr>
+{% endblock content %}
