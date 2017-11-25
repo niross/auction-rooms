@@ -50,7 +50,7 @@ class AuctionManager(models.Manager):
     def get_queryset(self):
         return AuctionQuerySet(self.model, using=self._db)
 
-    def create_auction(self, experience, check_in, check_out, # pylint: disable=too-many-arguments
+    def create_auction(self, experience, check_in, check_out,
                        starting_price, reserve_price, end_date):
         """
         Create an auction from an experience
@@ -204,12 +204,12 @@ class Auction(DeletableTimeStampedModel):
     )
     search_appearance_count = models.PositiveIntegerField(
         default=0,
-        help_text='The number of times this auction has ' \
+        help_text='The number of times this auction has '
                   'appeared in search results or on the homepage'
     )
     featured = models.BooleanField(
         default=False,
-        help_text='Set to true to show this auction in ' \
+        help_text='Set to true to show this auction in '
                   'the featured section on the homepage'
     )
     uuid = ShortUUIDField()
@@ -330,6 +330,18 @@ class Auction(DeletableTimeStampedModel):
         now = datetime.utcnow().replace(tzinfo=pytz.utc)
         return self.is_live() and self.end_date < now + timedelta(hours=24)
 
+    def pretty_checkin_date(self):
+        return self.check_in.strftime('%a, %-d %b %Y ')
+
+    def pretty_checkin(self):
+        return self.check_in.strftime('%H:%M %a, %-d %b %Y ')
+
+    def pretty_checkout_date(self):
+        return self.check_out.strftime('%a, %-d %b %Y ')
+
+    def pretty_checkout(self, include_time=True):
+        return self.check_out.strftime('%H:%M %a, %-d %b %Y ')
+
     def pretty_duration(self):
         days = (self.check_out.date() - self.check_in.date()).days
         return '{} Night{}'.format(days, 's' if days > 1 else '')
@@ -427,3 +439,7 @@ class Favourite(DeletableTimeStampedModel):
     auction = models.ForeignKey(Auction, related_name='favourites')
     user = models.ForeignKey(User, related_name='favourites')
     reminder_sent = models.BooleanField(default=False)
+    new_listing_sent = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('auction', 'user')
