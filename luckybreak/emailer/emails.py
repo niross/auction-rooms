@@ -18,6 +18,7 @@ class BaseEmail(object):
     """
     def __init__(self, **kwargs):
         self.params = kwargs
+        self.params['settings'] = settings
         self.params['site'] = Site.objects.get_current()
         self.params['recipient'] = User.objects.get(pk=kwargs['recipient_id'])
 
@@ -94,3 +95,19 @@ class GuestAuctionLost(BaseEmail):
         super(GuestAuctionLost, self).__init__(**kwargs)
         from luckybreak.auctions.models import Auction
         self.params['auction'] = Auction.objects.get(pk=kwargs['auction_id'])
+
+
+class FavouritedAuctionReListedEmail(BaseEmail):
+    # Note: Do not change this name without changing the tasks that depend on it
+    name = 'Favourited Auction Relisted'
+    template_name = 'favourited_auction_relisted'
+    subject = 'One of your favourites is back on the market!'
+
+    def __init__(self, **kwargs):
+        super(FavouritedAuctionReListedEmail, self).__init__(**kwargs)
+        from luckybreak.auctions.models import Auction, Favourite
+        self.params.update({
+            'favourite': Favourite.objects.get(pk=kwargs['favourite_id']),
+            'auction': Auction.objects.get(pk=kwargs['auction_id']),
+        })
+
