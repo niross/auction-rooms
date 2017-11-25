@@ -99,5 +99,7 @@ class User(AbstractUser):
             pk__in=[a.id for a in auctions if a.highest_bid().user != self]
         )
 
-
+    def emails(self):
+        from luckybreak.emailer.models import EmailLog
+        return EmailLog.objects.filter(recipient=self.email)
 

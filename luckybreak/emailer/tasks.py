@@ -16,3 +16,8 @@ def guest_auction_won(**kwargs):
 @task
 def guest_auction_lost(**kwargs):
     emails.GuestAuctionLost(**kwargs).send()
+
+
+@task
+def favourite_auction_relisted_email(**kwargs):
+    emails.FavouritedAuctionReListedEmail(**kwargs).send()
