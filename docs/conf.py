@@ -1,4 +1,4 @@
-# luckybreak documentation build configuration file, created by
+# auction rooms documentation build configuration file, created by
 # sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -39,7 +39,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'luckybreak'
+project = 'auction-rooms'
 copyright = """2017, Nick Ross"""
 
 # The version info for the project you're documenting, acts as replacement for
@@ -163,7 +163,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'luckybreakdoc'
+htmlhelp_basename = 'auctionroomsdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,8 +183,8 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index',
-     'luckybreak.tex',
-     'luckybreak Documentation',
+     'auction-rooms.tex',
+     'auction-rooms Documentation',
      """Nick Ross""", 'manual'),
 ]
 
@@ -214,7 +214,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'luckybreak', 'luckybreak Documentation',
+    ('index', 'auction-rooms', 'auction-rooms Documentation',
      ["""Nick Ross"""], 1)
 ]
 
@@ -228,8 +228,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'luckybreak', 'luckybreak Documentation',
-     """Nick Ross""", 'luckybreak',
+    ('index', 'auction-rooms', 'auction-rooms Documentation',
+     """Nick Ross""", 'auction-rooms',
      """An auction site for unoccupied hotel rooms""", 'Miscellaneous'),
 ]
 
