@@ -11,7 +11,11 @@ services:
       - postgres_data_dev:/var/lib/postgresql/data
       - postgres_backup_dev:/backups
     environment:
+<<<<<<< HEAD
       - POSTGRES_USER=auctionrooms
+=======
+      - POSTGRES_USER=luckybreak
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
     ports:
       - "5432:5432"
 
@@ -25,10 +29,17 @@ services:
       - mailhog
       - redis
     environment:
+<<<<<<< HEAD
       - POSTGRES_USER=auctionrooms
       - USE_DOCKER=yes
       #- DJANGO_SETTINGS_MODULE=config.settings.local
       - DATABASE_URL=postgis://auctionrooms@postgres/auctionrooms
+=======
+      - POSTGRES_USER=luckybreak
+      - USE_DOCKER=yes
+      #- DJANGO_SETTINGS_MODULE=config.settings.local
+      - DATABASE_URL=postgis://luckybreak@postgres/luckybreak
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
     volumes:
       - .:/app
     ports:
