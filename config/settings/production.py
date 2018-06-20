@@ -90,8 +90,8 @@ INSTALLED_APPS += ['gunicorn', ]
 # EMAIL
 # ------------------------------------------------------------------------------
 DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-                         default='luckybreak <noreply@luckybreak.sonick.co.uk>')
-EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[luckybreak]')
+                         default='Auction Rooms <noreply@auction-rooms.sonick.co.uk>')
+EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[auction rooms]')
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
@@ -198,7 +198,7 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 CHANNEL_LAYERS = {
    'default': {
        'BACKEND': 'asgi_redis.RedisChannelLayer',
-       'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+       'ROUTING': 'auction-rooms.auctions.routing.channel_routing',
        'CONFIG': {
            'hosts': [(
                'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'
