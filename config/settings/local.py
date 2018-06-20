@@ -99,7 +99,11 @@ PROTOCOL = 'http://'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
+<<<<<<< HEAD
         'ROUTING': 'auction-rooms.auctions.routing.channel_routing',
+=======
+        'ROUTING': 'luckybreak.auctions.routing.channel_routing',
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
         'CONFIG': {
             'hosts': [('redis', 6379)]
         }
