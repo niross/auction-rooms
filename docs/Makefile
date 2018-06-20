@@ -77,17 +77,28 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
+<<<<<<< HEAD
 	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/auctionrooms.qhcp"
 	@echo "To view the help file:"
 	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/auctionrooms.qhc"
+=======
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/luckybreak.qhcp"
+	@echo "To view the help file:"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/luckybreak.qhc"
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
+<<<<<<< HEAD
 	@echo "# mkdir -p $$HOME/.local/share/devhelp/auctionrooms"
 	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/auctionrooms"
+=======
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/luckybreak"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/luckybreak"
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 	@echo "# devhelp"
 
 epub:

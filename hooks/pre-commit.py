@@ -108,7 +108,11 @@ def check_javascript():
 
     rrcode = 0
     for f in modifieds:
+<<<<<<< HEAD
         conf = os.path.join(get_project_path(), 'auction-rooms', 'static', 'js', 'apps', '.eslintrc')
+=======
+        conf = os.path.join(get_project_path(), 'luckybreak', 'static', 'js', 'apps', '.eslintrc')
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
         out, err, retcode = call('eslint -c {} {}'.format(conf, f))
         if out or err:
             output('eslint', out, err)
