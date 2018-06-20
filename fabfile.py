@@ -7,9 +7,9 @@ from fabric.operations import run, sudo, get
 from fabric.state import env
 
 USER = os.environ['USER']
-SITE_ROOT = '/var/www/sites/luckybreak'
+SITE_ROOT = '/var/www/sites/auction-rooms'
 DJANGO_MANAGE = os.path.join(SITE_ROOT, 'manage.py')
-VENV_ACTIVATE = '/home/nick/.virtualenvs/luckybreak/bin/activate'
+VENV_ACTIVATE = '/home/nick/.virtualenvs/auction-rooms/bin/activate'
 DB_PATH = os.path.join(SITE_ROOT, 'db/lander.sqlite3')
 
 env.hosts = 'stringer'
@@ -22,7 +22,7 @@ DJANGO_ENV = {
     'DJANGO_MAILGUN_API_KEY': 'xxx',
     'DJANGO_ADMIN_URL': 'xxx',
     'MAILGUN_SENDER_DOMAIN': 'xxx',
-    'DATABASE_URL': 'postgis://luckybreak:7YFzZ4dZ4pR@localhost/luckybreak'
+    'DATABASE_URL': 'postgis://auction-rooms:7YFzZ4dZ4pR@localhost/auction-rooms'
 }
 
 
@@ -62,9 +62,9 @@ def deploy():
                 '--settings config.settings.production'
             )
             sudo('service apache2 reload')
-            sudo('supervisorctl restart luckybreak_celery')
-            sudo('supervisorctl restart luckybreak_asgi_daphne')
-            sudo('supervisorctl restart luckybreak_asgi_workers:*')
+            sudo('supervisorctl restart ar_celery')
+            sudo('supervisorctl restart ar_asgi_daphne')
+            sudo('supervisorctl restart ar_asgi_workers:*')
 
     register_deployment(os.path.dirname(os.path.realpath(__file__)))
 
@@ -75,7 +75,7 @@ def import_prod_db():
     Get a copy of the production database and import it locally
     """
     now = datetime.now().strftime('%Y-%m-%d')
-    filename = 'luckybreak-prod-db-backup-{}'.format(now)
+    filename = 'auction-rooms-prod-db-backup-{}'.format(now)
     sqlpath = os.path.join('/tmp', '{}.sql'.format(filename))
     tarpath = os.path.join('/tmp', '{}.tgz'.format(filename))
     backup_dir = os.path.join(os.path.dirname(__file__), 'db-backups')
@@ -83,17 +83,17 @@ def import_prod_db():
     local_tar = os.path.join(backup_dir, filename + '.tgz')
     local_sql = os.path.join(backup_dir, filename + '.sql')
 
-    run('pg_dump -U luckybreak luckybreak > {}'.format(sqlpath))
+    run('pg_dump -U auction-rooms auction-rooms > {}'.format(sqlpath))
     run('tar -czvf {} -C /tmp {}'.format(tarpath, '{}.sql'.format(filename)))
     get(tarpath, local_path=local_tar)
     run('rm {} {}'.format(sqlpath, tarpath))
 
     local('tar -xzf {} -C {}'.format(local_tar, backup_dir))
-    local('docker-compose -f /home/nick/projects/luckybreak/local.yml stop')
-    local('docker-compose -f /home/nick/projects/luckybreak/local.yml up -d postgres')
-    local('psql -p 5432 -h 127.0.0.1 -U postgres -c \'drop database luckybreak\'')
-    local('psql -p 5432 -h 127.0.0.1 -U postgres -c \'create database luckybreak\'')
-    local('psql -p 5432 -h 127.0.0.1 -U postgres -d luckybreak < {}'.format(local_sql))
+    local('docker-compose -f /home/nick/projects/auction-rooms/local.yml stop')
+    local('docker-compose -f /home/nick/projects/auction-rooms/local.yml up -d postgres')
+    local('psql -p 5432 -h 127.0.0.1 -U postgres -c \'drop database auction-rooms\'')
+    local('psql -p 5432 -h 127.0.0.1 -U postgres -c \'create database auction-rooms\'')
+    local('psql -p 5432 -h 127.0.0.1 -U postgres -d auction-rooms < {}'.format(local_sql))
     local('rm {}'.format(local_sql))
-    local('docker-compose -f /home/nick/projects/luckybreak/local.yml up -d')
-    local('python /home/nick/projects/luckybreak/manage.py scramble_user_emails')
+    local('docker-compose -f /home/nick/projects/auction-rooms/local.yml up -d')
+    local('python /home/nick/projects/auction-rooms/manage.py scramble_user_emails')
