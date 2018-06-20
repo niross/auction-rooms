@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # auction rooms documentation build configuration file, created by
+=======
+# luckybreak documentation build configuration file, created by
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 # sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -39,7 +43,11 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
+<<<<<<< HEAD
 project = 'auction-rooms'
+=======
+project = 'luckybreak'
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 copyright = """2017, Nick Ross"""
 
 # The version info for the project you're documenting, acts as replacement for
@@ -163,7 +171,11 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
+<<<<<<< HEAD
 htmlhelp_basename = 'auctionroomsdoc'
+=======
+htmlhelp_basename = 'luckybreakdoc'
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,8 +195,13 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index',
+<<<<<<< HEAD
      'auction-rooms.tex',
      'auction-rooms Documentation',
+=======
+     'luckybreak.tex',
+     'luckybreak Documentation',
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
      """Nick Ross""", 'manual'),
 ]
 
@@ -214,7 +231,11 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
+<<<<<<< HEAD
     ('index', 'auction-rooms', 'auction-rooms Documentation',
+=======
+    ('index', 'luckybreak', 'luckybreak Documentation',
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
      ["""Nick Ross"""], 1)
 ]
 
@@ -228,8 +249,13 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
+<<<<<<< HEAD
     ('index', 'auction-rooms', 'auction-rooms Documentation',
      """Nick Ross""", 'auction-rooms',
+=======
+    ('index', 'luckybreak', 'luckybreak Documentation',
+     """Nick Ross""", 'luckybreak',
+>>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
      """An auction site for unoccupied hotel rooms""", 'Miscellaneous'),
 ]
 
