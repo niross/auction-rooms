@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static compile_static %}
+{% block title %}Get your occupancy numbers up today{% endblock title %}
+{% block description %}Increase your occupancy and boost your revenue with {{ site.name }} auctions{% endblock description %}
+{% block body_class %}provider-marketing{% endblock body_class %}
+{% block extra_css %}
+  <link href="{% static 'less/provider-marketing.less'|compile %}" rel="stylesheet">
+{% endblock extra_css %}
+{% block content %}
+  <div class="hero-wrap">
+    <div class="hero" style="background-image:url('{{ settings.PROVIDER_BACKGROUND_IMAGE }}')">
+      <div>
+        <div>
+          <h1>Increase Your Occupancy Today</h1>
+          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+          <div class="row">
+            <div class="col s12 m8 offset-m2 l8 offset-l2">
+              <p>Nullam tincidunt lectus ut nibh tincidunt, non vehicula purus bibendum. Maecenas pellentesque porta mauris, nec aliquet tortor porta condimentum. Nulla faucibus, metus vel varius fringilla, risus felis iaculis sapien, nec congue leo ligula vitae odio.</p>
+              <p>Nam consectetur, dolor ac scelerisque pretium, nunc tellus elementum mi, quis euismod justo diam ut purus. Donec vel lobortis orci. Aenean orci dui, tincidunt eget lacus rhoncus, sagittis venenatis diam.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <nav class="crumbs">
+      <div class="nav-wrapper">
+        <div class="col s12">
+          <a href="{% url 'browse:homepage' %}" class="breadcrumb">Home</a>
+          <a href="{% url 'browse:provider-marketing' %}" class="breadcrumb">Start Listing</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row">
+      <div clas="col s12">
+        <p class="center hide-on-med-and-up">
+          <a
+            class="waves-effect waves-light btn btn-large green"
+            href="{% url 'users:provider-signup' %}"
+          >
+            <i class="material-icons left">check_circle</i> Get Started
+          </a>
+        </p>
+      </div>
+      <div class="col s12 m8">
+        <div class="row homepage-section">
+          <div class="col s12">
+            <h5 class="section-header">Fill your vacant rooms</h5>
+            <p>
+              Nullam tincidunt lectus ut nibh tincidunt, non vehicula purus bibendum. Maecenas pellentesque porta mauris, nec aliquet tortor porta condimentum. Nulla faucibus, metus vel varius fringilla, risus felis iaculis sapien, nec congue leo ligula vitae odio.
+            </p>
+            <p>
+              Nam consectetur, dolor ac scelerisque pretium, nunc tellus elementum mi, quis euismod justo diam ut purus. Donec vel lobortis orci.
+              Aenean orci dui, tincidunt eget lacus rhoncus, sagittis venenatis diam.
+            </p>
+          </div>
+        </div>
+        <div class="row homepage-section">
+          <div class="col s12">
+            <h5 class="section-header">How it works</h5>
+            <p>
+              Nullam tincidunt lectus ut nibh tincidunt, non vehicula purus bibendum. Maecenas pellentesque porta mauris, nec aliquet tortor porta condimentum. Nulla faucibus, metus vel varius fringilla, risus felis iaculis sapien, nec congue leo ligula vitae odio.
+            </p>
+          </div>
+        </div>
+        <div class="row homepage-section">
+          <div class="col s12">
+            <h5 class="section-header">Reasons to join</h5>
+            <p>
+              <ul class="reasons">
+                <li>
+                  <p class="valign-wrapper">
+                    <i class="material-icons">check_circle</i> Nulla faucibus, metus vel varius fringilla
+                  </p>
+                </li>
+                <li>
+                  <p class="valign-wrapper">
+                    <i class="material-icons">check_circle</i> Nulla faucibus, metus vel varius fringilla
+                  </p>
+                </li>
+                <li>
+                  <p class="valign-wrapper">
+                    <i class="material-icons">check_circle</i> Nulla faucibus, metus vel varius fringilla
+                  </p>
+                </li>
+                <li>
+                  <p class="valign-wrapper">
+                    <i class="material-icons">check_circle</i> Nulla faucibus, metus vel varius fringilla
+                  </p>
+                </li>
+                <li>
+                  <p class="valign-wrapper">
+                    <i class="material-icons">check_circle</i> Nulla faucibus, metus vel varius fringilla
+                  </p>
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+        <div class="row homepage-section">
+          <div class="col s12">
+            <h5 class="section-header">Terms & Conditions</h5>
+            <p>
+              Nullam tincidunt lectus ut nibh tincidunt, non vehicula purus bibendum. Maecenas pellentesque porta mauris, nec aliquet tortor porta condimentum. Nulla faucibus, metus vel varius fringilla, risus felis iaculis sapien, nec congue leo ligula vitae odio.
+            </p>
+          </div>
+        </div>
+      </div>
+      {% include 'browse/inc/get_started_panel.html' %}
+    </div>
+  </div>
+{% endblock content %}
