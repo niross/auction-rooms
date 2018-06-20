@@ -1,9 +1,9 @@
 #!/bin/bash
-export PYTHONPATH="/var/www/sites/luckybreak/"
+export PYTHONPATH="/var/www/sites/auction-rooms/"
 export DJANGO_SETTINGS_MODULE="config.settings.production"
-export DATABASE_URL="postgis://luckybreak:7YFzZ4dZ4pR&zM@localhost:5432/luckybreak"
+export DATABASE_URL="postgis://auction-rooms:7YFzZ4dZ4pR&zM@localhost:5432/auction-rooms"
 export DJANGO_EMAIL_BACKEND='anymail.backends.mailgun.MailgunBackend'
-export FROM_EMAIL="noreply@luckybreak.sonick.co.uk"
+export FROM_EMAIL="noreply@auction-rooms.sonick.co.uk"
 export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
 export DJANGO_SECRET_KEY='%qh^s8^(oz&zcti*bta77i!k0t+jk4)!2_@yqy4@b_##_z#0b3'
@@ -18,6 +18,6 @@ export CELERY_AMQP_TASK_RESULT_EXPIRES=300
 
 /home/nick/.virtualenvs/luckybreak/bin/celery --workdir=/var/www/sites/luckybreak -A luckybreak.taskapp worker --beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler --schedule=/tmp/luckybreak-celerybeat-schedule --pidfile /tmp/luckybreak-celerybeat-pid --hostname=lb1@%h
 
-#/home/nick/.virtualenvs/luckybreak/bin/celery -A luckybreak.taskapp beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --workdir=/var/www/sites/luckybreak --schedule=/tmp/luckybreak-celerybeat-schedule --pidfile /tmp/luckybreak-celerybeat-pid
+#/home/nick/.virtualenvs/auction-rooms/bin/celery -A auction-rooms.taskapp beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --workdir=/var/www/sites/auction-rooms --schedule=/tmp/auction-rooms-celerybeat-schedule --pidfile /tmp/auction-rooms-celerybeat-pid
 
 
