@@ -78,3 +78,4 @@ staticfiles/
 db-backups
 config/prod/*
 fabfile.py
+config/prod/*

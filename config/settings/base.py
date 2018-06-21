@@ -1,9 +1,5 @@
 """
-<<<<<<< HEAD
 Django settings for auction rooms project.
-=======
-Django settings for luckybreak project.
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -17,13 +13,8 @@ from datetime import timedelta
 
 import environ
 
-<<<<<<< HEAD
 ROOT_DIR = environ.Path(__file__) - 3  # (auction-rooms/config/settings/base.py - 3 = auction-rooms/)
 APPS_DIR = ROOT_DIR.path('auction-rooms')
-=======
-ROOT_DIR = environ.Path(__file__) - 3  # (luckybreak/config/settings/base.py - 3 = luckybreak/)
-APPS_DIR = ROOT_DIR.path('luckybreak')
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -75,7 +66,6 @@ THIRD_PARTY_APPS = [
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-<<<<<<< HEAD
     'auction-rooms.common',
     'auction-rooms.users.apps.UsersConfig',
     'auction-rooms.browse',
@@ -85,17 +75,6 @@ LOCAL_APPS = [
     'auction-rooms.contact',
     'auction-rooms.event_log',
     'auction-rooms.emailer',
-=======
-    'luckybreak.common',
-    'luckybreak.users.apps.UsersConfig',
-    'luckybreak.browse',
-    'luckybreak.experiences',
-    'luckybreak.auctions',
-    'luckybreak.currencies',
-    'luckybreak.contact',
-    'luckybreak.event_log',
-    'luckybreak.emailer',
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -117,11 +96,7 @@ MIDDLEWARE = [
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-<<<<<<< HEAD
     'sites': 'auction-rooms.contrib.sites.migrations'
-=======
-    'sites': 'luckybreak.contrib.sites.migrations'
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 }
 
 # DEBUG
@@ -154,11 +129,7 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-<<<<<<< HEAD
     'default': env.db('DATABASE_URL', default='postgresql:///auction-rooms'),
-=======
-    'default': env.db('DATABASE_URL', default='postgresql:///luckybreak'),
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 }
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 DATABASES['default']['ATOMIC_REQUESTS'] = True
@@ -218,13 +189,8 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'django_settings_export.settings_export',
-<<<<<<< HEAD
                 'auction-rooms.common.context_processors.site',
                 'auction-rooms.users.context_processors.favourites',
-=======
-                'luckybreak.common.context_processors.site',
-                'luckybreak.users.context_processors.favourites',
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
             ],
         },
     },
@@ -316,13 +282,8 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-<<<<<<< HEAD
 ACCOUNT_ADAPTER = 'auction-rooms.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'auction-rooms.users.adapters.SocialAccountAdapter'
-=======
-ACCOUNT_ADAPTER = 'luckybreak.users.adapters.AccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'luckybreak.users.adapters.SocialAccountAdapter'
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
@@ -352,30 +313,18 @@ LOGIN_REDIRECT_URL = 'users:dashboard'
 LOGIN_URL = 'account_login'
 
 ACCOUNT_FORMS = {
-<<<<<<< HEAD
     'login': 'auction-rooms.users.forms.LBLoginForm',
     'signup': 'auction-rooms.users.forms.LBSignupForm',
 }
 SOCIALACCOUNT_FORMS = {
     'signup': 'auction-rooms.users.forms.LBSocialSignupForm',
-=======
-    'login': 'luckybreak.users.forms.LBLoginForm',
-    'signup': 'luckybreak.users.forms.LBSignupForm',
-}
-SOCIALACCOUNT_FORMS = {
-    'signup': 'luckybreak.users.forms.LBSocialSignupForm',
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 }
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-<<<<<<< HEAD
 INSTALLED_APPS += ['auction-rooms.taskapp.celery.CeleryConfig']
-=======
-INSTALLED_APPS += ['luckybreak.taskapp.celery.CeleryConfig']
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'
@@ -439,11 +388,7 @@ GOOGLE_MAPS_KEY = 'AIzaSyCqKfIMgSU5OILdIsuu7dq9qD82HJa5ot4'
 
 HOMEPAGE_BACKGROUND_IMAGE = '/static/images/backgrounds/ishan-seefromthesky-118523.jpg'
 PROVIDER_BACKGROUND_IMAGE = '/static/images/backgrounds/markus-spiske-37931.jpg'
-<<<<<<< HEAD
 TWITTER_USERNAME = '@auction-rooms'
-=======
-TWITTER_USERNAME = '@luckybreak'
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 FACEBOOK_APP_ID = '162315807659925'
 
 DEFAULT_CURRENCY_ID = 1  # GBP
@@ -460,11 +405,7 @@ THUMBNAIL_ALIASES = {
 CHANNEL_LAYERS = {
    'default': {
        'BACKEND': 'asgi_redis.RedisChannelLayer',
-<<<<<<< HEAD
        'ROUTING': 'auction-rooms.auctions.routing.channel_routing',
-=======
-       'ROUTING': 'luckybreak.auctions.routing.channel_routing',
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
        'CONFIG': {
            'hosts': [('redis', 6379)]
        },

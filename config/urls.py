@@ -6,13 +6,8 @@ from django.contrib.sitemaps.views import sitemap
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
-<<<<<<< HEAD
 from auctioneer.auctions.sitemaps import AuctionStaticSitemap
 from auctioneer.browse.sitemaps import BrowseStaticSitemap
-=======
-from luckybreak.auctions.sitemaps import AuctionStaticSitemap
-from luckybreak.browse.sitemaps import BrowseStaticSitemap
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 
 sitemaps = {
     'browse': BrowseStaticSitemap,
@@ -24,7 +19,6 @@ urlpatterns = [
     url(settings.ADMIN_URL, admin.site.urls),
 
     # User management
-<<<<<<< HEAD
     url(r'^', include('auction-rooms.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
 
@@ -37,20 +31,6 @@ urlpatterns = [
     # API
     url(r'^api/', include('auction-rooms.experiences.api_urls', namespace='experience-api')),
     url(r'^api/', include('auction-rooms.auctions.api_urls', namespace='auction-api')),
-=======
-    url(r'^', include('luckybreak.users.urls', namespace='users')),
-    url(r'^accounts/', include('allauth.urls')),
-
-    # App Views
-    url(r'', include('luckybreak.browse.urls', namespace='browse')),
-    url(r'^contact/', include('luckybreak.contact.urls', namespace='contact')),
-    url(r'^experiences/', include('luckybreak.experiences.urls', namespace='experiences')),
-    url(r'^auctions/', include('luckybreak.auctions.urls', namespace='auctions')),
-
-    # API
-    url(r'^api/', include('luckybreak.experiences.api_urls', namespace='experience-api')),
-    url(r'^api/', include('luckybreak.auctions.api_urls', namespace='auction-api')),
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 
     url(r'^robots.txt$', TemplateView.as_view(
         template_name="robots.txt",

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 Auction Rooms
-=======
-luckybreak
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 ==========
 
 Hotel Room Auctions!
@@ -14,17 +10,10 @@ Getting up and running locally
 ::
 
     $ git clone git@gitlab.com:luckybreak/luckybreak-web.git
-<<<<<<< HEAD
     $ cd auction-rooms
     $ docker-compose -f local.yml build
     $ docker-compose -f local.yml up
 
-=======
-    $ cd luckybreak
-    $ docker-compose -f local.yml build
-    $ docker-compose -f local.yml up
-    
->>>>>>> 9b9893078a92810b5c88ecd128a908ef6fb95aa5
 URL for testing is http://localhost:8000
 
 Emails sent by the system will be viewable at http://localhost:8025/
