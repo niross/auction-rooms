@@ -313,11 +313,11 @@ LOGIN_REDIRECT_URL = 'users:dashboard'
 LOGIN_URL = 'account_login'
 
 ACCOUNT_FORMS = {
-    'login': 'auction-rooms.users.forms.LBLoginForm',
-    'signup': 'auction-rooms.users.forms.LBSignupForm',
+    'login': 'auction-rooms.users.forms.ARLoginForm',
+    'signup': 'auction-rooms.users.forms.ARSignupForm',
 }
 SOCIALACCOUNT_FORMS = {
-    'signup': 'auction-rooms.users.forms.LBSocialSignupForm',
+    'signup': 'auction-rooms.users.forms.ARSocialSignupForm',
 }
 
 # SLUGLIFIER

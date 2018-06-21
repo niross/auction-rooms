@@ -9,7 +9,7 @@ from auctioneer.auctions.models import Auction, Favourite
 from auctioneer.users import models
 
 
-class LBLoginForm(LoginForm):
+class ARLoginForm(LoginForm):
     error_messages = {
         'account_inactive': _(
             "This account is currently inactive."
@@ -26,14 +26,14 @@ class LBLoginForm(LoginForm):
     }
 
     def __init__(self, *args, **kwargs):
-        super(LBLoginForm, self).__init__(*args, **kwargs)
+        super(ARLoginForm, self).__init__(*args, **kwargs)
         self.fields['favourite'] = forms.CharField(
             required=False,
             widget=HiddenInput()
         )
 
     def login(self, request, redirect_url=None):
-        ret = super(LBLoginForm, self).login(request, redirect_url=redirect_url)
+        ret = super(ARLoginForm, self).login(request, redirect_url=redirect_url)
         data = self.cleaned_data
         if 'favourite' in data and data['favourite'] != '':
             try:
@@ -48,7 +48,7 @@ class LBLoginForm(LoginForm):
         return ret
 
 
-class LBSignupForm(SignupForm):
+class ARSignupForm(SignupForm):
     _USER_TYPE_CHOICES = (
         (models.User.USER_TYPE_GUEST, 'I\'m looking for experiences'),
         (models.User.USER_TYPE_PROVIDER, 'I\'m selling experiences'),
@@ -59,7 +59,7 @@ class LBSignupForm(SignupForm):
     last_name = forms.CharField()
 
     def __init__(self, *args, **kwargs):
-        super(LBSignupForm, self).__init__(*args, **kwargs)
+        super(ARSignupForm, self).__init__(*args, **kwargs)
         if 'initial' in kwargs:
             if 'user_type' in kwargs['initial']:
                 self.fields['user_type'].widget = forms.widgets.HiddenInput(attrs={
@@ -72,7 +72,7 @@ class LBSignupForm(SignupForm):
         self.fields['favourite'] = forms.CharField(required=False, widget=HiddenInput())
 
     def save(self, request):
-        user = super(LBSignupForm, self).save(request)
+        user = super(ARSignupForm, self).save(request)
         data = self.cleaned_data
         if 'favourite' in data and data['favourite'] != '':
             try:
@@ -87,7 +87,7 @@ class LBSignupForm(SignupForm):
         return user
 
 
-class LBSocialSignupForm(SocialSignupForm):
+class ARSocialSignupForm(SocialSignupForm):
     _USER_TYPE_CHOICES = (
         (models.User.USER_TYPE_GUEST, 'I\'m looking for experiences'),
         (models.User.USER_TYPE_PROVIDER, 'I\'m selling experiences'),
@@ -99,7 +99,7 @@ class LBSocialSignupForm(SocialSignupForm):
     favourite = forms.CharField(required=False, widget=HiddenInput())
 
     def __init__(self, *args, **kwargs):
-        super(LBSocialSignupForm, self).__init__(*args, **kwargs)
+        super(ARSocialSignupForm, self).__init__(*args, **kwargs)
         if 'data' in kwargs and kwargs['data']['user_type'] == models.User.USER_TYPE_PROVIDER:
             self.fields['phone'].required = True
 
@@ -107,7 +107,7 @@ class LBSocialSignupForm(SocialSignupForm):
         state = request.session._session_cache[
             'socialaccount_sociallogin'
         ]['state']
-        user = super(LBSocialSignupForm, self).save(request)
+        user = super(ARSocialSignupForm, self).save(request)
         if 'auth_params' in state and state['auth_params'] != '':
             try:
                 Favourite.objects.create(
