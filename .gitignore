@@ -76,6 +76,6 @@ staticfiles/
 
 .cache/
 db-backups
-config/prod/*
+config/auction-rooms-config
 fabfile.py
 auction-rooms/static/js/dist
