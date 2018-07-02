@@ -198,7 +198,7 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 CHANNEL_LAYERS = {
    'default': {
        'BACKEND': 'asgi_redis.RedisChannelLayer',
-       'ROUTING': 'auction-rooms.auctions.routing.channel_routing',
+       'ROUTING': 'auction_rooms.auctions.routing.channel_routing',
        'CONFIG': {
            'hosts': [(
                'redis://:SFuScuCzTrKEKkH7d8nN9feqQ6A6HtsCf2CBT2'

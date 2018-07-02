@@ -14,7 +14,7 @@ from datetime import timedelta
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3  # (auction-rooms/config/settings/base.py - 3 = auction-rooms/)
-APPS_DIR = ROOT_DIR.path('auction-rooms')
+APPS_DIR = ROOT_DIR.path('auction_rooms')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -66,15 +66,15 @@ THIRD_PARTY_APPS = [
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    'auction-rooms.common',
-    'auction-rooms.users.apps.UsersConfig',
-    'auction-rooms.browse',
-    'auction-rooms.experiences',
-    'auction-rooms.auctions',
-    'auction-rooms.currencies',
-    'auction-rooms.contact',
-    'auction-rooms.event_log',
-    'auction-rooms.emailer',
+    'auction_rooms.common',
+    'auction_rooms.users.apps.UsersConfig',
+    'auction_rooms.browse',
+    'auction_rooms.experiences',
+    'auction_rooms.auctions',
+    'auction_rooms.currencies',
+    'auction_rooms.contact',
+    'auction_rooms.event_log',
+    'auction_rooms.emailer',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -96,7 +96,7 @@ MIDDLEWARE = [
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-    'sites': 'auction-rooms.contrib.sites.migrations'
+    'sites': 'auction_rooms.contrib.sites.migrations'
 }
 
 # DEBUG
@@ -189,8 +189,8 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'django_settings_export.settings_export',
-                'auction-rooms.common.context_processors.site',
-                'auction-rooms.users.context_processors.favourites',
+                'auction_rooms.common.context_processors.site',
+                'auction_rooms.users.context_processors.favourites',
             ],
         },
     },
@@ -282,8 +282,8 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'auction-rooms.users.adapters.AccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'auction-rooms.users.adapters.SocialAccountAdapter'
+ACCOUNT_ADAPTER = 'auction_rooms.users.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'auction_rooms.users.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
@@ -313,18 +313,18 @@ LOGIN_REDIRECT_URL = 'users:dashboard'
 LOGIN_URL = 'account_login'
 
 ACCOUNT_FORMS = {
-    'login': 'auction-rooms.users.forms.ARLoginForm',
-    'signup': 'auction-rooms.users.forms.ARSignupForm',
+    'login': 'auction_rooms.users.forms.ARLoginForm',
+    'signup': 'auction_rooms.users.forms.ARSignupForm',
 }
 SOCIALACCOUNT_FORMS = {
-    'signup': 'auction-rooms.users.forms.ARSocialSignupForm',
+    'signup': 'auction_rooms.users.forms.ARSocialSignupForm',
 }
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ########## CELERY
-INSTALLED_APPS += ['auction-rooms.taskapp.celery.CeleryConfig']
+INSTALLED_APPS += ['auction_rooms.taskapp.celery.CeleryConfig']
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'
@@ -405,7 +405,7 @@ THUMBNAIL_ALIASES = {
 CHANNEL_LAYERS = {
    'default': {
        'BACKEND': 'asgi_redis.RedisChannelLayer',
-       'ROUTING': 'auction-rooms.auctions.routing.channel_routing',
+       'ROUTING': 'auction_rooms.auctions.routing.channel_routing',
        'CONFIG': {
            'hosts': [('redis', 6379)]
        },

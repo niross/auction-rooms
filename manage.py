@@ -22,8 +22,8 @@ if __name__ == '__main__':
         raise
 
     # This allows easy placement of apps within the interior
-    # auction-rooms directory.
+    # auction_rooms directory.
     current_path = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(os.path.join(current_path, 'auction-rooms'))
+    sys.path.append(os.path.join(current_path, 'auction_rooms'))
 
     execute_from_command_line(sys.argv)

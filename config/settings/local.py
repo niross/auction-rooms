@@ -99,7 +99,7 @@ PROTOCOL = 'http://'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
-        'ROUTING': 'auction-rooms.auctions.routing.channel_routing',
+        'ROUTING': 'auction_rooms.auctions.routing.channel_routing',
         'CONFIG': {
             'hosts': [('redis', 6379)]
         }
