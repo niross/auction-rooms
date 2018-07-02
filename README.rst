@@ -9,7 +9,7 @@ Getting up and running locally
 
 ::
 
-    $ git clone git@gitlab.com:luckybreak/luckybreak-web.git
+    $ git clone git@github.com:niross/auction-rooms.git
     $ cd auction-rooms
     $ docker-compose -f local.yml build
     $ docker-compose -f local.yml up
