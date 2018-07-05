@@ -1,7 +1,5 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
-const eslint = require('gulp-eslint');
-const connect = require('gulp-connect');
 const shell = require('gulp-shell');
 const webpack = require('webpack');
 const rimraf = require('gulp-rimraf');
@@ -16,20 +14,6 @@ const FRONTEND_FILES = [
   '*/src/**/*.js'
 ];
 
-// ----------------------------------------------------------------------------
-// EsLint
-// ----------------------------------------------------------------------------
-gulp.task('eslint', () =>
-  gulp
-    .src(FRONTEND_FILES)
-    .pipe(eslint({
-      envs: [
-        'browser'
-      ]
-    }))
-    .pipe(eslint.formatEach('stylish', process.stderr))
-    .pipe(eslint.failOnError())
-);
 
 // ----------------------------------------------------------------------------
 // Cleaning
@@ -77,13 +61,6 @@ gulp.task('watch:prod', () => {
 // Hot reload webpack server
 gulp.task('hotload', shell.task(['node ./server']));
 
-// Source maps server
-gulp.task('server:sources', () => {
-  connect.server({
-    root: __dirname,
-    port: 3001
-  });
-});
 
 // ----------------------------------------------------------------------------
 // Aggregations

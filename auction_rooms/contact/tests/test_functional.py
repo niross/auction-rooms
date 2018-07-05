@@ -1,9 +1,10 @@
+import time
 from django.core import mail
 
 from auction_rooms.common.tests import BaseFunctionalTestCase
 
 
-class AuthTestCase(BaseFunctionalTestCase):
+class ContactTestCase(BaseFunctionalTestCase):
     def test_send_contact_message(self):
         self.selenium.get(self.live_url('contact:contact'))
         self.selenium.find_element_by_id('id_name').send_keys('William Moreland')

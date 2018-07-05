@@ -79,3 +79,4 @@ db-backups
 config/auction-rooms-config
 fabfile.py
 auction_rooms/static/js/dist
+auction_rooms/media/
