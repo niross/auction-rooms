@@ -8,6 +8,7 @@ module.exports = {
   devtool: 'eval',
   cache: true,
   context: __dirname,
+  mode: 'development',
   entry: {
     experience: [
       `webpack-dev-server/client?${PUBLIC_PATH}`,
@@ -48,31 +49,31 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    //new webpack.NoErrorsPlugin(),
     new BundleTracker({ filename: './webpack-stats-dev.json' }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
   resolve: {
-    modulesDirectories: ['node_modules', 'bower_components'],
-    extensions: ['', '.js', '.jsx'],
+    modules: ['node_modules', 'bower_components'],
+    extensions: ['.js', '.jsx'],
     alias: {
       ie: 'component-ie'
     }
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loaders: ['react-hot', 'babel?presets[]=stage-0']
+      loaders: ['babel-loader?presets[]=stage-0']
     }, {
       test: /\.css/,
       loader: 'style-loader!css-loader'
     }, {
       test: /\.less$/,
-      loader: 'style!css!less'
+      loader: 'style-loader!css-loader!less-loader'
     }, {
       test: /\.json$/,
-      loader: 'json'
+      loader: 'json-loader'
     }, {
       test: /\.jpe?g$|\.gif$|\.png$|\.ico$/,
       loader: `${require.resolve('file-loader')}?name=[name].[ext]`

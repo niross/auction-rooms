@@ -5,6 +5,7 @@ const BundleTracker = require('webpack-bundle-tracker');
 module.exports = {
   cache: true,
   context: __dirname,
+  mode: 'production',
   entry: {
     experience: './experience/src/index.jsx',
     'provider-auction': './provider-auction/src/index.jsx',
@@ -23,21 +24,21 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
       loaders: [
-        'babel?presets[]=stage-0'
+        'babel-loader?presets[]=stage-0'
       ]
     }, {
       test: /\.less$/,
-      loader: 'style!css!less'
+      loader: 'style-loader!css!less'
     }, {
       test: /\.json$/,
-      loader: 'json'
+      loader: 'json-loader'
     }, {
       test: /\.css$/,
-      loader: 'style!css'
+      loader: 'style-loader!css-loader'
     }, {
       test: /.(png|jpg)$/,
       loader: 'file-loader',
@@ -47,27 +48,34 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       ie: 'component-ie',
       'isomorphic-fetch': 'fetch-mock-forwarder'
     }
   },
   debug: false,
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.bundle.js', Infinity),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new BundleTracker({ filename: './webpack-stats-prod.json' }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
+  optimization: {
+    splitChunks: 'all'
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
       }
+    }
+  },
+  plugins: [
+    // ensure that we get a production build of any dependencies
+    // this is primarily for React, where this removes 179KB from the bundle
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"'
     }),
-    new webpack.SourceMapDevToolPlugin(
-      'bundle.js.map',
-      '\n//# sourceMappingURL=http://127.0.0.1:3001/dist/js/[url]'
-    ),
+    new BundleTracker({ filename: './webpack-stats-prod.json' }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
 };
