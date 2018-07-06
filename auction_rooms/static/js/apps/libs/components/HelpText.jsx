@@ -23,14 +23,23 @@ const styles = {
   className: ''
 };
 
-const HelpText = props => (
-  <div
-    className={`helptext col s${props.s} m${props.m} l${props.l} ${props.className}`}
-    style={Object.assign(props.style, styles)}
-  >
-    {props.children}
-  </div>
-);
+const HelpText = props => {
+  const styles = {
+    marginBottom: '20px',
+    fontSize: '12px',
+    color: '#9e9e9e',
+    className: ''
+  };
+  Object.assign(styles, props.style);
+  return (
+    <div
+      className={`helptext col s${props.s} m${props.m} l${props.l} ${props.className}`}
+      style={styles}
+    >
+      {props.children}
+    </div>
+  );
+}
 
 HelpText.propTypes = propTypes;
 HelpText.defaultProps = defaultProps;
