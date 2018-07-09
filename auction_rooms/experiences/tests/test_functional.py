@@ -254,11 +254,12 @@ class UpdateExperienceTestCase(BaseExperienceTestCase):
     def test_update_experience(self):
         self.client.force_login(self.provider)
         self.selenium.get(self.live_url('experiences:experiences'))
-
+        time.sleep(2)
         experience = Experience.objects.last()
-        self.selenium.find_element_by_id(
-            'edit-experience-button-{}'.format(experience.id)
-        ).click()
+        self.selenium.execute_script(
+            'document.getElementById('
+            '"edit-experience-button-{}").click()'.format(experience.id)
+        )
 
         modal = self.selenium.find_element_by_id('experience-modal-{}'.format(experience.id))
 
@@ -336,9 +337,6 @@ class UpdateExperienceTestCase(BaseExperienceTestCase):
         self.selenium.get(self.live_url('experiences:experiences'))
 
         experience = Experience.objects.last()
-        self.selenium.find_element_by_id(
-            'edit-experience-button-{}'.format(experience.id)
-        ).click()
         self.selenium.execute_script(
             'document.getElementById("edit-experience-button-{}")'
             '.click()'.format(
