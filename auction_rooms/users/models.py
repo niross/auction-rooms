@@ -12,7 +12,8 @@ class User(AbstractUser):
         (USER_TYPE_PROVIDER, 'Provider'),
     )
     user_type = models.IntegerField(
-        choices=_USER_TYPE_CHOICES
+        choices=_USER_TYPE_CHOICES,
+        default=USER_TYPE_GUEST
     )
     phone = models.CharField(
         max_length=100, null=True, blank=True
