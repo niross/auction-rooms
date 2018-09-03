@@ -6,7 +6,7 @@ wheel==0.29.0
 
 
 # Bleeding edge Django
-django==1.11.15
+django==2.1.1
 
 # Configuration
 django-environ==0.4.3
@@ -14,14 +14,14 @@ whitenoise==3.3.0
 
 
 # Forms
-django-braces==1.11.0
-django-crispy-forms==1.6.1
+django-braces==1.13.0
+django-crispy-forms==1.7.2
 
 # Models
 django-model-utils==3.0.0
 
 # Images
-Pillow==4.2.1
+Pillow==5.2.0
 
 # Password storage
 argon2-cffi==16.3.0
@@ -45,7 +45,7 @@ django-redis==4.8.0
 redis>=2.10.5
 
 
-celery==4.1.0
+celery==4.2.1
 
 
 
@@ -54,19 +54,19 @@ django-compressor==2.1.1
 
 # Raven is the Sentry client
 # --------------------------
-raven==6.1.0
+raven==6.9.0
 
 
 # Your custom requirements go here
 django-settings-export==1.2.1
-django-static-precompiler==1.6
+django-static-precompiler==1.8.2
 crispy-forms-materialize==0.2
-django-webpack-loader==0.5.0
-djangorestframework==3.6.4
+django-webpack-loader==0.6.0
+djangorestframework==3.8.2
 easy-thumbnails==2.4.2
 channels==1.1.8
 asgi_redis==1.4.3
-django-celery-beat==1.0.1
+django-celery-beat==1.1.1
 django-celery-results==1.0.1
 shortuuid==0.5.0
 django-extensions==1.8.1

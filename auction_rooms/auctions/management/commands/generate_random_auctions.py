@@ -40,4 +40,4 @@ class Command(BaseCommand):
                 auction.featured = True
                 auction.save()
 
-        print 'Finished creating {} auctions'.format(kwargs['amount'])
+        print('Finished creating {} auctions'.format(kwargs['amount']))

@@ -140,7 +140,8 @@ class Auction(DeletableTimeStampedModel):
     experience = models.ForeignKey(
         Experience,
         related_name='auctions',
-        help_text='The experience this auction was created from'
+        help_text='The experience this auction was created from',
+        on_delete=models.DO_NOTHING
     )
     title = models.CharField(
         max_length=255,
@@ -172,7 +173,8 @@ class Auction(DeletableTimeStampedModel):
     currency = models.ForeignKey(
         Currency,
         default=settings.DEFAULT_CURRENCY_ID,
-        help_text='The date and time the experience starts'
+        help_text='The date and time the experience starts',
+        on_delete=models.DO_NOTHING
     )
     url = models.URLField(
         null=True,
@@ -379,7 +381,11 @@ class Auction(DeletableTimeStampedModel):
 
 
 class AuctionImage(models.Model):
-    auction = models.ForeignKey(Auction, related_name='images')
+    auction = models.ForeignKey(
+        Auction,
+        related_name='images',
+        on_delete=models.DO_NOTHING
+    )
     image = models.ImageField(upload_to='auctions/')
     default = models.BooleanField(default=False)
 
@@ -391,7 +397,11 @@ class AuctionImage(models.Model):
 
 
 class AuctionInclusion(models.Model):
-    auction = models.ForeignKey(Auction, related_name='inclusions')
+    auction = models.ForeignKey(
+        Auction,
+        related_name='inclusions',
+        on_delete=models.DO_NOTHING
+    )
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -402,7 +412,11 @@ class AuctionInclusion(models.Model):
 
 
 class AuctionExclusion(models.Model):
-    auction = models.ForeignKey(Auction, related_name='exclusions')
+    auction = models.ForeignKey(
+        Auction,
+        related_name='exclusions',
+        on_delete=models.DO_NOTHING
+    )
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -413,8 +427,16 @@ class AuctionExclusion(models.Model):
 
 
 class Bid(DeletableTimeStampedModel):
-    auction = models.ForeignKey(Auction, related_name='bids')
-    user = models.ForeignKey(User, related_name='bids')
+    auction = models.ForeignKey(
+        Auction,
+        related_name='bids',
+        on_delete=models.DO_NOTHING
+    )
+    user = models.ForeignKey(
+        User,
+        related_name='bids',
+        on_delete=models.DO_NOTHING
+    )
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
@@ -436,8 +458,16 @@ class Bid(DeletableTimeStampedModel):
 
 
 class Favourite(DeletableTimeStampedModel):
-    auction = models.ForeignKey(Auction, related_name='favourites')
-    user = models.ForeignKey(User, related_name='favourites')
+    auction = models.ForeignKey(
+        Auction,
+        related_name='favourites',
+        on_delete=models.DO_NOTHING
+    )
+    user = models.ForeignKey(
+        User,
+        related_name='favourites',
+        on_delete=models.DO_NOTHING
+    )
     reminder_sent = models.BooleanField(default=False)
     new_listing_sent = models.BooleanField(default=False)
 

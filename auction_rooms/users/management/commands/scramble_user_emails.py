@@ -14,4 +14,4 @@ class Command(BaseCommand):
             user.email = str(uuid.uuid1().hex)[:14] + '@example.com'
             user.save()
             update_count += 1
-        print 'Updated {} users.'.format(update_count)
+        print('Updated {} users.'.format(update_count))

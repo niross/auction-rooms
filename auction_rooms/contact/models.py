@@ -5,7 +5,12 @@ from auction_rooms.common.models import DeletableTimeStampedModel
 
 
 class ContactMessage(DeletableTimeStampedModel):
-    user = models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.DO_NOTHING
+    )
     name = models.CharField(max_length=255)
     email = models.EmailField()
     message = models.TextField()

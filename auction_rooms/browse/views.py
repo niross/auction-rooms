@@ -91,7 +91,7 @@ class SearchResultsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
-        if not self.request.user.is_authenticated() or \
+        if not self.request.user.is_authenticated or \
                 not self.request.user.is_staff:
             increment_search_appearance_count.delay(
                 [x.id for x in context['object_list']]

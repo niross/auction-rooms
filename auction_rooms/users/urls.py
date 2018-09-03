@@ -3,6 +3,8 @@ from django.views import defaults as default_views
 
 from . import views
 
+app_name = 'users'
+
 urlpatterns = [
     url(
         regex=r'^dashboard/$',

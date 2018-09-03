@@ -79,7 +79,7 @@ class Command(BaseCommand):
             num_images = random.randint(2, 6)
             for i in range(0, num_images):
                 image = images.pop(random.randint(0, len(images) - 1))
-                with open(image, 'r') as fh:
+                with open(image, 'rb') as fh:
                     path = os.path.join(
                         settings.MEDIA_ROOT,
                         ExperienceImage.image.field.upload_to,
@@ -93,6 +93,5 @@ class Command(BaseCommand):
                     )
                     ei.save()
 
-        print 'Finished creating {} experiences'.format(kwargs['amount'])
-
+        print('Finished creating {} experiences'.format(kwargs['amount']))
 

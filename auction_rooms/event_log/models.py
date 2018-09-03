@@ -114,7 +114,11 @@ class EventLog(TimeStampedModel):
         (EVENT_TYPE_LOST_AUCTION,
          'User submitted the highest bid but didn\'t win the auction'),
     )
-    user = models.ForeignKey('users.User', related_name='events')
+    user = models.ForeignKey(
+        'users.User',
+        related_name='events',
+        on_delete=models.DO_NOTHING
+    )
     type = models.IntegerField(choices=_EVENT_TYPE_CHOICES)
     data = models.TextField(null=True)
 

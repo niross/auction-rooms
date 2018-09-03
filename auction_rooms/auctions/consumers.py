@@ -12,7 +12,7 @@ class ProviderAuctionConsumer(JsonWebsocketConsumer):
 
     # Perform actions on connection start
     def connect(self, message, **kwargs):
-        if not message.user.is_authenticated():
+        if not message.user.is_authenticated:
             message.reply_channel.send({'accept': False})
             return
 

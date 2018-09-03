@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'auctions'
+
 urlpatterns = [
     url(
         regex=r'^live/$',

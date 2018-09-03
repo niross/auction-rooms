@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from auction_rooms.browse import views
 
+app_name = 'browse'
+
 urlpatterns = (
     url(
         r'^$',
