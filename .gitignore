@@ -82,3 +82,4 @@ auction_rooms/static/js/dist
 auction_rooms/media/
 asgi.py
 bin/
+.idea
